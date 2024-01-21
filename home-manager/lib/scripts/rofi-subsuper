@@ -1,0 +1,32 @@
+#!/usr/bin/env @bash@/bin/bash
+
+# This script converts text to subscript or superscript
+# and copies it to the clipboard.
+# Written for rofi, requires xclip
+#
+# No explicit quit command, be aware if you don't have a generic exit method from rofi
+
+if [ "$@" ]
+then
+    # Get everything except first word
+    STRING=`echo "$@" | cut -d' ' -f2-`
+
+    # if first word is super
+    if [[ "$1" =~ super[[:space:]] ]]
+    then
+        # Convert to superscript
+        NEWTEXT=`echo "$STRING" | @sed@/bin/sed -e 'y|0123456789abcdefghijklmnopqrstuvwxyz|⁰¹²³⁴⁵⁶⁷⁸⁹ᵃᵇᶜᵈᵉᶠᵍʰᶦʲᵏˡᵐⁿᵒᵖᵠʳˢᵗᵘᵛʷˣʸᶻ|'`
+        coproc ( echo "$NEWTEXT" | @xclip@/bin/xclip -selection clipboard )
+        exit 0
+    elif [[ "$1" =~ sub[[:space:]] ]]
+    then
+        # Convert to subscript
+        NEWTEXT=`echo "$STRING" | @sed@/bin/sed -e 'y|0123456789abcdefghijklmnopqrstuvwxyz|₀₁₂₃₄₅₆₇₈₉ₐbcdₑfghᵢⱼₖₗₘₙₒₚqᵣₛₜᵤᵥwₓyz|'`
+        coproc ( echo "$NEWTEXT" | @xclip@/bin/xclip -selection clipboard )
+        exit 0
+    else
+        echo "type something starting with 'sub' or 'super'"
+    fi
+else
+    echo "type something starting with 'sub' or 'super'"
+fi

@@ -1,0 +1,76 @@
+# This file defines overlays
+{inputs, ...}: let
+  getSrcFromInput = pkg: src: pkg.overrideAttrs (_: {inherit src;});
+in {
+  # This one brings our custom packages from the 'pkgs' directory
+  additions = final: _prev: import ../pkgs {pkgs = final;};
+
+  # This one contains whatever you want to overlay
+  # You can change versions, add patches, set compilation flags, anything really.
+  # https://nixos.wiki/wiki/Overlays
+  modifications = final: prev: rec {
+    vimwiki-markdown = getSrcFromInput prev.vimwiki-markdown inputs.vimwiki-markdown-src;
+    mpv = prev.mpv-unwrapped.override {
+      ffmpeg = prev.ffmpeg_5-full;
+    };
+    greenclip = getSrcFromInput prev.greenclip inputs.greenclip-src;
+    picom = prev.picom.overrideAttrs (old: {
+      version = "unstable-2023-12-22";
+      src = inputs.picom-src;
+      buildInputs = with final;
+        [
+          unstable.cmake
+          unstable.libev
+          unstable.xorg.xcbutil
+          unstable.pcre2
+        ]
+        ++ old.buildInputs;
+    });
+    browserpass = final.oldversion.browserpass;
+
+    myAwesome = final.awesome.overrideAttrs (old: rec {
+      pname = "myAwesome";
+      patches = [];
+      postPatch = ''
+        chmod +x /build/source/tests/examples/_postprocess.lua
+        patchShebangs /build/source/tests/examples/_postprocess.lua
+      '';
+      src = inputs.awesomewm-src;
+      lua = final.lua5_3;
+    });
+
+    # Neovim plugins
+    plugin = pname: src:
+      prev.vimUtils.buildVimPlugin {
+        inherit pname src;
+        version = "master";
+      };
+    vim-puppet-4tabs = plugin "vim-puppet-4tabs" inputs.vim-puppet-4tabs-src;
+    vim-yadi = plugin "vim-yadi" inputs.vim-yadi-src;
+    nvim-transparent = plugin "nvim-transparent" inputs.nvim-transparent-src;
+    yanky = plugin "yanky" inputs.yanky-src;
+    leap = plugin "leap" inputs.leap-src;
+    trailblazer = plugin "trailblazer" inputs.trailblazer-src;
+    commentnvim = plugin "commentnvim" inputs.commentnvim-src;
+    telescope-file-browser = plugin "telescope-file-browser" inputs.telescope-file-browser-src;
+    vim-colorschemes-forked = plugin "vim-colorschemes-forked" inputs.vim-colorschemes-forked-src;
+    copilot = plugin "copilot" inputs.copilot-src;
+    undowarn = plugin "undowarn" inputs.undowarn-src;
+  };
+
+  # When applied, the unstable nixpkgs set (declared in the flake inputs) will
+  # be accessible through 'pkgs.unstable'
+  unstable-packages = final: _prev: {
+    unstable = import inputs.nixpkgs-unstable {
+      system = final.system;
+      config.allowUnfree = true;
+    };
+  };
+  # same for oldversion
+  oldversion-packages = final: _prev: {
+    oldversion = import inputs.nixpkgs-2211 {
+      system = final.system;
+      config.allowUnfree = true;
+    };
+  };
+}

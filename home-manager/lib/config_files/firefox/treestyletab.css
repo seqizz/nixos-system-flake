@@ -1,0 +1,72 @@
+/* Adjust style for tab that has sound playing. */
+.tab.sound-playing .label:before {
+  content: "🔊 ";
+}
+
+/* Change styling of pending (unloaded) tabs */
+.tab.discarded {
+  opacity: 0.85;
+}
+
+/* Less visible tab dividers. 
+   A black border with a very low alpha slightly darkens any color. */
+.tab {
+  border: solid 1px #00000012; 
+}
+
+/* I don't need a damn close button */
+.tab .closebox {
+  display: none;
+}
+
+/* Hide the "new tab" button at the bottom edge of the tab bar */
+.newtab-button-box {
+  display: none;
+}
+
+#tabbar {
+  bottom: 0 !important; /* Eliminate dead space on bottom */
+}
+
+/* Container tabs background color */
+.contextual-identity-marker {
+  position: absolute !important;
+  pointer-events: none;
+  z-index: 0;
+  
+  bottom: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  top: 0 !important;
+  
+  width: unset !important;
+  height: unset !important;  
+    
+  opacity: 0.5;
+}
+
+/* Make selected tab visible */
+tab-item.active tab-item-substance {
+  height: 45px !important;
+}
+
+/* No favicon also */
+tab-item:not(.faviconized):not(.loading):is(.active) tab-favicon {
+  display: none;
+}
+/* Except for loading ones */
+tab-item:not(.faviconized):is(.loading) tab-favicon {
+  opacity: 1;
+}
+
+/* Hmmh bold text */
+tab-item.active .label-content {
+  font-weight: 600;
+  font-size: 110%;
+  color: #d79921 !important;
+}
+
+/* Sprinkle some color */
+tab-item.active tab-item-substance .background {
+  background: #282828 !important;
+}

@@ -1,0 +1,14 @@
+# Switch to a branch with selected commit
+bind main B +sh -c "git checkout -b `echo -n %(commit) | head -c 10 | sed 's/^/g_pick_/'` %(commit) && echo Switched to a new branch!"
+
+# copy commit id to clipboard
+bind generic c +sh -c "echo -n %(commit) | xclip -selection c && echo Commit it copied to clipboard!"
+
+# export current diff to a file
+bind main x +git format-patch -1 -N %(commit) -o /tmp/
+
+# copy web link to the clipboard
+bind main C +sh -c "git-browse-origin -s %(commit) | xclip -selection c && echo Web link copied to clipboard!"
+
+# open commit in web browser
+bind generic O +sh -c "git-browse-origin %(commit) && echo Opened in browser!"
