@@ -3,7 +3,7 @@
   getSrcFromInput = pkg: src: pkg.overrideAttrs (_: {inherit src;});
 in {
   # This one brings our custom packages from the 'pkgs' directory
-  additions = final: _prev: import ../pkgs {pkgs = final;};
+  additions = final: _prev: import ../pkgs {pkgs = final;inputs = inputs;};
 
   # This one contains whatever you want to overlay
   # You can change versions, add patches, set compilation flags, anything really.
@@ -14,6 +14,9 @@ in {
       ffmpeg = prev.ffmpeg_5-full;
     };
     greenclip = getSrcFromInput prev.greenclip inputs.greenclip-src;
+    loose = final.callPackage ../pkgs/loose.nix {inherit inputs;};
+    nixos-plymouth = final.callPackage ../pkgs/nixos-plymouth.nix {inherit inputs;};
+    pinentry-rofi = final.callPackage ../pkgs/pinentry-rofi.nix {inherit inputs;};
     picom = prev.picom.overrideAttrs (old: {
       version = "unstable-2023-12-22";
       src = inputs.picom-src;

@@ -116,7 +116,7 @@ in
     opera # Good to have as alternative
     pamixer # pulseaudio mixer
     papirus-icon-theme
-    paoutput
+    # paoutput
     pasystray
     pavucontrol
     pcmanfm-qt # A file-manager which fucking works

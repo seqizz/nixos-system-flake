@@ -24,8 +24,23 @@
       flake = false;
     };
 
+    loose-src = {
+      url = "git+https://git.gurkan.in/gurkan/loose.git";
+      flake = false;
+    };
+
+    nixos-plymouth-src = {
+      url = "git+https://git.gurkan.in/gurkan/nixos-blur-plymouth.git";
+      flake = false;
+    };
+
     vimwiki-markdown-src = {
       url = "github:WnP/vimwiki_markdown";
+      flake = false;
+    };
+
+    pinentry-rofi-src = {
+      url = "github:plattfot/pinentry-rofi";
       flake = false;
     };
 
@@ -81,6 +96,7 @@
     nixpkgs,
     home-manager,
     nur,
+    loose-src,
     ...
   } @ inputs: let
     inherit (self) outputs;
