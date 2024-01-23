@@ -39,11 +39,6 @@
       flake = false;
     };
 
-    pinentry-rofi-src = {
-      url = "github:plattfot/pinentry-rofi";
-      flake = false;
-    };
-
     # Vim plugins
     vim-puppet-4tabs-src = {
       url = "git+https://git.gurkan.in/gurkan/vim-puppet.git"; # plain https is not working?

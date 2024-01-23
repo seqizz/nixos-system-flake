@@ -122,7 +122,7 @@ in
     pcmanfm-qt # A file-manager which fucking works
     # pdftk # split-combine pdfs
     picom # X compositor which sucks, also do not use services.picom
-    pinentry-rofi
+    pkgs.unstable.pinentry-rofi
     playerctl
     poetry
     # poppler_utils # for pdfunite

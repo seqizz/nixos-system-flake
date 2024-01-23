@@ -16,9 +16,8 @@ in {
     greenclip = getSrcFromInput prev.greenclip inputs.greenclip-src;
     loose = final.callPackage ../pkgs/loose.nix {inherit inputs;};
     nixos-plymouth = final.callPackage ../pkgs/nixos-plymouth.nix {inherit inputs;};
-    pinentry-rofi = final.callPackage ../pkgs/pinentry-rofi.nix {inherit inputs;};
     picom = prev.picom.overrideAttrs (old: {
-      version = "unstable-2023-12-22";
+      version = "master";
       src = inputs.picom-src;
       buildInputs = with final;
         [
@@ -33,6 +32,7 @@ in {
 
     myAwesome = final.awesome.overrideAttrs (old: rec {
       pname = "myAwesome";
+      version = "master";
       patches = [];
       postPatch = ''
         chmod +x /build/source/tests/examples/_postprocess.lua
