@@ -1,4 +1,4 @@
-{ config, pkgs, ...}:
+{ config, pkgs, inputs, ...}:
 
 let
   my_scripts = (import ./scripts.nix {pkgs = pkgs;});
@@ -64,7 +64,8 @@ in
     steam
     pkgs.unstable.tdesktop # telegram
     pkgs.unstable.firefox # fucker crashing on me with 114.0.2
-    pkgs.unstable.wezterm
+    # pkgs.unstable.wezterm
+    inputs.wezterm.packages.x86_64-linux.default
 
     # NUR packages
     config.nur.repos.wolfangaukang.vdhcoapp
