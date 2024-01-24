@@ -3,7 +3,11 @@
   getSrcFromInput = pkg: src: pkg.overrideAttrs (_: {inherit src;});
 in {
   # This one brings our custom packages from the 'pkgs' directory
-  additions = final: _prev: import ../pkgs {pkgs = final;inputs = inputs;};
+  additions = final: _prev:
+    import ../pkgs {
+      pkgs = final;
+      inputs = inputs;
+    };
 
   # This one contains whatever you want to overlay
   # You can change versions, add patches, set compilation flags, anything really.
@@ -16,6 +20,16 @@ in {
     greenclip = getSrcFromInput prev.greenclip inputs.greenclip-src;
     loose = final.callPackage ../pkgs/loose.nix {inherit inputs;};
     nixos-plymouth = final.callPackage ../pkgs/nixos-plymouth.nix {inherit inputs;};
+    # @Reference: Overriding rust stuff via cargoDeps
+    # Seems like original author has passed away, RIP @jD91mZM2
+    xidlehook = prev.xidlehook.overrideAttrs (out: rec {
+      version = "unstable-2022-05-18";
+      src = inputs.xidlehook-src;
+      cargoDeps = out.cargoDeps.overrideAttrs (_: {
+      inherit src; # You need to pass "src" here again
+        outputHash = "sha256-Iuri3dOLzrfTzHvwOKcZrVJFotqrGlM6EeuV29yqz+U=";
+      });
+    });
     picom = prev.picom.overrideAttrs (old: {
       version = "master";
       src = inputs.picom-src;

@@ -53,21 +53,6 @@ in {
 
     xidlehook = {
       enable = true;
-      # @Reference: Overriding rust stuff via cargoDeps
-      # Seems like original author has passed away, RIP @jD91mZM2
-      package = pkgs.xidlehook.overrideAttrs (out: rec {
-        version = "unstable-2022-05-18";
-        src = pkgs.fetchFromGitHub {
-          owner = "realSaltyFish";
-          repo = "xidlehook";
-          rev = "12ea7a8d074fa5907f757e9df85f35c44252e13d";
-          sha256 = "12f7yfwjijcy5cwj60ba7h8lpgxq25kgf0infyzkrivyzsyk6nrz";
-        };
-        cargoDeps = out.cargoDeps.overrideAttrs (_: {
-          inherit src; # You need to pass "src" here again
-          outputHash = "sha256-Iuri3dOLzrfTzHvwOKcZrVJFotqrGlM6EeuV29yqz+U=";
-        });
-      });
       not-when-fullscreen = true;
       environment = {
         "DISPLAY" = ":0";
