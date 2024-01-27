@@ -97,6 +97,23 @@ in {
         Service.PrivateTmp = false;
       };
 
+      wezterm-mux-server = {
+        Unit = {
+          Description = "WezTerm mux server";
+          X-SwitchMethod = "keep-old";
+          After = [
+            "graphical-session.target"
+          ];
+        };
+        Service = {
+          ExecStart = "${pkgs.wezterm}/bin/wezterm-mux-server";
+          RestartSec = 5;
+          Restart = "always";
+          Environment = "DISPLAY=:0";
+          PrivateTmp = "false";
+        };
+      };
+
       auto-rotate = {
         Unit = {
           Description = "Automatic screen rotation helper";
