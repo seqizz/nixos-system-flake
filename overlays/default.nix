@@ -26,7 +26,8 @@ in {
       version = "unstable-2022-05-18";
       src = inputs.xidlehook-src;
       cargoDeps = out.cargoDeps.overrideAttrs (_: {
-      inherit src; # You need to pass "src" here again
+        inherit src; # We need to pass "src" here again
+        # TODO: Find a way to define this on inputs?
         outputHash = "sha256-Iuri3dOLzrfTzHvwOKcZrVJFotqrGlM6EeuV29yqz+U=";
       });
     });
