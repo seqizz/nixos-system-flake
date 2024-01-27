@@ -66,7 +66,7 @@ in
     scriptPath = ".hm-xsession";
     # ${pkgs.dbus}/bin/dbus-run-session ${pkgs.awesome}/bin/awesome
     windowManager.command = ''
-    ${pkgs.dbus}/bin/dbus-run-session ${pkgs.myAwesome}/bin/awesome
+    ${pkgs.dbus}/bin/dbus-run-session ${pkgs.awesome}/bin/awesome
     '';
     initExtra = ''
       # Trigger loose with reset switch

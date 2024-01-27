@@ -44,7 +44,7 @@ in {
     });
     browserpass = final.oldversion.browserpass;
 
-    myAwesome = final.awesome.overrideAttrs (old: rec {
+    awesome = prev.awesome.overrideAttrs (old: rec {
       pname = "myAwesome";
       version = "master";
       patches = [];
@@ -53,7 +53,7 @@ in {
         patchShebangs /build/source/tests/examples/_postprocess.lua
       '';
       src = inputs.awesomewm-src;
-      lua = final.lua5_3;
+      lua = prev.lua5_3;
     });
 
     # Neovim plugins
