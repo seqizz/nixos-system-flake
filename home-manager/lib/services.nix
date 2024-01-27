@@ -73,7 +73,7 @@ in {
   };
 
   systemd.user = {
-    startServices = true;
+    startServices = "sd-switch";
     services = {
       baglan = {
         Unit = {
