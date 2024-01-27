@@ -89,7 +89,6 @@
     nethogs
     nix-diff
     nix-du
-    nix-index
     nix-zsh-completions
     nmap
     ntfs3g

@@ -123,6 +123,8 @@ in
       enable = true;
       enableZshIntegration = true;
     };
+
+    nix-index-database.comma.enable = true;
   };
 }
 #  vim: set ts=2 sw=2 tw=0 et :

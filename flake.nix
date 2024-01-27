@@ -10,6 +10,16 @@
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     nur.url = "github:nix-community/NUR";
 
+    nix-index-database = {
+      url = "github:nix-community/nix-index-database";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    simple-nixos-mailserver = {
+      url = "gitlab:simple-nixos-mailserver/nixos-mailserver/nixos-23.11";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     wezterm = {
       # url = "github:wez/wezterm?dir=nix";
       url = "github:davidsierradz/wezterm/add-additional-outputs-to-nix-flake?dir=nix";
@@ -102,6 +112,8 @@
     home-manager,
     nur,
     loose-src,
+    nix-index-database,
+    simple-nixos-mailserver,
     ...
   } @ inputs: let
     inherit (self) outputs;
@@ -132,6 +144,14 @@
           ./nixos/machines/innodellix.nix
         ];
       };
+      rocksteady = nixpkgs.lib.nixosSystem {
+        specialArgs = {inherit inputs outputs;};
+        modules = [
+          simple-nixos-mailserver.nixosModules.mailserver
+          ./nixos/configuration.nix
+          ./nixos/machines/rocksteady.nix
+        ];
+      };
     };
 
     homeConfigurations = {
@@ -139,6 +159,7 @@
         pkgs = nixpkgs.legacyPackages.x86_64-linux; # Home-manager requires 'pkgs' instance
         extraSpecialArgs = {inherit inputs outputs;};
         modules = [
+          nix-index-database.hmModules.nix-index
           nur.hmModules.nur
           ./home-manager/home.nix
           ./home-manager/lib/packages/workPackages.nix

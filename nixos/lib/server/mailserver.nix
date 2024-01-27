@@ -6,12 +6,12 @@ let
   secrets = import ../secrets.nix;
 in
 {
-  imports = [
-    (builtins.fetchTarball {
-      url = "https://gitlab.com/simple-nixos-mailserver/nixos-mailserver/-/archive/nixos-23.11/nixos-mailserver-nixos-23.11.tar.gz";
-      sha256 = "1czvxn0qq2s3dxphpb28f3845a9jr05k8p7znmv42mwwlqwkh1ax";
-    })
-  ];
+  # imports = [
+  #   (builtins.fetchTarball {
+  #     url = "https://gitlab.com/simple-nixos-mailserver/nixos-mailserver/-/archive/nixos-23.11/nixos-mailserver-nixos-23.11.tar.gz";
+  #     sha256 = "1czvxn0qq2s3dxphpb28f3845a9jr05k8p7znmv42mwwlqwkh1ax";
+  #   })
+  # ];
 
   environment.systemPackages = with pkgs; [
     my_webmail
