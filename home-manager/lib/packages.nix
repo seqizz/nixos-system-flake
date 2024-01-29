@@ -100,6 +100,13 @@ in
     # kde-gtk-config # best GTK theme selector
     libnotify
     libreoffice
+    hunspell # For spellcheck on Libreoffice
+    hunspellDicts.de_DE
+    hunspellDicts.en_US
+    aspell # If any app uses aspell
+    aspellDicts.de
+    aspellDicts.en
+    aspellDicts.tr
     loose # Fuck yeah
     lxqt.lximage-qt
     meld # GUI diff tool
