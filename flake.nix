@@ -45,8 +45,8 @@
       flake = false;
     };
 
-    nixos-plymouth-src = {
-      url = "git+https://git.gurkan.in/gurkan/nixos-blur-plymouth.git";
+    lol-plymouth-src = {
+      url = "git+https://git.gurkan.in/gurkan/lol-plymouth.git";
       flake = false;
     };
 

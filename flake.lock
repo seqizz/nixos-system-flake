@@ -242,6 +242,22 @@
         "type": "github"
       }
     },
+    "lol-plymouth-src": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1706394146,
+        "narHash": "sha256-CmGOX9v+KVZX5Emk3YMYfCMzitZDBBL/eSjovCU9ga4=",
+        "ref": "refs/heads/master",
+        "rev": "99a4ca895ec2f34fc038ca4c9045edbfdd1dd8df",
+        "revCount": 1,
+        "type": "git",
+        "url": "https://git.gurkan.in/gurkan/lol-plymouth.git"
+      },
+      "original": {
+        "type": "git",
+        "url": "https://git.gurkan.in/gurkan/lol-plymouth.git"
+      }
+    },
     "loose-src": {
       "flake": false,
       "locked": {
@@ -283,42 +299,26 @@
         ]
       },
       "locked": {
-        "lastModified": 1705806513,
-        "narHash": "sha256-FcOmNjhHFfPz2udZbRpZ1sfyhVMr+C2O8kOxPj+HDDk=",
+        "lastModified": 1706411424,
+        "narHash": "sha256-BzziJYucEZvdCE985vjPoo3ztWcmUiSQ1wJ2CoT6jCc=",
         "owner": "nix-community",
         "repo": "nix-index-database",
-        "rev": "f8e04fbcebcc24cebc91989981bd45f69b963ed7",
+        "rev": "c782f2a4f6fc94311ab5ef31df2f1149a1856181",
         "type": "github"
       },
       "original": {
         "owner": "nix-community",
         "repo": "nix-index-database",
         "type": "github"
-      }
-    },
-    "nixos-plymouth-src": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1657314789,
-        "narHash": "sha256-BSmh+Gy3yJMA4RoJ0uaQ/WsYBs+Txr6K3cAQjf+yM5Y=",
-        "ref": "refs/heads/master",
-        "rev": "ea75b51a1f04aa914647a2929eab6bbe595bcfc0",
-        "revCount": 1,
-        "type": "git",
-        "url": "https://git.gurkan.in/gurkan/nixos-blur-plymouth.git"
-      },
-      "original": {
-        "type": "git",
-        "url": "https://git.gurkan.in/gurkan/nixos-blur-plymouth.git"
       }
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1706098335,
-        "narHash": "sha256-r3dWjT8P9/Ah5m5ul4WqIWD8muj5F+/gbCdjiNVBKmU=",
+        "lastModified": 1706373441,
+        "narHash": "sha256-S1hbgNbVYhuY2L05OANWqmRzj4cElcbLuIkXTb69xkk=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "a77ab169a83a4175169d78684ddd2e54486ac651",
+        "rev": "56911ef3403a9318b7621ce745f5452fb9ef6867",
         "type": "github"
       },
       "original": {
@@ -434,11 +434,11 @@
     },
     "nur": {
       "locked": {
-        "lastModified": 1706377249,
-        "narHash": "sha256-Yexs/FRVheTzHNMbFr4/ogsfq0x35FoTK6a4MOhjSko=",
+        "lastModified": 1706532826,
+        "narHash": "sha256-aMbtt2vJx1XeTRaVzBSWnTxOerb59YKqLWJCvcUfXPM=",
         "owner": "nix-community",
         "repo": "NUR",
-        "rev": "4843ee0bf2cfd4cce6ed4b325ceddd7691df8435",
+        "rev": "892517d79c1ddbedaa21f9f204cdfb4a12321360",
         "type": "github"
       },
       "original": {
@@ -470,11 +470,11 @@
         "nixpkgs": "nixpkgs_2"
       },
       "locked": {
-        "lastModified": 1705942301,
-        "narHash": "sha256-K7p20bd3VfyJf05/+ZlTiqmGB2DIwh3DX6/a4azUX9k=",
+        "lastModified": 1706478259,
+        "narHash": "sha256-xBFTy2+dkizhfgGrL6YmxBli9mgDLWVnF/mL7IZSL0c=",
         "owner": "yshui",
         "repo": "picom",
-        "rev": "702e30df4ac9baa8bd305024c3905e1f8a946e12",
+        "rev": "606844c4bbff1f1069593edf1fd9ad4094f09ef9",
         "type": "github"
       },
       "original": {
@@ -491,9 +491,9 @@
         "greenclip-src": "greenclip-src",
         "home-manager": "home-manager",
         "leap-src": "leap-src",
+        "lol-plymouth-src": "lol-plymouth-src",
         "loose-src": "loose-src",
         "nix-index-database": "nix-index-database",
-        "nixos-plymouth-src": "nixos-plymouth-src",
         "nixpkgs": "nixpkgs",
         "nixpkgs-2211": "nixpkgs-2211",
         "nixpkgs-unstable": "nixpkgs-unstable",
@@ -750,11 +750,11 @@
       },
       "locked": {
         "dir": "nix",
-        "lastModified": 1706025545,
-        "narHash": "sha256-sdFIiIOW0L1876p5vqIRnmuPhdn5rJahXLyIeXvhGns=",
+        "lastModified": 1706460169,
+        "narHash": "sha256-faeekOE+go3aiEp4ZwQDEvjeou+ggXyVRuaT8xXNLQU=",
         "owner": "davidsierradz",
         "repo": "wezterm",
-        "rev": "7c80727ceb90f069c0f0db5918bbca4e18f2c88b",
+        "rev": "58beef52f98555b04e6360ded59ed87d1ce4a174",
         "type": "github"
       },
       "original": {

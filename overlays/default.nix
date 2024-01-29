@@ -19,7 +19,7 @@ in {
     };
     greenclip = getSrcFromInput prev.greenclip inputs.greenclip-src;
     loose = final.callPackage ../pkgs/loose.nix {inherit inputs;};
-    nixos-plymouth = final.callPackage ../pkgs/nixos-plymouth.nix {inherit inputs;};
+    lol-plymouth = final.callPackage ../pkgs/lol-plymouth.nix {inherit inputs;};
     # @Reference: Overriding rust stuff via cargoDeps
     # Seems like original author has passed away, RIP @jD91mZM2
     xidlehook = prev.xidlehook.overrideAttrs (out: rec {

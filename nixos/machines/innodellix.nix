@@ -39,8 +39,8 @@ in {
     };
     plymouth = {
       enable = true;
-      theme = "nixos-blur";
-      themePackages = [pkgs.nixos-plymouth];
+      theme = "lol";
+      themePackages = [pkgs.lol-plymouth];
     };
     initrd = {
       systemd.enable = true;
