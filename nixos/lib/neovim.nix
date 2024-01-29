@@ -16,21 +16,43 @@
       '';
       packages.myVimPackages = with pkgs.vimPlugins; {
         start = [
-          lualine-nvim # Statusline
           coc-lua
           coc-nvim
           coc-pyright
           colorizer # Colorize hex codes
-          context-vim # Keep the context on top
           conform-nvim # Autoformat for various languages
-          pkgs.copilot # well, shit works
+          context-vim # Keep the context on top
+          gitlinker-nvim
           indent-blankline-nvim-lua # Visible indent lines
-          pkgs.leap # Better movement with s
-          pkgs.trailblazer # Better mark jumps Ctrl-S and Shift-Up/Down
+          indent-o-matic
           limelight-vim # Focus helper
+          lualine-nvim # Statusline
           pkgs.commentnvim
+          pkgs.copilot # well, shit works
+          pkgs.leap # Better movement with s
           pkgs.nvim-transparent
+          pkgs.telescope-file-browser
+          pkgs.trailblazer # Better mark jumps Ctrl-S and Shift-Up/Down
+          pkgs.undowarn # warn for over-undo
+          pkgs.vim-colorschemes-forked
+          pkgs.vim-puppet-4tabs
+          pkgs.vim-yadi
+          pkgs.yanky
           splitjoin-vim # Better split/join with gS/gJ
+          tagbar # sidebar
+          telescope-nvim
+          telescope-zoxide
+          terminus # terminal integration
+          vim-easytags
+          vim-fugitive # git helper
+          vim-gutentags
+          vim-illuminate # highlight word under cursor everywhere
+          vim-markdown
+          vim-nix
+          vim-oscyank
+          vim-trailing-whitespace
+          vim-yaml
+          vimwiki
           # Needed for commentnvim
           (nvim-treesitter.withPlugins (p: [
             p.bash
@@ -46,28 +68,6 @@
             p.vim
             p.yaml
           ]))
-          tagbar # sidebar
-          telescope-nvim
-          pkgs.telescope-file-browser
-          telescope-zoxide
-          terminus # terminal integration
-          pkgs.undowarn # warn for over-undo
-          pkgs.vim-colorschemes-forked
-          vim-easytags
-          vim-fugitive # git helper
-          vim-gh-line
-          vim-gutentags
-          vim-illuminate # highlight word under cursor everywhere
-          vim-markdown
-          vim-nix
-          vim-oscyank
-          indent-o-matic
-          pkgs.vim-puppet-4tabs
-          vim-trailing-whitespace
-          pkgs.vim-yadi
-          vim-yaml
-          vimwiki
-          pkgs.yanky
         ];
       };
     };
