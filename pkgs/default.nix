@@ -5,4 +5,9 @@
   lineicons = pkgs.callPackage ./lineicons.nix {};
   adminapi = pkgs.python3Packages.callPackage ./adminapi.nix {};
   tapop100 = pkgs.python3Packages.callPackage ./tapop100.nix {};
+  kufur-generator = pkgs.python3Packages.callPackage ./kufur-generator.nix {};
+  comar-generator = pkgs.python3Packages.callPackage ./comar-generator.nix {};
+  anayasaya-noldu = pkgs.python3Packages.callPackage ./anayasaya-noldu.nix {};
+  hugo-83 = pkgs.python3Packages.callPackage ./hugo-83.nix {};
+  hugo-56 = pkgs.python3Packages.callPackage ./hugo-56.nix {};
 }

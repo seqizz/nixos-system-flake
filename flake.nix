@@ -45,6 +45,21 @@
       flake = false;
     };
 
+    kufur-generator-src = {
+      url = "git+https://git.gurkan.in/gurkan/kufur-generator.git";
+      flake = false;
+    };
+
+    comar-generator-src = {
+      url = "git+https://git.gurkan.in/gurkan/comar-generator.git";
+      flake = false;
+    };
+
+    anayasaya-noldu-src = {
+      url = "git+https://git.gurkan.in/gurkan/anayasaya-noldu.git";
+      flake = false;
+    };
+
     lol-plymouth-src = {
       url = "git+https://git.gurkan.in/gurkan/lol-plymouth.git";
       flake = false;

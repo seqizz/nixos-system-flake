@@ -1,13 +1,13 @@
-{
-  lib,
-  inputs,
-  python3Packages,
+{ lib
+, inputs
+, python3Packages
 }:
 python3Packages.buildPythonPackage rec {
-  pname = "kufur-generator";
+
+  pname = "anayasaya-noldu";
   version = "master";
 
-  src = inputs.kufur-generator-src;
+  src = inputs.anayasaya-noldu-src;
 
   propagatedBuildInputs = with python3Packages; [
     python-telegram-bot
@@ -17,10 +17,10 @@ python3Packages.buildPythonPackage rec {
   doCheck = false;
 
   meta = with lib; {
-    description = "Awesome swears";
-    homepage = https://github.com/seqizz/kufur-generator;
+    description = "Biktiran sikko bahaneler";
+    homepage = https://github.com/seqizz/anayasaya-noldu;
     license = licenses.mit;
-    maintainers = ["seqizz"];
+    maintainers = [ "seqizz" ] ;
     platforms = platforms.linux;
   };
 }

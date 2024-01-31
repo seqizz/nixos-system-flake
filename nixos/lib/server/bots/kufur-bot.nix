@@ -1,6 +1,6 @@
 { config, pkgs, ...}:
 let
-  kufur-generator = pkgs.python3Packages.callPackage ../../packages/kufur-generator.nix {};
+  # kufur-generator = pkgs.python3Packages.callPackage ../../packages/kufur-generator.nix {};
   secrets = import ../../secrets.nix;
 in
 {
