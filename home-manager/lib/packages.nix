@@ -63,7 +63,7 @@ in
     # non-stable stuff, subject to change
     steam
     pkgs.unstable.tdesktop # telegram
-    pkgs.unstable.firefox # fucker crashing on me with 114.0.2
+    firefox # was unstable, broke webgl
     # pkgs.unstable.wezterm
     inputs.wezterm.packages.x86_64-linux.default
 
