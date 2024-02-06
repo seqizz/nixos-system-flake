@@ -5,6 +5,7 @@
     ../common.nix
 
     ./bind.nix
+    ./bots/anayasa-bot.nix
     ./bots/comar-bot.nix
     ./bots/kufur-bot.nix
     ./bots/timezone-bot.nix

@@ -16,7 +16,7 @@ in
           setuptools
         ]);
       in
-        "${python-with-telegram.interpreter} ${anayasaya-noldu.outPath}/lib/${pkgs.python3.libPrefix}/site-packages/anayasaya-noldu/telegram-anayasa.py";
+        "${python-with-telegram.interpreter} /shared/scripts/anayasaya-noldu/anayasaya-noldu/telegram-anayasabot.py";
       Restart = "always";
       RestartSec = 30;
       StandardOutput = "syslog";

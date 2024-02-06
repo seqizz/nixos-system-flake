@@ -1,6 +1,5 @@
 { config, pkgs, ...}:
 let
-  # comar-generator = pkgs.python3Packages.callPackage ../../packages/comar-generator.nix {};
   secrets = import ../../secrets.nix;
 in
 {
@@ -17,7 +16,7 @@ in
           setuptools
         ]);
       in
-        "${python-with-telegram.interpreter} ${comar-generator.outPath}/lib/${pkgs.python3.libPrefix}/site-packages/comar-generator/telegram-comarbot.py";
+        "${python-with-telegram.interpreter} /shared/scripts/comar-generator/comar-generator/telegram-comarbot.py";
       Restart = "always";
       RestartSec = 30;
       StandardOutput = "syslog";
