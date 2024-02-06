@@ -1,5 +1,8 @@
+# Check if SSH_AUTH_SOCK is set
+if [[ -z $SSH_AUTH_SOCK ]]; then
+  echo "SSH_AUTH_SOCK is not set?"
+elif ! [[ `ssh-add -L | grep nist` ]] && [[ `lsusb | grep "0406 Yubico"` ]]; then
 # Add yubikey to ssh
-if ! [[ `ssh-add -L | grep nist` ]] && [[ `lsusb | grep "0406 Yubico"` ]]; then
   if [[ ! -z `pgrep ssh-add` ]]; then
     echo "(An instance of ssh-add is waiting)"
   else
