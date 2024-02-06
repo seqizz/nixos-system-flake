@@ -1,10 +1,6 @@
 { config, pkgs, lib, ...}:
 let
   secrets = import ../secrets.nix;
-  baseconfig = { allowUnfree = true; };
-  unstable = import (
-    fetchTarball https://github.com/NixOS/nixpkgs/archive/nixos-unstable.tar.gz
-  ) { config = baseconfig; };
 in
 {
   users.users.rustypaste = {
@@ -25,7 +21,7 @@ in
     };
     serviceConfig = {
       User = "rustypaste";
-      ExecStart = "${unstable.rustypaste}/bin/rustypaste";
+      ExecStart = "${pkgs.unstable.rustypaste}/bin/rustypaste";
       Restart = "always";
       RestartSec = 30;
       StandardOutput = "syslog";

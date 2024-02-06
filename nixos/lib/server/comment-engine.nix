@@ -3,12 +3,6 @@ let
   secrets = import ../secrets.nix;
 in
 {
-  # We need the package
-  nixpkgs.config = {
-    packageOverrides = pkgs: rec {
-      remark42 = pkgs.callPackage ../../modules/packages/remark42.nix {};
-    };
-  };
   environment.systemPackages = with pkgs; [
     remark42
   ];

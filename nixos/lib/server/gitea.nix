@@ -1,14 +1,8 @@
-{ lib, config, ... }:
-let
-  baseconfig = { allowUnfree = true; };
-  unstable = import (
-  fetchTarball https://github.com/NixOS/nixpkgs/archive/nixos-unstable.tar.gz
-  ) { config = baseconfig; };
-in
+{ lib, config, pkgs, ... }:
 {
   services.gitea = {
     enable = true;
-    package = unstable.gitea;
+    package = pkgs.unstable.gitea;
     appName = "My git forks";
     extraConfig = ''
       [DEFAULT]
