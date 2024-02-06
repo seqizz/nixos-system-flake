@@ -6,7 +6,7 @@
     # Using this "path:///" nonsense to automate the update because I am NOT including my secret files in the git repo, even encrypted: https://github.com/NixOS/nix/issues/7107#issuecomment-1366095373
     # Waiting for https://github.com/NixOS/nix/pull/9352
     update-flake-inputs = "nix flake update path:///home/gurkan/syncfolder/dotfiles/nixos-system-flake";
-    homeup-noupdate = "nix-env -u && home-manager switch --flake path:///home/gurkan/syncfolder/dotfiles/nixos-system-flake#gurkan@innodellix --option eval-cache false";
+    homeup-noupdate = "home-manager switch --flake path:///home/gurkan/syncfolder/dotfiles/nixos-system-flake#gurkan@innodellix --option eval-cache false";
     sysup-noupdate = "sudo nixos-rebuild switch --flake path:///home/gurkan/syncfolder/dotfiles/nixos-system-flake#innodellix --verbose --upgrade --option eval-cache false";
     sysup = "update-flake-inputs && sysup-noupdate && if [[ $(whoami) == 'gurkan' ]]; then echo; echo \"Switching home-manager after waiting 15 sec...\"; sleep 15; homeup-noupdate; fi";
     homeup = "update-flake-inputs && homeup-noupdate";
