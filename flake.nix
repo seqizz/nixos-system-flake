@@ -20,11 +20,10 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    wezterm = {
-      # url = "github:wez/wezterm?dir=nix";
-      url = "github:davidsierradz/wezterm/add-additional-outputs-to-nix-flake?dir=nix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    # wezterm = {
+    #   url = "github:wez/wezterm?dir=nix";
+    #   inputs.nixpkgs.follows = "nixpkgs";
+    # };
 
     picom-src = {
       url = "github:yshui/picom";
