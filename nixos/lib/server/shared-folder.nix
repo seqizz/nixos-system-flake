@@ -32,9 +32,27 @@
     "remark-gurkanin".unitConfig.RequiresMountsFor = "/shared";
     "remark-siktirin".unitConfig.RequiresMountsFor = "/shared";
     "nginx".unitConfig.RequiresMountsFor = "/shared";
-    "acme-gurkan.in".unitConfig.RequiresMountsFor = "/shared";
-    "acme-mail.gurkan.in".unitConfig.RequiresMountsFor = "/shared";
-    "acme-siktir.in".unitConfig.RequiresMountsFor = "/shared";
+    "acme-gurkan.in" = {
+      unitConfig.RequiresMountsFor = "/shared";
+      after = [
+        "systemd-tmpfiles-setup.service"
+        "my-encrypted-folder.service"
+      ];
+    };
+    "acme-mail.gurkan.in" = {
+      unitConfig.RequiresMountsFor = "/shared";
+      after = [
+        "systemd-tmpfiles-setup.service"
+        "my-encrypted-folder.service"
+      ];
+    };
+    "acme-siktir.in" = {
+      unitConfig.RequiresMountsFor = "/shared";
+      after = [
+        "systemd-tmpfiles-setup.service"
+        "my-encrypted-folder.service"
+      ];
+    };
   };
 
   fileSystems."/shared" = {
