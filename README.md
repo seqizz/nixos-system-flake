@@ -1,10 +1,5 @@
-### My system flake for Nixos + Home manager
+### My system flake for Nixos + Home manager ❄️
 
-I am able to switch at last. There are some gimmicks left, but now it's at least better than the classical way.
+I am able to switch to flakes at last. There are some gimmicks left here and there, but now it's at least tidier than the classical way.
 
-#### TODO
-
-- [x] Move all inputs to `flake.nix`, no more sha256's in random places
-- [ ] Experiment with the nixos module of Home Manager (2-in-1 maybe?)
-- [?] Switch `rocksteady` to flake also
-    - [ ] Fix the relative paths in configs
+Only annoyance is that I can't use any file which is not staged in git. So as a hack I'm using `path:///` nonsense (see [aliases.nix](./nixos/lib/aliases.nix)).
