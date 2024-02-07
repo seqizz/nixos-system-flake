@@ -23,6 +23,7 @@
           conform-nvim # Autoformat for various languages
           context-vim # Keep the context on top
           gitlinker-nvim
+          gitsigns-nvim # Show git changes in the gutter
           indent-blankline-nvim-lua # Visible indent lines
           indent-o-matic
           limelight-vim # Focus helper
@@ -42,6 +43,10 @@
           tagbar # sidebar
           telescope-nvim
           telescope-zoxide
+          pkgs.neovim-project
+          plenary-nvim # Needed by session-manager
+          pkgs.neovim-session-manager # Needed by neovim-project
+          neo-tree-nvim
           terminus # terminal integration
           vim-easytags
           vim-fugitive # git helper
