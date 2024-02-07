@@ -43,7 +43,6 @@ in {
         ]
         ++ old.buildInputs;
     });
-    browserpass = final.oldversion.browserpass;
 
     awesome = prev.awesome.overrideAttrs (old: rec {
       pname = "myAwesome";
