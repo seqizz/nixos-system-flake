@@ -1,20 +1,16 @@
 [delta "mytheme"]
-  features = line-numbers decorations
+  features = decorations
   whitespace-error-style = 22 reverse
-  line-numbers-zero-style = "#FFFFFF"
 
   zero-style                    = dim slategray
   minus-style                   = firebrick
   minus-non-emph-style          = firebrick
   minus-emph-style              = bold crimson
   minus-empty-line-marker-style = syntax "#37222c"
-  line-numbers-minus-style      = dim firebrick
   plus-style                    = yellowgreen
   plus-non-emph-style           = yellowgreen
   plus-emph-style               = bold lime
   plus-empty-line-marker-style  = syntax "#20303b"
-  line-numbers-plus-style       = dim yellowgreen
-  line-numbers-zero-style       = "#3b4261"
   hunk-header-style = file line-number syntax bold
   file-style = omit
   blame-format = "{author:>18} ({commit:>8}) {timestamp:<13} "
