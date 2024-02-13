@@ -67,10 +67,6 @@
       url = "github:timakro/vim-yadi";
       flake = false;
     };
-    nvim-transparent-src = {
-      url = "github:xiyaowong/nvim-transparent";
-      flake = false;
-    };
     yanky-src = {
       url = "github:gbprod/yanky.nvim";
       flake = false;

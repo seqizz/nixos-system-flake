@@ -31,7 +31,6 @@
           pkgs.commentnvim
           pkgs.copilot # well, shit works
           pkgs.leap # Better movement with s
-          pkgs.nvim-transparent
           pkgs.telescope-file-browser
           pkgs.trailblazer # Better mark jumps Ctrl-S and Shift-Up/Down
           pkgs.undowarn # warn for over-undo

@@ -65,7 +65,6 @@ in {
       };
     vim-puppet-4tabs = plugin "vim-puppet-4tabs" inputs.vim-puppet-4tabs-src;
     vim-yadi = plugin "vim-yadi" inputs.vim-yadi-src;
-    nvim-transparent = plugin "nvim-transparent" inputs.nvim-transparent-src;
     yanky = plugin "yanky" inputs.yanky-src;
     leap = plugin "leap" inputs.leap-src;
     trailblazer = plugin "trailblazer" inputs.trailblazer-src;
