@@ -16,6 +16,7 @@
       '';
       packages.myVimPackages = with pkgs.vimPlugins; {
         start = [
+          catppuccin-nvim
           coc-lua
           coc-nvim
           coc-pyright
