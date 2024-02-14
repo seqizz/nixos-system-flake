@@ -47,7 +47,6 @@
           plenary-nvim # Needed by session-manager
           pkgs.neovim-session-manager # Needed by neovim-project
           terminus # terminal integration
-          vim-easytags
           vim-fugitive # git helper
           vim-gutentags
           vim-illuminate # highlight word under cursor everywhere
