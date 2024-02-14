@@ -16,7 +16,10 @@
   nixpkgs.hostPlatform = "x86_64-linux";
 
   boot = {
-    loader.grub.device = "/dev/vda";
+    loader.grub = {
+      device = "/dev/vda";
+      configurationLimit = 10;
+    };
     kernelModules = ["tcp_bbr"];
     kernel.sysctl = {
       "net.ipv4.tcp_congestion_control" = "bbr";
