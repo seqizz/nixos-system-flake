@@ -88,6 +88,7 @@ in
     ffmpegthumbs
     flameshot
     geany
+    ghorg  # Clone whole organizations from git remotes
     git-filter-repo # Amazing tool to rewrite history 😈
     gitstatus
     glxinfo
