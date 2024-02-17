@@ -17,13 +17,15 @@ in
     environment = {
       SECRET = secrets.remarkSecret;
       REMARK_URL = "https://siktir.in/comments";
-      AUTH_ANON = "true";
+      # AUTH_ANON = "true"; # well done spammer mfers
       STORE_BOLT_PATH = "/shared/comment-engine/dbs";
       REMARK_PORT = "4381";
       SITE = "siktir.in";
       AUTH_GITHUB_CID = secrets.remarkGithubCidSiktirin;
       AUTH_GITHUB_CSEC = secrets.remarkGithubCsecSiktirin;
       ADMIN_SHARED_ID = secrets.remarkAdminSharedID;
+      TELEGRAM_TOKEN = secrets.remarkTelegramAuthToken; # Just for user auth
+      AUTH_TELEGRAM = "true";
       NOTIFY_TYPE = "telegram";
       NOTIFY_TELEGRAM_TOKEN = secrets.remarkTelegramToken;
       NOTIFY_TELEGRAM_CHAN = secrets.remarkTelegramChannel;
@@ -45,7 +47,7 @@ in
     environment = {
       SECRET = secrets.remarkSecret;
       REMARK_URL = "https://gurkan.in/comments";
-      AUTH_ANON = "true";
+      # AUTH_ANON = "true"; # well done spammer mfers
       STORE_BOLT_PATH = "/shared/comment-engine/dbs";
       REMARK_PORT = "4382";
       SITE = "gurkan.in";
@@ -54,6 +56,8 @@ in
       AUTH_GOOGLE_CID = secrets.remarkGoogleCid;
       AUTH_GOOGLE_CSEC = secrets.remarkGoogleCsec;
       ADMIN_SHARED_ID = secrets.remarkAdminSharedID;
+      TELEGRAM_TOKEN = secrets.remarkTelegramAuthToken; # Just for user auth
+      AUTH_TELEGRAM = "true";
       NOTIFY_TYPE = "telegram";
       NOTIFY_TELEGRAM_TOKEN = secrets.remarkTelegramToken;
       NOTIFY_TELEGRAM_CHAN = secrets.remarkTelegramChannel;
