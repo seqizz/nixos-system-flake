@@ -95,7 +95,7 @@
       url = "github:github/copilot.vim";
       flake = false;
     };
-    neovim-session-manager-src= {
+    neovim-session-manager-src = {
       url = "github:Shatur/neovim-session-manager";
       flake = false;
     };

@@ -17,9 +17,11 @@
       [pull]
         ff = only
       [alias]
-          # foksheet: Send the last change amended to last commit quickly
-          # except on master branch
-          fs = "!CURBRANCH=$(git symbolic-ref --short HEAD) && if [ \"''${CURBRANCH}\" = \"master\" ]; then echo \"Cant do this on master, master\" && exit 1; fi  && git add -u && git commit -a --amend --no-edit && git push origin +''${CURBRANCH}"
+          # foksheet: Send the last change amended to last commit quickly, except on master branch
+          fs = "!CURBRANCH=$(git symbolic-ref --short HEAD) && if [ \"''${CURBRANCH}\" = \"master\" ]; then echo \"Cant do this on master, master\" && exit 1; fi  && git add -u && git commit -a --amend --no-edit && git push --force-with-lease origin ''${CURBRANCH}"
+
+          # fs makes it a bit carefully for remote refs, ffs doesn't care
+          ffs = "!CURBRANCH=$(git symbolic-ref --short HEAD) && if [ \"''${CURBRANCH}\" = \"master\" ]; then echo \"Cant do this on master, master\" && exit 1; fi  && git add -u && git commit -a --amend --no-edit && git push origin +''${CURBRANCH}"
 
           # Checkout the master branch, update it
           # and remove the source branch if it is already merged on upstream
@@ -48,6 +50,13 @@
 
       [safe]
           directory = /shared/syncfolder/dotfiles/nixos/etc/nixos
+
+      [diff]
+          colorMoved = default
+          colorMovedWS = allow-indentation-change
+
+      [rerere]
+          enabled = true
     '';
   };
 
@@ -55,7 +64,7 @@
   # call it with `git x`.
   environment.systemPackages = with pkgs; [
     (pkgs.writeScriptBin "git-cleanmerged" ''
-      git fetch --all && for branch in $(git branch -l | grep -v master); do git branch -d $branch ; done
+      git fetch --all && for branch in $(git branch -l | grep -v master); do git branch -d $branch ; done && git remote prune origin
     '')
     # Gitlab MR push, restrictive but works on basic level
     (pkgs.writeScriptBin "git-gmr" ''
