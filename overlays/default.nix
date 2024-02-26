@@ -18,6 +18,7 @@ in {
       ffmpeg = prev.ffmpeg_5-full;
     };
     greenclip = getSrcFromInput prev.greenclip inputs.greenclip-src;
+    sd-switch = inputs.sd-switch-src.packages.${final.system}.default;
     loose = final.callPackage ../pkgs/loose.nix {inherit inputs;};
     lol-plymouth = final.callPackage ../pkgs/lol-plymouth.nix {inherit inputs;};
     # @Reference: Overriding rust stuff via cargoDeps

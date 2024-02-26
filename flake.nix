@@ -25,6 +25,11 @@
     #   inputs.nixpkgs.follows = "nixpkgs";
     # };
 
+    sd-switch-src = {
+      #url = "git+file:///home/rycee/devel/sd-switch";
+      url = "sourcehut:~rycee/sd-switch/switch-to-zbus";
+    };
+
     picom-src = {
       url = "github:yshui/picom";
     };
