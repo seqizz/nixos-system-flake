@@ -66,7 +66,9 @@ in
     scriptPath = ".hm-xsession";
     # ${pkgs.dbus}/bin/dbus-run-session ${pkgs.awesome}/bin/awesome
     windowManager.command = ''
-    ${pkgs.dbus}/bin/dbus-run-session ${pkgs.awesome}/bin/awesome
+    ${pkgs.systemd}/bin/systemctl --user import-environment DISPLAY XAUTHORITY
+    ${pkgs.dbus}/bin/dbus-update-activation-environment --all --systemd --verbose
+    ${pkgs.awesome}/bin/awesome
     '';
     initExtra = ''
       # Trigger loose with reset switch
