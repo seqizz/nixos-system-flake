@@ -13,6 +13,7 @@ in
     configFile = {
       "tridactyl/tridactylrc".source = ./config_files/tridactyl/tridactylrc;
       "tridactyl/themes/mytheme.css".source = ./config_files/tridactyl/mytheme.css;
+
       "mimeapps.list".force = true;
 
       "Yubico/u2f_keys".text = secrets.yubicoU2FKeys;
@@ -33,6 +34,9 @@ in
       "delta-theme.gitconfig".source = ./config_files/delta-theme;
 
       "yamlfix_config.toml".source = ./config_files/yamlfix_config.toml;
+
+      "ghorg/conf.yaml".source = ./config_files/ghorg;
+      "ghorg/reclone.yaml".text = secrets.ghorgReclone;
     };
 
     # Placeholder for vim's undodir
