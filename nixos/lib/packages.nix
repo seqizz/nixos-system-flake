@@ -42,6 +42,7 @@
     shellcheck
     stylua
     taplo # toml
+    pkgs.unstable.ruff
 
     # Rest is sorted
     bandwhich
