@@ -39,6 +39,7 @@ user_pref("browser.urlbar.mdn.featureGate", false);
 user_pref("browser.urlbar.pocket.featureGate", false);
 user_pref("browser.urlbar.trending.featureGate", false);
 user_pref("browser.urlbar.weather.featureGate", false);
+user_pref("ui.systemUsesDarkTheme", 1);
 
 /* I am not in content with this, but can't find a better way ***/
 user_pref("browser.download.useDownloadDir", true);

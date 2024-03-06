@@ -68,7 +68,7 @@ in
     # inputs.wezterm.packages.x86_64-linux.default # in case I want to build latest one
 
     # NUR packages
-    config.nur.repos.wolfangaukang.vdhcoapp
+    config.nur.repos.wolfangaukang.vdhcoapp # Shit mostly doesn't work
     config.nur.repos.mic92.reveal-md
 
     # Rest is sorted
@@ -125,16 +125,13 @@ in
     opera # Good to have as alternative
     pamixer # pulseaudio mixer
     papirus-icon-theme
-    # paoutput
     pasystray
     pavucontrol
     pcmanfm-qt # A file-manager which fucking works
-    # pdftk # split-combine pdfs
     picom # X compositor which sucks, also do not use services.picom
     pkgs.unstable.pinentry-rofi
     playerctl
     poetry
-    # poppler_utils # for pdfunite
     proxychains
     rofi-pulse-select
     qpdfview

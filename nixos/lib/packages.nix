@@ -65,7 +65,6 @@
     dnsutils
     docker-compose
     dstat
-    du-dust # better du alternative
     ffmpeg
     file
     fzf
