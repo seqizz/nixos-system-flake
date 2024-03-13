@@ -71,6 +71,7 @@ in {
     trailblazer = plugin "trailblazer" inputs.trailblazer-src;
     commentnvim = plugin "commentnvim" inputs.commentnvim-src;
     telescope-file-browser = plugin "telescope-file-browser" inputs.telescope-file-browser-src;
+    coc-ruff = plugin "coc-ruff" inputs.coc-ruff-src;
     vim-colorschemes-forked = plugin "vim-colorschemes-forked" inputs.vim-colorschemes-forked-src;
     copilot = plugin "copilot" inputs.copilot-src;
     undowarn = plugin "undowarn" inputs.undowarn-src;

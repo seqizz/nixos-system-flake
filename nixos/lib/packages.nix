@@ -43,6 +43,7 @@
     stylua
     taplo # toml
     pkgs.unstable.ruff
+    pkgs.unstable.ruff-lsp
 
     # Rest is sorted
     bandwhich

@@ -84,6 +84,10 @@
       url = "github:LeonHeidelbach/trailblazer.nvim";
       flake = false;
     };
+    coc-ruff-src = {
+      url = "github:yaegassy/coc-ruff";
+      flake = false;
+    };
     commentnvim-src = {
       url = "github:numToStr/Comment.nvim";
       flake = false;

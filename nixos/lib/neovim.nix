@@ -29,6 +29,8 @@
           indent-o-matic
           limelight-vim # Focus helper
           lualine-nvim # Statusline
+          nvim-lspconfig
+          pkgs.coc-ruff
           pkgs.commentnvim
           pkgs.copilot # well, shit works
           pkgs.leap # Better movement with s
