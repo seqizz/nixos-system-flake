@@ -67,9 +67,9 @@ in
     pkgs.unstable.wezterm
     # inputs.wezterm.packages.x86_64-linux.default # in case I want to build latest one
 
-    # NUR packages
-    config.nur.repos.wolfangaukang.vdhcoapp # Shit mostly doesn't work
-    config.nur.repos.mic92.reveal-md
+    # NUR packages @Reference, mostly does not work / maintained
+    # config.nur.repos.wolfangaukang.vdhcoapp
+    # config.nur.repos.mic92.reveal-md
 
     # Rest is sorted
     adbfs-rootless
@@ -133,6 +133,7 @@ in
     playerctl
     poetry
     proxychains
+    reveal-md
     rofi-pulse-select
     qpdfview
     # qt5ct # QT5 theme selector
