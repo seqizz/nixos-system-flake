@@ -5,6 +5,7 @@ let
   }).writeSubbedBin;
 
   awk = pkgs.gawk;
+  awesome = pkgs.awesome;
   bash = pkgs.bash;
   brightnessctl = pkgs.brightnessctl;
   coreutils = pkgs.coreutils;
@@ -63,7 +64,7 @@ in
   lock-helper = (writeSubbedBin {
     name = "lock-helper";
     src = ./scripts/lock-helper;
-    inherit bash brightnessctl slock coreutils procps libnotify;
+    inherit bash brightnessctl slock coreutils procps libnotify awesome;
   });
   rofi-subsuper = (writeSubbedBin {
     name = "rofi-subsuper";
