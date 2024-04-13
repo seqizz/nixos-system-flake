@@ -11,9 +11,9 @@
   "application/x-xz-compressed-tar" = "org.kde.ark.desktop";
   "application/xhtml+xml" = "firefox.desktop";
   "application/zip" = "org.kde.ark.desktop";
-  "image/jpeg" = "lximage-qt.desktop";
-  "image/png" = "lximage-qt.desktop";
-  "image/gif" = "lximage-qt.desktop";
+  "image/jpeg" = "org.nomacs.ImageLounge.desktop";
+  "image/png" = "org.nomacs.ImageLounge.desktop";
+  "image/gif" = "org.nomacs.ImageLounge.desktop";
   "image/x-xcf" = "gimp.desktop";
   "inode/directory" = "pcmanfm.desktop";
   "application/x-directory" = "pcmanfm.desktop";

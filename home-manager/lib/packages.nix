@@ -109,7 +109,8 @@ in
     aspellDicts.en
     aspellDicts.tr
     loose # Fuck yeah
-    lxqt.lximage-qt
+    # lxqt.lximage-qt
+    nomacs
     meld # GUI diff tool
     mpv
     my_scripts.bulb-toggle
