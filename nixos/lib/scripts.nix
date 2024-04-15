@@ -8,6 +8,7 @@ let
   bash = pkgs.bash;
   brightnessctl = pkgs.brightnessctl;
   coreutils = pkgs.coreutils;
+  git = pkgs.git;
   grep = pkgs.gnugrep;
   iiosensorproxy = pkgs.iio-sensor-proxy;
   inotifytools = pkgs.inotify-tools;
@@ -23,6 +24,11 @@ in
     (writeSubbedBin {
       name = "oscyank";
       src = ./scripts/oscyank;
+    })
+    (writeSubbedBin {
+      name = "git-default-branch";
+      src = ./scripts/git-default-branch;
+      inherit git sed;
     })
   ];
 }

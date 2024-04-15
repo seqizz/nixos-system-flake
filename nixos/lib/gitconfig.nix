@@ -18,14 +18,14 @@
         ff = only
       [alias]
           # foksheet: Send the last change amended to last commit quickly, except on master branch
-          fs = "!CURBRANCH=$(git symbolic-ref --short HEAD) && if [ \"''${CURBRANCH}\" = \"master\" ]; then echo \"Cant do this on master, master\" && exit 1; fi  && git add -u && git commit -a --amend --no-edit && git push --force-with-lease origin ''${CURBRANCH}"
+          fs = "!CURBRANCH=$(git symbolic-ref --short HEAD) && if [ \"''${CURBRANCH}\" = \"$(git-default-branch)\" ]; then echo \"Cant do this on $(git-default-branch) bro\" && exit 1; fi  && git add -u && git commit -a --amend --no-edit && git push --force-with-lease origin ''${CURBRANCH}"
 
           # fs makes it a bit carefully for remote refs, ffs doesn't care
-          ffs = "!CURBRANCH=$(git symbolic-ref --short HEAD) && if [ \"''${CURBRANCH}\" = \"master\" ]; then echo \"Cant do this on master, master\" && exit 1; fi  && git add -u && git commit -a --amend --no-edit && git push origin +''${CURBRANCH}"
+          ffs = "!CURBRANCH=$(git symbolic-ref --short HEAD) && if [ \"''${CURBRANCH}\" = \"$(git-default-branch)\" ]; then echo \"Cant do this on $(git-default-branch) bro\" && exit 1; fi  && git add -u && git commit -a --amend --no-edit && git push origin +''${CURBRANCH}"
 
           # Checkout the master branch, update it
           # and remove the source branch if it is already merged on upstream
-          reclean = "!CURBRANCH=$(git symbolic-ref --short HEAD) && if [ \"''${CURBRANCH}\" = \"master\" ]; then echo \"Cant do this on master, master\" && exit 1; fi  && git checkout master && git pull && git branch -d ''${CURBRANCH}"
+          reclean = "!CURBRANCH=$(git symbolic-ref --short HEAD) && if [ \"''${CURBRANCH}\" = \"$(git-default-branch)\" ]; then echo \"Cant do this on $(git-default-branch) bro\" && exit 1; fi  && git checkout $(git-default-branch) && git pull && git branch -d ''${CURBRANCH}"
 
           # I am just lazy
           new = checkout -b
@@ -64,7 +64,7 @@
   # call it with `git x`.
   environment.systemPackages = with pkgs; [
     (pkgs.writeScriptBin "git-cleanmerged" ''
-      git fetch --all && for branch in $(git branch -l | grep -v master); do git branch -d $branch ; done && git remote prune origin
+      git fetch --all && for branch in $(git branch -l | grep -v `git-default-branch`); do git branch -d $branch ; done && git remote prune origin
     '')
     # Gitlab MR push, restrictive but works on basic level
     (pkgs.writeScriptBin "git-gmr" ''
@@ -74,7 +74,7 @@
             echo give an assignee name please
             exit 1
         fi
-        git push -o merge_request.create -o merge_request.target=master -o merge_request.remove_source_branch -o merge_request.assign="$1" origin $(git symbolic-ref --short HEAD)
+        git push -o merge_request.create -o merge_request.target=$(git-default-branch) -o merge_request.remove_source_branch -o merge_request.assign="$1" origin $(git symbolic-ref --short HEAD)
     '')
   ];
 }

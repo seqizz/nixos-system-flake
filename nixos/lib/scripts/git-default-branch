@@ -1,0 +1,18 @@
+#!/usr/bin/env sh
+if @git@/bin/git symbolic-ref refs/remotes/origin/HEAD >/dev/null 2>&1; then
+  default_branch="$(
+    @git@/bin/git symbolic-ref refs/remotes/origin/HEAD |
+      @sed@/bin/sed -e 's/refs\/remotes\/origin\///'
+  )"
+elif test -n "$(@git@/bin/git branch --list -- 'main')"; then
+  default_branch='main'
+elif test -n "$(@git@/bin/git branch --list -- 'master')"; then
+  default_branch='master'
+else
+  return 2
+fi
+
+printf '%s\n' "${default_branch}"
+unset -- default_branch
+
+{ set +o xtrace; } 2>/dev/null
