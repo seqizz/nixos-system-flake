@@ -31,7 +31,8 @@
     };
 
     picom-src = {
-      url = "github:yshui/picom/v11.2";
+      # url = "github:yshui/picom/v11.2";
+      url = "github:yshui/picom";
     };
 
     greenclip-src = {
@@ -65,7 +66,7 @@
 
     # Vim plugins
     vim-puppet-4tabs-src = {
-      url = "git+https://git.gurkan.in/gurkan/vim-puppet.git"; # plain https is not working?
+      url = "git+https://git.gurkan.in/gurkan/vim-puppet.git";
       flake = false;
     };
     vim-yadi-src = {
