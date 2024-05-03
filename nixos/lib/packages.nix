@@ -88,11 +88,11 @@
     mtr
     ncdu # fancy du
     nethogs
-    nix-diff
     nix-du
     nix-zsh-completions
     nmap
     ntfs3g
+    nvd
     openssl
     p7zip
     pciutils
@@ -116,6 +116,7 @@
     wget
     xkcdpass
     youtube-dl
+    yt-dlp
     zip
     zsh-completions
   ];
