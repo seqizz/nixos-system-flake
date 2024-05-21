@@ -69,12 +69,16 @@ in
       source = pkgs.writeText "disableDNScryptOnVPN" ''
         #!/usr/bin/env ${pkgs.bash}/bin/bash
 
-        if [[ "$2" == "vpn-up" ]] || [[ "$2" == "up" && "$1" == IG-* ]]; then
+        logger "dispatcher debug: Evaluating <$1> <$2>"
+
+        if [[ "$2" == "vpn-up" ]] || [[ "$2" == "up" && "$1" == IG-WG-* ]]; then
           logger "VPN connected, disabling dnscrypt-proxy"
-          ${pkgs.systemd}/bin/systemctl stop dnscrypt-proxy
-        elif [[ "$2" == "vpn-down" ]] || [[ "$2" == "down" && "$1" == IG-* ]]; then
+          ${pkgs.systemd}/bin/systemctl stop --no-block dnscrypt-proxy
+        elif [[ "$2" == "vpn-down" ]] || [[ "$2" == "down" && "$1" == IG-WG-* ]]; then
           logger "VPN disconnected, enabling dnscrypt-proxy"
-          ${pkgs.systemd}/bin/systemctl start dnscrypt-proxy
+          ${pkgs.systemd}/bin/systemctl start --no-block dnscrypt-proxy
+        else
+          logger "dispatcher debug: No action for <$1> <$2>"
         fi
       '';
       type = "basic";

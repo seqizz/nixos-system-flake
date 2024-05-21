@@ -12,6 +12,7 @@ in {
     (modulesPath + "/installer/scan/not-detected.nix")
     ../lib/laptop/common.nix
     ../lib/laptop/vpnconfig.nix # Only imported here
+    ../lib/laptop/wgconfig.nix # Only imported here
   ];
 
   # (needed for flakes)
