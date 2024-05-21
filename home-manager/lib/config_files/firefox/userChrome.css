@@ -24,13 +24,13 @@
   overflow-x: hidden !important;
   min-width: var(--sidebar-normal-width) !important;
   max-width: var(--sidebar-normal-width) !important;
-  -moz-transition: all .2s ease-out .2s !important;
+  -webkit-transition: all .2s ease-out .2s !important;
 }
 
 #sidebar-box:hover {
   margin-left: calc((var(--sidebar-hover-width) - var(--sidebar-normal-width)) * -1) !important;
   min-width: var(--sidebar-hover-width) !important;
-  -moz-transition: all .2s ease-out 2s !important;
+  -webkit-transition: all .2s ease-out 2s !important;
 }
 
 /* Hide sidebar splitter */
