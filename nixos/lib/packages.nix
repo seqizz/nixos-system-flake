@@ -52,6 +52,7 @@
     binutils
     cmake
     compsize # btrfs compression calculator
+    conntrack-tools
     cpulimit
     cryptsetup
     (curl.override {
@@ -114,6 +115,7 @@
     vgrep
     vimwiki-markdown
     wget
+    wireguard-tools
     xkcdpass
     youtube-dl
     yt-dlp

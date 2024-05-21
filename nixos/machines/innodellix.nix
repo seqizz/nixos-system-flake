@@ -25,6 +25,9 @@ in {
       ];
       enableStrongSwan = true;
     };
+    # wg-quick.interfaces = {
+      # inno0 = secrets.innoWGconfig;
+    # };
   };
 
   system.stateVersion = "20.09";

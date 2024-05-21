@@ -5,14 +5,17 @@
     firewall = {
 
       allowedTCPPortRanges = [
-        # kdeConnect:
+        # kdeConnect
         { from = 1714; to = 1764; }
       ];
 
       allowedUDPPortRanges = [
-        # kdeConnect:
+        # kdeConnect
         { from = 1714; to = 1764; }
       ];
+      # Wireguard needs this:
+      # https://discourse.nixos.org/t/solved-minimal-firewall-setup-for-wireguard-client/7577/2
+      checkReversePath = "loose";
     };
 
     networkmanager = {

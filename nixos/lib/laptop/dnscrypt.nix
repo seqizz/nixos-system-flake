@@ -69,11 +69,10 @@ in
       source = pkgs.writeText "disableDNScryptOnVPN" ''
         #!/usr/bin/env ${pkgs.bash}/bin/bash
 
-        if [[ "$2" == "vpn-up" ]]; then
+        if [[ "$2" == "vpn-up" ]] || [[ "$2" == "up" && "$1" == IG-* ]]; then
           logger "VPN connected, disabling dnscrypt-proxy"
           ${pkgs.systemd}/bin/systemctl stop dnscrypt-proxy
-        fi
-        if [[ "$2" == "vpn-down" ]]; then
+        elif [[ "$2" == "vpn-down" ]] || [[ "$2" == "down" && "$1" == IG-* ]]; then
           logger "VPN disconnected, enabling dnscrypt-proxy"
           ${pkgs.systemd}/bin/systemctl start dnscrypt-proxy
         fi
