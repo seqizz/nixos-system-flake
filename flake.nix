@@ -26,8 +26,7 @@
     # };
 
     sd-switch-src = {
-      #url = "git+file:///home/rycee/devel/sd-switch";
-      url = "sourcehut:~rycee/sd-switch/switch-to-zbus";
+      url = "sourcehut:~rycee/sd-switch";
     };
 
     picom-src = {
