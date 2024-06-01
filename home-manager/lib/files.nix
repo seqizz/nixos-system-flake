@@ -6,6 +6,7 @@ let
 in
 {
   xdg = {
+    # portal.enable = true; # On next release
     mimeApps = {
       enable = true;
       defaultApplications = fileAssociations;

@@ -26,14 +26,13 @@
       enable = true;
       wifi.powersave = true;
       # Randomize mac address on connections
-      extraConfig = ''
-      [device]
-      wifi.scan-rand-mac-address=yes
-
-      [connection]
-      wifi.cloned-mac-address=random
-      ethernet.cloned-mac-address=random
-      '';
+      settings = {
+        device.wifi = "scan-rand-mac-address=yes";
+        connection = {
+          wifi = "cloned-mac-address=random";
+          ethernet = "cloned-mac-address=random";
+        };
+      };
     };
 
     # @Reference

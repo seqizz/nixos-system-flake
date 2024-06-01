@@ -89,7 +89,7 @@ in {
   };
   # same for oldversion
   oldversion-packages = final: _prev: {
-    oldversion = import inputs.nixpkgs-2211 {
+    oldversion = import inputs.nixpkgs-previous {
       system = final.system;
       config.allowUnfree = true;
     };

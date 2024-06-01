@@ -26,11 +26,12 @@ python3Packages.buildPythonApplication rec {
 
   propagatedBuildInputs = with python3Packages; [
     jc
-    pyyaml
-    yamale
-    xdg-base-dirs
     pkgs.xorg.xrandr
     pyedid
+    pyyaml
+    typing-extensions
+    xdg-base-dirs
+    yamale
   ];
 
   # Sadly shtab doesn't have fish completion yet

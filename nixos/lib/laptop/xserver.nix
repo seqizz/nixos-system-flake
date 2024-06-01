@@ -17,10 +17,30 @@
   boot.blacklistedKernelModules = ["nouveau"];
 
   services = {
+    libinput = {
+      enable = true;
+      touchpad = {
+        disableWhileTyping = true;
+        naturalScrolling = true;
+      };
+    };
+    displayManager = {
+      defaultSession = "HM-awesome";
+      autoLogin = {
+        enable = true;
+        user = "gurkan";
+      };
+    };
     xserver = {
       enable = true;
-      layout = "tr";
-      xkbVariant = "";
+      displayManager.lightdm = {
+        enable = true;
+        greeter.enable = false;
+      };
+      xkb = {
+        variant = "";
+        layout = "tr";
+      };
       # exportConfiguration = true; # Needed for localectl to work properly
 
       windowManager.awesome = {
@@ -49,25 +69,6 @@
         ];
       };
 
-      displayManager = {
-        defaultSession = "HM-awesome";
-        autoLogin = {
-          enable = true;
-          user = "gurkan";
-        };
-        lightdm = {
-          enable = true;
-          greeter.enable = false;
-        };
-      };
-
-      libinput = {
-        enable = true;
-        touchpad = {
-          disableWhileTyping = true;
-          naturalScrolling = true;
-        };
-      };
       # extraLayouts.workman-p-tr = {
       #   description = "My workman turkish mod";
       #   languages = [ "eng" ];
