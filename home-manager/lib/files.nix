@@ -6,7 +6,13 @@ let
 in
 {
   xdg = {
-    # portal.enable = true; # On next release
+    portal = {
+      enable = true;
+      config.common.default = "*";
+      extraPortals = [
+        pkgs.xdg-desktop-portal-kde
+      ];
+    };
     mimeApps = {
       enable = true;
       defaultApplications = fileAssociations;
