@@ -73,6 +73,8 @@ in
     initExtra = ''
       # Trigger loose with reset switch
       ${pkgs.loose}/bin/loose rotate -r
+      # Extend default DPMS timeout, this will be overridden by lock-helper
+      xset dpms 3600 3600 3600
     '';
   };
 

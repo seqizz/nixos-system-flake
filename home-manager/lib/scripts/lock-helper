@@ -11,6 +11,12 @@ dim_screen () {
     DISPLAY=:0 @awesome@/bin/awesome-client 'flash_toggle(client.focus)'
     @brightnessctl@/bin/brightnessctl s 20
 }
+screen_off () {
+    DISPLAY=:0 @xset@/bin/xset dpms force off
+}
+screen_on () {
+    DISPLAY=:0 @xset@/bin/xset dpms force on
+}
 
 restore_brightness () {
     @brightnessctl@/bin/brightnessctl s `@coreutils@/bin/coreutils --coreutils-prog=cat /tmp/last_brightness`
@@ -28,10 +34,12 @@ if [[ "$action" == "start" ]]; then
     dim_screen
 
 elif [[ "$action" == "cancel" ]]; then
+    screen_on
     if test -f "/tmp/last_brightness"; then
         restore_brightness
     fi
 
 elif [[ "$action" == "lock" ]]; then
+    screen_off
     lock_screen
 fi
