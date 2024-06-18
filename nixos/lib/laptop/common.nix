@@ -71,7 +71,7 @@ in {
       # "options i915 enable_dc=4 enable_fbc=1 enable_guc=2 enable_psr=1 disable_power_well=1"
       "options iwlmvm power_scheme=3"
     ];
-    kernelParams = ["intel_pstate=disable"];
+    # kernelParams = ["intel_pstate=disable"];
     # I have more than enough memory here
     kernel.sysctl = {
       "vm.swappiness" = 0;
