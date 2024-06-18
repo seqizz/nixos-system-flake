@@ -27,8 +27,8 @@ let
       let wakeStr = if devCfg.wakeup then "enabled" else "disabled";
       in concatStringsSep ", " [
         ''ACTION=="add"''
-        ''ATTRS{idVendor}=="${toLower devCfg.vendor}"''
-        ''ATTRS{idProduct}=="${toLower devCfg.product}"''
+        ''ATTR{idVendor}=="${toLower devCfg.vendor}"''
+        ''ATTR{idProduct}=="${toLower devCfg.product}"''
         ''ATTR{power/wakeup}="${wakeStr}"''
       ])));
 

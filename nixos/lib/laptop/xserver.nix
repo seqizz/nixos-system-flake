@@ -38,8 +38,8 @@
         greeter.enable = false;
       };
       xkb = {
-        variant = "";
         layout = "tr";
+        variant = "";
       };
       # exportConfiguration = true; # Needed for localectl to work properly
 

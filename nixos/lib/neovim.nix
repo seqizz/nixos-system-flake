@@ -9,8 +9,8 @@
     enable = true;
     vimAlias = true;
     defaultEditor = true;
-    # package = pkgs.unstable.neovim-unwrapped;
-    package = pkgs.neovim-unwrapped;
+    package = pkgs.unstable.neovim-unwrapped;
+    # package = pkgs.neovim-unwrapped;
     configure = {
       customRC = ''
         source ~/.config/nvim/nix.vim
