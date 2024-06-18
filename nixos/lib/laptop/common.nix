@@ -10,7 +10,7 @@ in {
 
     ../common.nix
 
-    ./dnscrypt.nix
+    # ./dnscrypt.nix
     ./fonts.nix
     ./hardware.nix
     ./iphone.nix

@@ -21,8 +21,7 @@
     networkmanager = {
       # @Reference
       # appendNameservers = ["127.0.0.1"];
-      # insertNameservers = ["51.158.168.202"]; # Public Pi-hole
-      appendNameservers = ["1.1.1.1"]; # Sometimes nothing works
+      # insertNameservers = ["51.158.168.202"];
       enable = true;
       wifi.powersave = true;
       # Randomize mac address on connections
