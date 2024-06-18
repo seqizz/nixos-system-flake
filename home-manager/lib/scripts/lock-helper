@@ -16,6 +16,7 @@ screen_off () {
 }
 screen_on () {
     DISPLAY=:0 @xset@/bin/xset dpms force on
+    DISPLAY=:0 @xset@/bin/xset -dpms
 }
 
 restore_brightness () {
