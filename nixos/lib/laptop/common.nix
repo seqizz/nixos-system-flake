@@ -7,7 +7,6 @@
   secrets = import ../secrets.nix;
 in {
   imports = [
-
     ../common.nix
 
     # ./dnscrypt.nix
@@ -47,6 +46,7 @@ in {
           "audio"
           "disk"
           "docker"
+          "incus-admin"
           "input"
           "libvirtd"
           "networkmanager"
@@ -78,11 +78,62 @@ in {
     };
   };
 
-  # Libvirt stuff
-  virtualisation.libvirtd = {
-    enable = true;
-    onBoot = "ignore";
+  virtualisation = {
+    libvirtd = {
+      enable = true;
+      onBoot = "ignore";
+    };
+    incus = {
+      enable = true;
+      ui.enable = true;
+      preseed = {
+        networks = [
+          {
+            description = "My Incus network";
+            config = {
+              "ipv4.address" = "10.0.100.1/24";
+              "ipv4.nat" = "true";
+            };
+            name = "incusbr0";
+            type = "bridge";
+          }
+        ];
+        profiles = [
+          {
+            description = "My Incus profile";
+            devices = {
+              eth0 = {
+                "name" = "eth0";
+                "nictype" = "bridged";
+                "parent" = "incusbr0";
+                "type" = "nic";
+              };
+              root = {
+                "path" = "/";
+                "pool" = "default";
+                "type" = "disk";
+              };
+            };
+            name = "default";
+          }
+        ];
+        storage_pools = [
+          {
+            config = {
+              size = "16GiB";
+              source = "/var/lib/incus/disks/default.img";
+            };
+            description = "My Incus storage";
+            name = "default";
+            driver = "btrfs";
+          }
+        ];
+      };
+    };
   };
+  # Needed for incus
+  networking.nftables.enable = true;
+  networking.firewall.trustedInterfaces = ["incusbr*"];
   programs.dconf.enable = true;
   environment.systemPackages = with pkgs; [virt-manager];
   systemd.services.libvirtd.restartIfChanged = false;
