@@ -14,6 +14,9 @@ in
   };
 
   services.openssh = {
+    # Mitigation until https://github.com/NixOS/nixpkgs/pull/323753 reaches stable channel
+    # NixOS needs to speed up this flow..
+    settings.LoginGraceTime = 0;
     enable = true;
     banner = ''
     ,-.,-.,-.,-.
