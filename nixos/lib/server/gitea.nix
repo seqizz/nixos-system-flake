@@ -4,10 +4,6 @@
     enable = true;
     package = pkgs.unstable.gitea;
     appName = "My git forks";
-    extraConfig = ''
-      [DEFAULT]
-      WORK_PATH=/var/lib/gitea
-    '';
     settings = {
       service.DISABLE_REGISTRATION = true;
       log.LEVEL= "Warn";
@@ -23,7 +19,7 @@
       };
       ui = {
         SHOW_USER_EMAIL = false;
-        DEFAULT_THEME = "arc-green";
+        DEFAULT_THEME = "gitea-dark";
       };
       "ui.meta" = {
           DESCRIPTION = "This is where I fork my stuff";
