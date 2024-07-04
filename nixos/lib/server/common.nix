@@ -11,6 +11,7 @@
     ./bots/timezone-bot.nix
     ./comment-engine.nix
     ./gitea.nix
+    ./gotosocial.nix
     ./logrotate.nix
     ./mailserver.nix
     ./rustypaste.nix
