@@ -75,8 +75,6 @@ in {
     vim-colorschemes-forked = plugin "vim-colorschemes-forked" inputs.vim-colorschemes-forked-src;
     copilot = plugin "copilot" inputs.copilot-src;
     undowarn = plugin "undowarn" inputs.undowarn-src;
-    neovim-project = plugin "neovim-project" inputs.neovim-project-src;
-    neovim-session-manager = plugin "neovim-session-manager" inputs.neovim-session-manager-src;
   };
 
   # When applied, the unstable nixpkgs set (declared in the flake inputs) will

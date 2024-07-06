@@ -46,9 +46,7 @@
           tagbar # sidebar
           telescope-nvim
           telescope-zoxide
-          pkgs.neovim-project
           plenary-nvim # Needed by session-manager
-          pkgs.neovim-session-manager # Needed by neovim-project
           terminus # terminal integration
           vim-fugitive # git helper
           vim-gutentags

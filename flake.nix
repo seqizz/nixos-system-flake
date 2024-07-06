@@ -104,14 +104,6 @@
       url = "github:github/copilot.vim";
       flake = false;
     };
-    neovim-session-manager-src = {
-      url = "github:Shatur/neovim-session-manager";
-      flake = false;
-    };
-    neovim-project-src = {
-      url = "github:coffebar/neovim-project";
-      flake = false;
-    };
     undowarn-src = {
       url = "github:arp242/undofile_warn.vim";
       flake = false;
