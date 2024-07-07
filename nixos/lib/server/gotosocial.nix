@@ -13,7 +13,7 @@ in {
       db-address = "/var/lib/gotosocial/database.sqlite";
       db-type = "sqlite";
       port = 6090;
-      accounts-registration-open = true;
+      accounts-registration-open = false;
       instance-expose-public-timeline = true;
       protocol = "https";
       host = "has.siktir.in";
@@ -23,6 +23,8 @@ in {
       smtp-from = secrets.socialMailAddress;
       smtp-password = secrets.socialMailPassword;
       storage-local-base-path = "/var/lib/gotosocial/storage";
+      accounts-allow-custom-css = true;
+      landing-page-user = "gurkan";
     };
   };
 }
