@@ -12,6 +12,7 @@
   dnsAddress,
   dnsSearchAddress,
   mtu ? "1280",
+  fwmark ? "66",
   routeTable ? "42",
 }: let
   # Get a uniq id for each given network, needed by networkmanager
@@ -32,7 +33,7 @@ in {
     timestamp=1601638109
 
     [wireguard]
-    fwmark=${routeTable}
+    fwmark=${fwmark}
     mtu=${mtu}
     private-key=${privateKey}
 
