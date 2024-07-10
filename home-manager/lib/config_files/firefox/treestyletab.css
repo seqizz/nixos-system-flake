@@ -66,7 +66,21 @@ tab-item.active .label-content {
   color: #d79921 !important;
 }
 
+/* Reference: BLUR
+tab-item:not(.active):not(.faviconized) {
+  filter: blur(0.7px) grayscale(0.36);
+}
+*/
+
 /* Sprinkle some color */
 tab-item.active tab-item-substance .background {
   background: #282828 !important;
 }
+
+tab-item:is(.faviconized) {
+  min-height: 40px;
+  min-width: 40px;
+  padding: calc((var(--tab-current-size) - var(--favicon-size)) / 2);
+  transform: scale(120%);
+}
+
