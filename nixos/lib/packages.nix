@@ -118,7 +118,6 @@
     wget
     wireguard-tools
     xkcdpass
-    youtube-dl
     yt-dlp
     zip
     zsh-completions
