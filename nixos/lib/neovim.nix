@@ -60,13 +60,19 @@
           # Needed for commentnvim
           (nvim-treesitter.withPlugins (p: [
             p.bash
+            p.css
+            p.diff
             p.dockerfile
+            p.ini
+            p.gitcommit
             p.go
             p.json
             p.lua
             p.markdown
             p.nix
+            p.puppet
             p.python
+            p.ruby
             p.sql
             p.toml
             p.vim
