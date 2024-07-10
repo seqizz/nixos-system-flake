@@ -144,6 +144,7 @@
         specialArgs = {inherit inputs outputs;};
         modules = [
           nur.nixosModules.nur
+          nix-index-database.nixosModules.nix-index
           ./nixos/configuration.nix
           ./nixos/machines/innodellix.nix
         ];
@@ -152,6 +153,7 @@
         specialArgs = {inherit inputs outputs;};
         modules = [
           simple-nixos-mailserver.nixosModules.mailserver
+          nix-index-database.nixosModules.nix-index
           ./nixos/configuration.nix
           ./nixos/machines/rocksteady.nix
         ];
@@ -163,7 +165,6 @@
         pkgs = nixpkgs.legacyPackages.x86_64-linux; # Home-manager requires 'pkgs' instance
         extraSpecialArgs = {inherit inputs outputs;};
         modules = [
-          nix-index-database.hmModules.nix-index
           nur.hmModules.nur
           ./home-manager/home.nix
           ./home-manager/lib/packages/workPackages.nix
