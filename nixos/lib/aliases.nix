@@ -16,6 +16,5 @@ in
     homeup = "update-flake-inputs && homeup-noupdate";
     sysclean = "if [[ $(whoami) == 'gurkan' ]]; then echo; echo \"Clearing home-manager...\"; home-manager expire-generations \"-10 days\"; fi; sudo nix profile wipe-history --profile /nix/var/nix/profiles/system --older-than 14d && sudo nix-collect-garbage -d; sudo nix-store --optimize";
     syslist = "echo 'System:' ; sudo nix-env -p /nix/var/nix/profiles/system --list-generations; if [[ $(whoami) == 'gurkan' ]]; then echo; echo 'Home-manager:'; home-manager generations; fi";
-    pkglist = "for pack in `nixos-option environment.systemPackages | head -2 | tail -1 | tr -d \"[],\"`; do echo $pack ; done";
   };
 }
