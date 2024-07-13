@@ -10,7 +10,7 @@ in {
     settings = {
       application-name = "dumpster fire";
       bind-address = "127.0.0.1";
-      db-address = "/var/lib/gotosocial/database.sqlite";
+      db-address = "/shared/gotosocial/database.sqlite";
       db-type = "sqlite";
       port = 6090;
       accounts-registration-open = false;
@@ -22,10 +22,10 @@ in {
       smtp-username = secrets.socialMailAddress;
       smtp-from = secrets.socialMailAddress;
       smtp-password = secrets.socialMailPassword;
-      storage-local-base-path = "/var/lib/gotosocial/storage";
+      storage-local-base-path = "/shared/gotosocial/storage";
       accounts-allow-custom-css = true;
       landing-page-user = "gurkan";
-      media-emoji-local-max-size = "100KiB";
+      media-emoji-local-max-size = "120KiB";
     };
   };
 }
