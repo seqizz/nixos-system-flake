@@ -61,9 +61,6 @@
         # ''SUBSYSTEM=="power_supply", ATTR{online}=="0", RUN+="${power_adjust}/bin/power_adjust disconnected"''
         # ''SUBSYSTEM=="power_supply", ATTR{online}=="1", RUN+="${power_adjust}/bin/power_adjust connected"''
       ];
-      packages = with pkgs; [
-        qmk-udev-rules
-      ];
     };
 
     tlp = {

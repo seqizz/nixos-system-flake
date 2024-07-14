@@ -13,7 +13,7 @@
     bluetooth.enable = true;
     v4l2loopback.enable = false; # FIXME: Broken on latest for now
     logitech.wireless.enable = true;
-    keyboard.zsa.enable = true;
+    keyboard.qmk.enable = true;
     enableRedistributableFirmware = true;
 
     firmware = [pkgs.firmwareLinuxNonfree];
