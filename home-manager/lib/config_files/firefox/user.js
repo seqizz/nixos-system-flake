@@ -12,6 +12,7 @@ user_pref("extensions.pocket.enabled", false);
 user_pref("privacy.trackingprotection.fingerprinting.enabled", true);
 user_pref("privacy.trackingprotection.cryptomining.enabled", true);
 user_pref("privacy.trackingprotection.socialtracking.enabled", true);
+user_pref("dom.private-attribution.submission.enabled", false);
 
 /* Cache less ***/
 user_pref("browser.cache.disk.capacity", 100000);
@@ -40,6 +41,7 @@ user_pref("browser.urlbar.pocket.featureGate", false);
 user_pref("browser.urlbar.trending.featureGate", false);
 user_pref("browser.urlbar.weather.featureGate", false);
 user_pref("ui.systemUsesDarkTheme", 1);
+user_pref("devtools.accessibility.enabled", false);
 
 /* I am not in content with this, but can't find a better way ***/
 user_pref("browser.download.useDownloadDir", true);
