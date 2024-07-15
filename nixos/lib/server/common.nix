@@ -19,6 +19,7 @@
     ./shared-folder.nix
     ./ssh.nix
     ./websites.nix  # Just excluded from git, since it's so shit
+    ./yarr.nix
   ];
 
   environment.systemPackages = with pkgs; [

@@ -152,6 +152,7 @@
       rocksteady = nixpkgs.lib.nixosSystem {
         specialArgs = {inherit inputs outputs;};
         modules = [
+          self.nixosModules.yarr
           simple-nixos-mailserver.nixosModules.mailserver
           nix-index-database.nixosModules.nix-index
           ./nixos/configuration.nix
