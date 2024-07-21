@@ -5,7 +5,6 @@
 }:
 with pkgs; let
   cfg = config.services.yarr;
-  yarr = callPackage ../../pkgs/yarr.nix { };
 in
 {
   options = with lib; {
@@ -68,7 +67,7 @@ in
 
       package = mkOption {
         type = types.package;
-        default = yarr;
+        default = pkgs.yarr;
         defaultText = literalExpression "pkgs.yarr";
         description = "The package to use for yarr";
       };
