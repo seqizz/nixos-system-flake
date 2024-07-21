@@ -1,0 +1,86 @@
+on_screen_count:
+  1:
+    - _1:
+        resolution: 1920x1200
+        frequency: 60
+        primary: true
+      hooks:
+        pre:
+          - awesome-client 'awesome.emit_signal("save-tags")'
+        post:
+          - 'echo "Xft.dpi: 118" | xrdb -merge'
+          - pkill -HUP awesome
+  2:
+    - _1: # DE
+        resolution: 3440x1440
+        frequency: 100
+        primary: true
+      hooks:
+        pre:
+          - awesome-client 'awesome.emit_signal("save-tags")'
+        post:
+          - 'echo "Xft.dpi: 112" | xrdb -merge'
+          - pkill -HUP awesome
+    # Any other big-ass monitor
+    - _2:
+        resolution: 3440x1440
+        primary: true
+      hooks:
+        pre:
+          - awesome-client 'awesome.emit_signal("save-tags")'
+        post:
+          - 'echo "Xft.dpi: 118" | xrdb -merge'
+          - pkill -HUP awesome
+    - _3: # TR
+        resolution: 3840x2160
+        primary: true
+      hooks:
+        pre:
+          - awesome-client 'awesome.emit_signal("save-tags")'
+        post:
+          - 'echo "Xft.dpi: 140" | xrdb -merge'
+          - pkill -HUP awesome
+    # Keep laptop monitor
+    - eDP-1:
+        primary: true
+        resolution: 1920x1200
+        frequency: 60
+      hooks:
+        pre:
+          - awesome-client 'awesome.emit_signal("save-tags")'
+        post:
+          - 'echo "Xft.dpi: 118" | xrdb -merge'
+          - pkill -HUP awesome
+
+  3:
+    # Work?
+    - _1:
+        primary: true
+      _2:
+        left-of: _1
+      eDP-1:
+        disabled: true
+      hooks:
+        pre:
+          - awesome-client 'awesome.emit_signal("save-tags")'
+        post:
+          - 'echo "Xft.dpi: 112" | xrdb -merge'
+          - pkill -HUP awesome
+    - _1:
+        left-of: _2
+      _2:
+        primary: true
+      eDP-1:
+        disabled: true
+      hooks:
+        pre:
+          - awesome-client 'awesome.emit_signal("save-tags")'
+        post:
+          - 'echo "Xft.dpi: 112" | xrdb -merge'
+          - pkill -HUP awesome
+
+global_failback:
+  eDP-1:
+    resolution: 1920x1200
+    primary: true
+    frequency: 60

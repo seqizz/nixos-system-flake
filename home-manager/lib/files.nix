@@ -30,6 +30,8 @@ in
 
       "tig/config".source = ./config_files/tig;
 
+      "loose/config.yaml".source = ./config_files/loose;
+
       "picom.conf".source = ./config_files/picom.conf;
 
       "pylintrc".source = ./config_files/pylintrc;
