@@ -9,5 +9,6 @@
     ./ssh.nix
     ./files.nix
     ./xserver.nix
+    ./tarsnap.nix
   ];
 }
