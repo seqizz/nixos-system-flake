@@ -78,7 +78,7 @@ in
       theme = "glue_pro_blue";
       extraConfig = {
         matching = "regex";
-        max-history-size = 200;
+        max-history-size = 500;
         kb-clear-line = "Control+a";
         kb-move-front = "" ;
         kb-cancel = "Control+c,Escape,Control+g,Control+bracketleft";
