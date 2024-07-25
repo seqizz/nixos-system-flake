@@ -50,4 +50,6 @@ in
       `='-----------'
 '';
   };
+
+  programs.mosh.enable=true;
 }

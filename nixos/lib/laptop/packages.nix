@@ -7,6 +7,7 @@
     iw
     linuxPackages.cpupower
     lm_sensors
+    mosh
     powertop
     samba
     wirelesstools
