@@ -25,7 +25,7 @@ in {
       storage-local-base-path = "/shared/gotosocial/storage";
       accounts-allow-custom-css = true;
       landing-page-user = "gurkan";
-      media-emoji-local-max-size = "120KiB";
+      media-emoji-local-max-size = "200KiB";
     };
   };
 }
