@@ -51,6 +51,7 @@
     bat
     bc
     binutils
+    bpftrace
     cmake
     compsize # btrfs compression calculator
     conntrack-tools
