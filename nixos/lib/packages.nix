@@ -81,7 +81,6 @@
     iftop
     inetutils # telnet
     iotop
-    ix # pastebin
     jq
     linuxPackages.perf
     lsof
@@ -106,6 +105,7 @@
     sshfs-fuse
     stow # Supercharged symlinks
     sysstat
+    tailspin
     tcpdump
     thttpd # for htpasswd
     tig # git helper
