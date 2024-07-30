@@ -4,13 +4,14 @@
   [
     ../common.nix
 
+    ./acme.nix
     ./bind.nix
     ./bots/anayasa-bot.nix
     ./bots/comar-bot.nix
     ./bots/kufur-bot.nix
     ./bots/timezone-bot.nix
     ./comment-engine.nix
-    ./gitea.nix
+    ./forgejo.nix
     ./gotosocial.nix
     ./logrotate.nix
     ./mailserver.nix
@@ -18,7 +19,7 @@
     ./shadowsocks.nix
     ./shared-folder.nix
     ./ssh.nix
-    ./websites.nix  # Just excluded from git, since it's so shit
+    ./websites.nix
     ./yarr.nix
   ];
 

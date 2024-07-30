@@ -5,6 +5,7 @@
     nixpkgs.url = "github:nixos/nixpkgs/nixos-24.05";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
     nixpkgs-previous.url = "github:nixos/nixpkgs/nixos-23.11";
+    nixpkgs-forgejopinned.url = "github:nixos/nixpkgs/038fb464fcfa79b4f08131b07f2d8c9a6bcc4160";
 
     home-manager.url = "github:nix-community/home-manager/release-24.05";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
@@ -113,6 +114,7 @@
   outputs = {
     self,
     nixpkgs,
+    nixpkgs-forgejopinned,
     home-manager,
     nur,
     loose-src,
