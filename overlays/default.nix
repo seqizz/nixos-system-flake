@@ -13,6 +13,9 @@ in {
   # You can change versions, add patches, set compilation flags, anything really.
   # https://nixos.wiki/wiki/Overlays
   modifications = final: prev: rec {
+    # rainloop-community = prev.rainloop-community.override {
+    #   dataPath = "/shared/.mail_webmail_data";
+    # };
     vimwiki-markdown = getSrcFromInput prev.vimwiki-markdown inputs.vimwiki-markdown-src;
     mpv = prev.mpv-unwrapped.override {
       ffmpeg = prev.ffmpeg_5-full;

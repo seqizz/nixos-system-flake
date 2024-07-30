@@ -20,7 +20,6 @@
     ];
     config = {
       allowUnfree = true;
-      # allowUnfreePredicate = _: true; # XXX: remove if no issues arise
     };
   };
 
