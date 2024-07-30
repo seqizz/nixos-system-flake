@@ -1,26 +1,18 @@
-{ config, pkgs, ... }:
-let
-  my_webmail = pkgs.rainloop-community.override {
-    dataPath = "/shared/.mail_webmail_data";
-  };
-  secrets = import ../secrets.nix;
-in
 {
-  # imports = [
-  #   (builtins.fetchTarball {
-  #     url = "https://gitlab.com/simple-nixos-mailserver/nixos-mailserver/-/archive/nixos-23.11/nixos-mailserver-nixos-23.11.tar.gz";
-  #     sha256 = "1czvxn0qq2s3dxphpb28f3845a9jr05k8p7znmv42mwwlqwkh1ax";
-  #   })
+  config,
+  pkgs,
+  ...
+}: let
+  secrets = import ../secrets.nix;
+in {
+  # environment.systemPackages = with pkgs; [
+  # rainloop-community
   # ];
-
-  environment.systemPackages = with pkgs; [
-    my_webmail
-  ];
 
   mailserver = {
     enable = true;
     fqdn = "mail.gurkan.in";
-    domains = [ "gurkan.in" "siktir.in" ];
+    domains = ["gurkan.in" "siktir.in"];
     mailDirectory = "/shared/mail";
     certificateDirectory = "/shared/mail/certificates";
     dkimKeyDirectory = "/shared/.mail_dkim_keys";
@@ -29,7 +21,7 @@ in
     # certificateScheme = 1;
     # certificateFile = "/var/lib/acme/git.gurkan.in/fullchain.pem";
     # keyFile = "/var/lib/acme/git.gurkan.in/key.pem";
-    loginAccounts = secrets.mailAccount;
+    loginAccounts = secrets.mailAccounts;
     enableImap = true;
     enablePop3 = true;
     enableImapSsl = true;
@@ -66,4 +58,3 @@ in
     };
   };
 }
-
