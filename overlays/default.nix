@@ -45,6 +45,7 @@ in {
           unstable.xorg.xcbutil
           unstable.pcre2
           unstable.epoxy
+          unstable.asciidoctor
         ]
         ++ old.buildInputs;
     });
