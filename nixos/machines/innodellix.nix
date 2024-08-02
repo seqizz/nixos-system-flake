@@ -128,6 +128,13 @@ in {
     printers.ensurePrinters = secrets.officePrinters;
   };
 
+  security.pki.certificates = [
+    secrets.innoRootCA
+    secrets.innoRootCAECC
+    secrets.innoServiceCA
+    secrets.innoServiceCAECC
+  ];
+
   # Printing stuff
   services = {
     printing.drivers = with pkgs; [
