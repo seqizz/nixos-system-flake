@@ -90,12 +90,12 @@ in {
     };
   };
   # same for oldversion
-  oldversion-packages = final: _prev: {
-    oldversion = import inputs.nixpkgs-previous {
-      system = final.system;
-      config.allowUnfree = true;
-    };
-  };
+  # oldversion-packages = final: _prev: {
+  #   oldversion = import inputs.nixpkgs-previous {
+  #     system = final.system;
+  #     config.allowUnfree = true;
+  #   };
+  # };
   # temporary
   forgejopinned-packages = final: _prev: {
     forgejopinned = import inputs.nixpkgs-forgejopinned {
