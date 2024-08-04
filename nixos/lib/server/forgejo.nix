@@ -4,7 +4,8 @@
   pkgs,
   ...
 }: {
-  # MIGRATION
+  # XXX: Switch to clean forgejo when I have time
+  # Maybe create a migration script?
   services.gitea.enable = false;
   users.users.gitea = {
     home = "/var/lib/gitea";
@@ -16,11 +17,7 @@
 
   services.forgejo= {
     enable = true;
-    # XXX: Need to stay on same gitea version until Forgejo 8 is released
-    # https://codeberg.org/forgejo/forgejo/issues/3940
     package = pkgs.unstable.forgejo;
-    # appName = "My git forks";
-    # MIGRATION
     user = "gitea";
     group = "gitea";
     stateDir = "/var/lib/gitea";
@@ -29,7 +26,6 @@
       user = "gitea";
     };
     settings = {
-      # MIGRATION
       DEFAULT.APP_NAME = "My git forks";
       service.DISABLE_REGISTRATION = true;
       log.LEVEL = "Warn";
