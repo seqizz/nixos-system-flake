@@ -5,32 +5,33 @@
   ...
 }: {
   # MIGRATION
-  # services.gitea.enable = false;
-  # users.users.gitea = {
-  #   home = "/var/lib/gitea";
-  #   useDefaultShell = true;
-  #   group = "gitea";
-  #   isSystemUser = true;
-  # };
-  # users.groups.gitea = {};
+  services.gitea.enable = false;
+  users.users.gitea = {
+    home = "/var/lib/gitea";
+    useDefaultShell = true;
+    group = "gitea";
+    isSystemUser = true;
+  };
+  users.groups.gitea = {};
 
-  services.gitea= {
+  services.forgejo= {
     enable = true;
     # XXX: Need to stay on same gitea version until Forgejo 8 is released
     # https://codeberg.org/forgejo/forgejo/issues/3940
-    package = pkgs.forgejopinned.gitea;
-    appName = "My git forks";
+    package = pkgs.unstable.forgejo;
+    # appName = "My git forks";
     # MIGRATION
-    # user = "gitea";
-    # group = "gitea";
+    user = "gitea";
+    group = "gitea";
     # stateDir = "/var/lib/gitea";
-    # database = {
-      # name = "gitea";
-      # user = "gitea";
-    # };
+    stateDir = "/shared/forgejo";
+    database = {
+      name = "gitea";
+      user = "gitea";
+    };
     settings = {
       # MIGRATION
-      # DEFAULT.APP_NAME = "My git forks";
+      DEFAULT.APP_NAME = "My git forks";
       service.DISABLE_REGISTRATION = true;
       log.LEVEL = "Warn";
       repository = {
