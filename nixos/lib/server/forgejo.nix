@@ -23,8 +23,7 @@
     # MIGRATION
     user = "gitea";
     group = "gitea";
-    # stateDir = "/var/lib/gitea";
-    stateDir = "/shared/forgejo";
+    stateDir = "/var/lib/gitea";
     database = {
       name = "gitea";
       user = "gitea";
