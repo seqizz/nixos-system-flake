@@ -16,7 +16,7 @@
       outputs.overlays.additions
       outputs.overlays.modifications
       outputs.overlays.unstable-packages
-      outputs.overlays.oldversion-packages
+      # outputs.overlays.oldversion-packages
     ];
     config = {
       allowUnfree = true;
