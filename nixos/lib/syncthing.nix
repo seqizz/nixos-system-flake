@@ -65,10 +65,6 @@ in
               name = "innodellix";
               id = secrets.syncthingIDinnodellix;
             };
-            oneplus = {
-              name = "oneplus";
-              id = secrets.syncthingIDoneplus;
-            };
             splinter = {
               name = "splinter";
               id = secrets.syncthingIDsplinter;
@@ -84,10 +80,10 @@ in
               label = "syncfolder";
               devices = [
                 "nixosis"
-                "oneplus"
                 "oneplusNord"
                 "rocksteady"
                 "innodellix"
+                "splinter"
               ];
             };
           };

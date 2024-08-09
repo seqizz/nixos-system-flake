@@ -1,4 +1,4 @@
-{pkgs, inputs, ...}: let
+{pkgs, inputs, config, ...}: let
   sync = "/home/gurkan/syncfolder";
   secrets = import ./secrets.nix {pkgs = pkgs;};
   fileAssociations = import ./file-associations.nix;
@@ -64,6 +64,8 @@ in {
 
     # TODO: This shit is world-readable
     ".tarsnap.key".text = secrets.tarsnapKey;
+
+    "devel".source = config.lib.file.mkOutOfStoreSymlink "/devel";
 
     ".rustypaste/config.toml".text = secrets.rustypasteSecret;
 

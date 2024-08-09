@@ -98,10 +98,11 @@ in {
   };
 
   hardware = {
-    ipu6 = {
-      enable = true;
-      platform = "ipu6epmtl";
-    };
+    # XXX: Webcam, in-kernel driver seems broken, will wait
+    # ipu6 = {
+    #   enable = true;
+    #   platform = "ipu6epmtl";
+    # };
     sensor.iio.enable = true;
     printers.ensurePrinters = secrets.officePrinters;
     cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
