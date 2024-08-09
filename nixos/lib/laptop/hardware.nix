@@ -39,6 +39,16 @@
         product = "c33a";
       }
       {
+        # Damn fingerprint device
+        vendor = "27c6";
+        product = "633c";
+      }
+      {
+        # Extra sensitive touchpad
+        vendor = "2c2f";
+        product = "002b";
+      }
+      {
         # Logitech unifying receiver (mouse)
         vendor = "046d";
         product = "c52b";

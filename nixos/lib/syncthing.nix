@@ -69,6 +69,10 @@ in
               name = "oneplus";
               id = secrets.syncthingIDoneplus;
             };
+            splinter = {
+              name = "splinter";
+              id = secrets.syncthingIDsplinter;
+            };
             oneplusNord = {
               name = "oneplusNord";
               id = secrets.syncthingIDoneplusNord;

@@ -5,7 +5,9 @@
     nixpkgs.url = "github:nixos/nixpkgs/nixos-24.05";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
     # nixpkgs-previous.url = "github:nixos/nixpkgs/nixos-23.11";
-    nixpkgs-forgejopinned.url = "github:nixos/nixpkgs/038fb464fcfa79b4f08131b07f2d8c9a6bcc4160";
+    # nixpkgs-forgejopinned.url = "github:nixos/nixpkgs/038fb464fcfa79b4f08131b07f2d8c9a6bcc4160";
+    disko.url = "github:nix-community/disko";
+    disko.inputs.nixpkgs.follows = "nixpkgs";
 
     home-manager.url = "github:nix-community/home-manager/release-24.05";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
@@ -28,6 +30,11 @@
 
     sd-switch-src = {
       url = "sourcehut:~rycee/sd-switch";
+    };
+
+    lain-src = {
+      url = "github:lcpz/lain";
+      flake = false;
     };
 
     picom-src = {
@@ -117,6 +124,7 @@
     nixpkgs-forgejopinned,
     home-manager,
     nur,
+    disko,
     loose-src,
     nix-index-database,
     simple-nixos-mailserver,
@@ -142,6 +150,17 @@
     homeManagerModules = import ./modules/home-manager;
 
     nixosConfigurations = {
+      splinter = nixpkgs.lib.nixosSystem {
+        specialArgs = {inherit inputs outputs;};
+        modules = [
+          disko.nixosModules.disko
+          # { disko.devices.disk.disk1.device = "/dev/nvme0n1"; }
+          nur.nixosModules.nur
+          nix-index-database.nixosModules.nix-index
+          ./nixos/configuration.nix
+          ./nixos/machines/splinter.nix
+        ];
+      };
       innodellix = nixpkgs.lib.nixosSystem {
         specialArgs = {inherit inputs outputs;};
         modules = [
@@ -165,6 +184,15 @@
 
     homeConfigurations = {
       "gurkan@innodellix" = home-manager.lib.homeManagerConfiguration {
+        pkgs = nixpkgs.legacyPackages.x86_64-linux; # Home-manager requires 'pkgs' instance
+        extraSpecialArgs = {inherit inputs outputs;};
+        modules = [
+          nur.hmModules.nur
+          ./home-manager/home.nix
+          ./home-manager/lib/packages/workPackages.nix
+        ];
+      };
+      "gurkan@splinter" = home-manager.lib.homeManagerConfiguration {
         pkgs = nixpkgs.legacyPackages.x86_64-linux; # Home-manager requires 'pkgs' instance
         extraSpecialArgs = {inherit inputs outputs;};
         modules = [

@@ -1,10 +1,8 @@
-{ pkgs, ... }:
-let
+{pkgs, inputs, ...}: let
   sync = "/home/gurkan/syncfolder";
-  secrets = import ./secrets.nix {pkgs=pkgs;};
+  secrets = import ./secrets.nix {pkgs = pkgs;};
   fileAssociations = import ./file-associations.nix;
-in
-{
+in {
   xdg = {
     portal = {
       enable = true;
@@ -59,6 +57,8 @@ in
       src = ./config_files/zsh_nix;
       openscPath = "${pkgs.opensc.outPath}";
     };
+
+    ".config/awesome/lain".source = inputs.lain-src;
 
     ".gist".text = secrets.gistSecret;
 
