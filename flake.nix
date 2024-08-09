@@ -196,7 +196,8 @@
         pkgs = nixpkgs.legacyPackages.x86_64-linux; # Home-manager requires 'pkgs' instance
         extraSpecialArgs = {
           inherit inputs outputs;
-          hostName = "splinter";
+          # Home-manager is not passing this for some reason?
+          osConfig = self.nixosConfigurations.splinter.config;
         };
         modules = [
           nur.hmModules.nur
