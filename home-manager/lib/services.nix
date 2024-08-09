@@ -2,6 +2,7 @@
   config,
   lib,
   pkgs,
+  hostName,
   ...
 }: let
   baseconfig = {allowUnfree = true;};
@@ -97,7 +98,7 @@ in {
         Service.PrivateTmp = false;
       };
 
-      auto-rotate = {
+      auto-rotate = lib.mkIf (hostName == "innodellix") {
         Unit = {
           Description = "Automatic screen rotation helper";
           After = [
@@ -117,3 +118,4 @@ in {
   };
 }
 #  vim: set ts=2 sw=2 tw=0 et :
+

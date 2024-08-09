@@ -194,7 +194,10 @@
       };
       "gurkan@splinter" = home-manager.lib.homeManagerConfiguration {
         pkgs = nixpkgs.legacyPackages.x86_64-linux; # Home-manager requires 'pkgs' instance
-        extraSpecialArgs = {inherit inputs outputs;};
+        extraSpecialArgs = {
+          inherit inputs outputs;
+          hostName = "splinter";
+        };
         modules = [
           nur.hmModules.nur
           ./home-manager/home.nix
