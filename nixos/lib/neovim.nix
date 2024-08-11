@@ -38,6 +38,7 @@
           pkgs.telescope-file-browser
           pkgs.trailblazer # Better mark jumps Ctrl-S and Shift-Up/Down
           pkgs.undowarn # warn for over-undo
+          pkgs.smoothcursor
           pkgs.vim-colorschemes-forked
           pkgs.vim-puppet-4tabs
           pkgs.vim-yadi

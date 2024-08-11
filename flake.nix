@@ -116,6 +116,10 @@
       url = "github:arp242/undofile_warn.vim";
       flake = false;
     };
+    smoothcursor-src = {
+      url = "github:gen740/SmoothCursor.nvim";
+      flake = false;
+    };
   };
 
   outputs = {
