@@ -39,12 +39,14 @@
     # Code formatters
     alejandra # Nix
     nodePackages.fixjson
+    pkgs.unstable.ruff
+    pkgs.unstable.ruff-lsp
     puppet-lint
+    rubyPackages_3_3.rubocop
     shellcheck
     stylua
     taplo # toml
-    pkgs.unstable.ruff
-    pkgs.unstable.ruff-lsp
+    typstyle
 
     # Rest is sorted
     bandwhich

@@ -64,9 +64,9 @@
             p.css
             p.diff
             p.dockerfile
-            p.ini
             p.gitcommit
             p.go
+            p.ini
             p.json
             p.lua
             p.markdown
@@ -76,6 +76,7 @@
             p.ruby
             p.sql
             p.toml
+            p.typst
             p.vim
             p.yaml
           ]))
