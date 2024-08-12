@@ -81,7 +81,11 @@ in {
       "rd.systemd.show_status=auto"
       # lower the udev log level to show only errors or worse
       "rd.udev.log_level=3"
-      "i915.modeset=1"
+      # "i915.modeset=1"
+      "intel_pstate=passive"
+      "pcie_aspm=force"
+      "i915.enable_fbc=1"
+      "i915.enable_psr=2"
       # "video=eDP-1:1920x1200@60"
     ];
   };
@@ -107,7 +111,7 @@ in {
     printers.ensurePrinters = secrets.officePrinters;
     cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
     nvidia = {
-      modesetting.enable = true;
+      # modesetting.enable = true;
       package = config.boot.kernelPackages.nvidiaPackages.beta;
       prime = {
         sync.enable = false;
