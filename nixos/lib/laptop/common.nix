@@ -78,6 +78,8 @@ in {
     };
   };
 
+  # @Reference: If I need to move machines around
+  # networking.firewall.allowedTCPPorts = [8443];
   virtualisation = {
     libvirtd = {
       enable = true;
@@ -87,6 +89,9 @@ in {
       enable = true;
       ui.enable = true;
       preseed = {
+        config = {
+          "core.https_address" = "127.0.0.1:8443";
+        };
         networks = [
           {
             description = "My Incus network";

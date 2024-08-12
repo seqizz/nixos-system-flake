@@ -3,8 +3,7 @@
   lib,
   pkgs,
   ...
-}:
-{
+}: {
   # Lorri is a daemon which can write stuff, workaround
   systemd.user.services.lorri.serviceConfig.ProtectHome = lib.mkForce false;
 
