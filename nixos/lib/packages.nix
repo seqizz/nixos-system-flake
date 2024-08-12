@@ -16,6 +16,10 @@
     };
     less.enable = true;
     nix-index-database.comma.enable = true;
+    git = {
+      enable = true;
+      lfs.enable = true;
+    };
   };
 
   environment.systemPackages = with pkgs; [
@@ -75,7 +79,6 @@
     file
     fzf
     gcc
-    git
     glibcLocales
     gnumake
     go
