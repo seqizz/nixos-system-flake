@@ -41,6 +41,15 @@
       alsa.enable = true;
       alsa.support32Bit = true;
       pulse.enable = true;
+      extraConfig.pipewire = {
+        "10-wtf-discord-fix" = {
+          "context.properties" = {
+            "default.clock.quantum" = 2048;
+            "default.clock.min-quantum" = 1024;
+            "default.clock.max-quantum" = 4096;
+          };
+        };
+      };
       # config.pipewire-pulse."context.exec" = [
       #   { "path" = "${pkgs.pulseaudio}/bin/pactl"; "args" = "load-module module-switch-on-connect blacklist=\"USB|Dock\""; }
       # ];
