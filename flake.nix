@@ -38,8 +38,8 @@
     };
 
     picom-src = {
-      # url = "github:yshui/picom/v11.2";
-      url = "github:yshui/picom";
+      url = "github:yshui/picom/v11.2";
+      # url = "github:yshui/picom";
     };
 
     greenclip-src = {
