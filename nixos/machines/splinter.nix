@@ -1,4 +1,3 @@
-# This is just an example, you should generate yours with nixos-generate-config and put it in here.
 {
   config,
   pkgs,
@@ -57,9 +56,9 @@ in {
         "usb_storage"
         "xhci_pci"
         "vmd"
-        # "nvidia"
+        "nvidia"
       ];
-      kernelModules = ["dm-snapshot"];
+      kernelModules = ["dm-snapshot" "i915"];
       luks.devices = {
         crypted = {
           preLVM = true;
@@ -68,9 +67,9 @@ in {
         };
       };
     };
-    kernelModules = ["kvm-intel" "i915"];
-    # kernelModules = ["kvm-intel" "i915" "nvidia"];
+    extraModulePackages = [config.boot.kernelPackages.nvidiaPackages.latest];
     kernelPackages = pkgs.unstable.linuxPackages_latest;
+    # @Reference, we can "extend" stuff
     # kernelPackages = pkgs.unstable.linuxPackages_latest.extend (final: prev: {
     #   nvidia_x11 = prev.nvidia_x11_beta;
     # });
@@ -105,42 +104,53 @@ in {
     '';
   };
 
-  nixpkgs = {
-    overlays = [
-      (final: prev: {
-        bumblebee = prev.bumblebee.override {
-          nvidia_x11_i686 = pkgs.unstable.pkgsi686Linux.linuxPackages.nvidia_x11_beta.override {
-            libsOnly = true;
-          };
-        };
-      })
+  # IPU6 tests, not working yet
+  hardware.firmware = with pkgs.unstable; [
+    ipu6-camera-bins
+    ivsc-firmware
+  ];
+
+  services.udev.extraRules = ''
+    SUBSYSTEM=="intel-ipu6-psys", MODE="0660", GROUP="video"
+  '';
+
+  services.v4l2-relayd.instances.ipu6 = {
+    enable = true;
+
+    cardLabel = "Intel MIPI Camera";
+
+    extraPackages = [
+      pkgs.unstable.gst_all_1.icamerasrc-ipu6epmtl
     ];
+
+    input = {
+      pipeline = "icamerasrc";
+      format = "NV12";
+    };
   };
 
   hardware = {
-    # XXX: Webcam, in-kernel driver seems broken, will wait
+    # XXX: Webcam, almost same as above IPU6 section
+    # Waiting for https://github.com/NixOS/nixpkgs/pull/332240 to use built-in module
     # ipu6 = {
-    #   enable = true;
-    #   platform = "ipu6epmtl";
+      # enable = true;
+      # platform = "ipu6epmtl";
     # };
     sensor.iio.enable = true;
     printers.ensurePrinters = secrets.officePrinters;
     cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
-    bumblebee.enable = true;
-    # fixedbumblebee.enable = true;
-    # nvidia = {
-    #   # modesetting.enable = true;
-    #   package = config.boot.kernelPackages.nvidiaPackages.beta;
-    #   prime = {
-    #     sync.enable = false;
-    #     offload = {
-    #       enable = true;
-    #       enableOffloadCmd = true;
-    #     };
-    #     intelBusId = "PCI:0:2:0";
-    #     nvidiaBusId = "PCI:1:0:0";
-    #   };
-    # };
+    nvidia = {
+      package = config.boot.kernelPackages.nvidiaPackages.latest;
+      prime = {
+        sync.enable = false;
+        offload = {
+          enable = true;
+          enableOffloadCmd = true;
+        };
+        intelBusId = "PCI:0:2:0";
+        nvidiaBusId = "PCI:1:0:0";
+      };
+    };
   };
 
   security.pki.certificates = [
@@ -157,8 +167,7 @@ in {
       gutenprint
       splix
     ];
-    xserver.videoDrivers = ["i915"];
-    # xserver.videoDrivers = ["nvidia"];
+    xserver.videoDrivers = ["i915" "nvidia"];
   };
 
   environment.systemPackages = with pkgs; [
