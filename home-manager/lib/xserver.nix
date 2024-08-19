@@ -34,6 +34,21 @@ in
     };
   };
 
+  systemd.user.services.libinput-gestures = {
+    Unit = {
+      Description = "Libinput Gestures";
+    };
+    Install = {
+      WantedBy = [
+        "multi-user.target"
+        "graphical-session.target"
+      ];
+    };
+    Service = {
+      ExecStart = "${pkgs.libinput-gestures}/bin/libinput-gestures";
+    };
+  };
+
   gtk = {
     enable = true;
     font = {
