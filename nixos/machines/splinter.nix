@@ -57,7 +57,7 @@ in {
         "usb_storage"
         "xhci_pci"
         "vmd"
-        "nvidia"
+        # "nvidia"
       ];
       kernelModules = ["dm-snapshot"];
       luks.devices = {
@@ -68,8 +68,12 @@ in {
         };
       };
     };
-    kernelModules = ["kvm-intel" "i915" "nvidia"];
+    kernelModules = ["kvm-intel" "i915"];
+    # kernelModules = ["kvm-intel" "i915" "nvidia"];
     kernelPackages = pkgs.unstable.linuxPackages_latest;
+    # kernelPackages = pkgs.unstable.linuxPackages_latest.extend (final: prev: {
+    #   nvidia_x11 = prev.nvidia_x11_beta;
+    # });
     kernelParams = [
       # prevent the kernel from blanking plymouth out of the fb
       "fbcon=nodefer"
@@ -101,6 +105,18 @@ in {
     '';
   };
 
+  nixpkgs = {
+    overlays = [
+      (final: prev: {
+        bumblebee = prev.bumblebee.override {
+          nvidia_x11_i686 = pkgs.unstable.pkgsi686Linux.linuxPackages.nvidia_x11_beta.override {
+            libsOnly = true;
+          };
+        };
+      })
+    ];
+  };
+
   hardware = {
     # XXX: Webcam, in-kernel driver seems broken, will wait
     # ipu6 = {
@@ -110,19 +126,21 @@ in {
     sensor.iio.enable = true;
     printers.ensurePrinters = secrets.officePrinters;
     cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
-    nvidia = {
-      # modesetting.enable = true;
-      package = config.boot.kernelPackages.nvidiaPackages.beta;
-      prime = {
-        sync.enable = false;
-        offload = {
-          enable = true;
-          enableOffloadCmd = true;
-        };
-        intelBusId = "PCI:0:2:0";
-        nvidiaBusId = "PCI:1:0:0";
-      };
-    };
+    bumblebee.enable = true;
+    # fixedbumblebee.enable = true;
+    # nvidia = {
+    #   # modesetting.enable = true;
+    #   package = config.boot.kernelPackages.nvidiaPackages.beta;
+    #   prime = {
+    #     sync.enable = false;
+    #     offload = {
+    #       enable = true;
+    #       enableOffloadCmd = true;
+    #     };
+    #     intelBusId = "PCI:0:2:0";
+    #     nvidiaBusId = "PCI:1:0:0";
+    #   };
+    # };
   };
 
   security.pki.certificates = [
@@ -139,8 +157,8 @@ in {
       gutenprint
       splix
     ];
-    # SHIT
-    xserver.videoDrivers = ["nvidia"];
+    xserver.videoDrivers = ["i915"];
+    # xserver.videoDrivers = ["nvidia"];
   };
 
   environment.systemPackages = with pkgs; [

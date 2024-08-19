@@ -19,6 +19,8 @@ in {
       "tridactyl/tridactylrc".source = ./config_files/tridactyl/tridactylrc;
       "tridactyl/themes/mytheme.css".source = ./config_files/tridactyl/mytheme.css;
 
+      "ruff/ruff.toml".source = ./config_files/ruff.toml;
+
       "mimeapps.list".force = true;
 
       "Yubico/u2f_keys".text = secrets.yubicoU2FKeys;
@@ -31,6 +33,8 @@ in {
       "loose/config.yaml".source = ./config_files/loose;
 
       "picom.conf".source = ./config_files/picom.conf;
+
+      "libinput-gestures.conf".source = ./config_files/libinput-gestures.conf;
 
       "pylintrc".source = ./config_files/pylintrc;
 
