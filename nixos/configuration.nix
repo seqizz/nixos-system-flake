@@ -21,7 +21,6 @@
       outputs.overlays.modifications
       outputs.overlays.unstable-packages
       # outputs.overlays.oldversion-packages
-      outputs.overlays.forgejopinned-packages
 
       # You can also add overlays exported from other flakes:
       # neovim-nightly-overlay.overlays.default

@@ -97,11 +97,4 @@ in {
   #     config.allowUnfree = true;
   #   };
   # };
-  # temporary
-  forgejopinned-packages = final: _prev: {
-    forgejopinned = import inputs.nixpkgs-forgejopinned {
-      system = final.system;
-      config.allowUnfree = true;
-    };
-  };
 }
