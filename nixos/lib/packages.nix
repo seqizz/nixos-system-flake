@@ -38,7 +38,7 @@
     # unstable is better for some packages
     pkgs.unstable.rustypaste-cli
     pkgs.unstable.sheldon # zsh plugin manager
-    pkgs.unstable.igrep
+    igrep
 
     # Code formatters
     alejandra # Nix

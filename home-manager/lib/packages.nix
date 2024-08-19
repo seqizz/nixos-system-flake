@@ -64,7 +64,7 @@ in
     steam
     pkgs.unstable.tdesktop # telegram
     firefox # was unstable, broke webgl
-    pkgs.unstable.wezterm
+    wezterm
     # inputs.wezterm.packages.x86_64-linux.default # in case I want to build latest one
 
     # NUR packages @Reference, mostly does not work / maintained
