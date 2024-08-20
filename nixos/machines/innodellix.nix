@@ -1,4 +1,3 @@
-# This is just an example, you should generate yours with nixos-generate-config and put it in here.
 {
   config,
   pkgs,
@@ -11,24 +10,18 @@ in {
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
     ../lib/laptop/common.nix
-    ../lib/laptop/vpnconfig.nix # Only imported here
-    ../lib/laptop/wgconfig.nix # Only imported here
   ];
 
   # (needed for flakes)
   nixpkgs.hostPlatform = "x86_64-linux";
 
   networking = {
-    hostName = "innodellix";
+    hostName = "bebop";
     networkmanager = {
       plugins = with pkgs; [
         networkmanager-openvpn
       ];
-      enableStrongSwan = true;
     };
-    # wg-quick.interfaces = {
-      # inno0 = secrets.innoWGconfig;
-    # };
   };
 
   system.stateVersion = "20.09";
@@ -41,11 +34,6 @@ in {
         configurationLimit = 8;
       };
       efi.canTouchEfiVariables = true;
-    };
-    plymouth = {
-      enable = true;
-      theme = "lol";
-      themePackages = [pkgs.lol-plymouth];
     };
     initrd = {
       systemd.enable = true;
@@ -67,7 +55,6 @@ in {
       };
     };
     kernelModules = ["kvm-intel" "i915"];
-    # kernelPackages = pkgs.linuxPackages_6_7;
     kernelPackages = pkgs.unstable.linuxPackages_latest;
     kernelParams = [
       # prevent the kernel from blanking plymouth out of the fb
@@ -123,27 +110,6 @@ in {
   };
 
   hardware = {
-    # video.hidpi.enable = lib.mkDefault true;
-    sensor.iio.enable = true;
-    printers.ensurePrinters = secrets.officePrinters;
+    sensor.iio.enable = true; # For rotation sensor
   };
-
-  security.pki.certificates = [
-    secrets.innoRootCA
-    secrets.innoRootCAECC
-    secrets.innoServiceCA
-    secrets.innoServiceCAECC
-  ];
-
-  # Printing stuff
-  services = {
-    printing.drivers = with pkgs; [
-      hplipWithPlugin
-      gutenprint
-      splix
-    ];
-  };
-  environment.systemPackages = with pkgs; [
-    cifs-utils
-  ];
 }

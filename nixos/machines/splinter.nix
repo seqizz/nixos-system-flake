@@ -36,11 +36,6 @@
       };
       efi.canTouchEfiVariables = true;
     };
-    plymouth = {
-      enable = true;
-      theme = "lol";
-      themePackages = [pkgs.lol-plymouth];
-    };
     initrd = {
       systemd.enable = true;
       availableKernelModules = [
@@ -133,7 +128,6 @@
     # enable = true;
     # platform = "ipu6epmtl";
     # };
-    sensor.iio.enable = true;
     cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
     nvidia = {
       package = config.boot.kernelPackages.nvidiaPackages.latest;
@@ -148,18 +142,4 @@
       };
     };
   };
-
-  # Printing stuff
-  services = {
-    printing.drivers = with pkgs; [
-      hplipWithPlugin
-      gutenprint
-      splix
-    ];
-    xserver.videoDrivers = ["i915" "nvidia"];
-  };
-
-  environment.systemPackages = with pkgs; [
-    cifs-utils
-  ];
 }

@@ -15,8 +15,10 @@ in {
     ./iphone.nix
     ./networking.nix
     ./packages.nix
+    ./printing.nix
     ./services.nix
     ./sound.nix
+    ./virt.nix
     ./xserver.nix
     ./yubikey.nix
   ];
@@ -26,6 +28,12 @@ in {
     earlySetup = true;
     # Good for HiDPI on TTY
     font = "latarcyrheb-sun32";
+  };
+
+  boot.plymouth = {
+    enable = true;
+    theme = "lol";
+    themePackages = [pkgs.lol-plymouth];
   };
 
   security.sudo.wheelNeedsPassword = false;
@@ -136,10 +144,4 @@ in {
       };
     };
   };
-  # Needed for incus
-  networking.nftables.enable = true;
-  networking.firewall.trustedInterfaces = ["incusbr*"];
-  programs.dconf.enable = true;
-  environment.systemPackages = with pkgs; [virt-manager];
-  systemd.services.libvirtd.restartIfChanged = false;
 }
