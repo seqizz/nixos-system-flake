@@ -4,14 +4,11 @@
   modulesPath,
   lib,
   ...
-}: let
-  secrets = import ../lib/secrets.nix;
-in {
+}: {
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
     ../lib/laptop/common.nix
-    ../lib/laptop/vpnconfig.nix # Only imported here
-    ../lib/laptop/wgconfig.nix # Only imported here
+    ../lib/inno.nix
     ./splinter-disko.nix
   ];
 
@@ -133,11 +130,10 @@ in {
     # XXX: Webcam, almost same as above IPU6 section
     # Waiting for https://github.com/NixOS/nixpkgs/pull/332240 to use built-in module
     # ipu6 = {
-      # enable = true;
-      # platform = "ipu6epmtl";
+    # enable = true;
+    # platform = "ipu6epmtl";
     # };
     sensor.iio.enable = true;
-    printers.ensurePrinters = secrets.officePrinters;
     cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
     nvidia = {
       package = config.boot.kernelPackages.nvidiaPackages.latest;
@@ -152,13 +148,6 @@ in {
       };
     };
   };
-
-  security.pki.certificates = [
-    secrets.innoRootCA
-    secrets.innoRootCAECC
-    secrets.innoServiceCA
-    secrets.innoServiceCAECC
-  ];
 
   # Printing stuff
   services = {

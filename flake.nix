@@ -191,7 +191,6 @@
         modules = [
           nur.hmModules.nur
           ./home-manager/home.nix
-          ./home-manager/lib/packages/workPackages.nix
         ];
       };
       "gurkan@splinter" = home-manager.lib.homeManagerConfiguration {
@@ -204,7 +203,6 @@
         modules = [
           nur.hmModules.nur
           ./home-manager/home.nix
-          ./home-manager/lib/packages/workPackages.nix
         ];
       };
     };

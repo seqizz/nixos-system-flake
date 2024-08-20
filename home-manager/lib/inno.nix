@@ -6,6 +6,7 @@
   ...
 }: let
   secrets = import ./secrets.nix {pkgs = pkgs;};
+  my_scripts = (import ./scripts.nix {pkgs = pkgs;});
 in {
   xdg = {
     configFile = {
@@ -14,4 +15,8 @@ in {
       "pypoetry/auth.toml".text = secrets.poetryAuthInno;
     };
   };
+  home.packages = with pkgs; [
+    pkgs.unstable.slack
+    my_scripts.innovpn-toggle
+  ];
 }

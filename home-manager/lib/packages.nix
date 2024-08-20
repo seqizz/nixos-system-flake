@@ -66,6 +66,8 @@ in
     firefox # was unstable, broke webgl
     wezterm
     # inputs.wezterm.packages.x86_64-linux.default # in case I want to build latest one
+    pkgs.unstable.discord
+    thunderbird
 
     # NUR packages @Reference, mostly does not work / maintained
     # config.nur.repos.wolfangaukang.vdhcoapp
@@ -119,7 +121,7 @@ in
     my_scripts.psitool-script
     my_scripts.rofi-subsuper
     my_scripts.tarsnap-dotfiles
-    my_scripts.workman-toggle
+    # my_scripts.workman-toggle
     my_scripts.xinput-toggle
     nfpm
     onboard # on-screen keyboard
