@@ -22,6 +22,7 @@
       touchpad = {
         disableWhileTyping = true;
         naturalScrolling = true;
+        tappingDragLock = false;
       };
     };
     displayManager = {
