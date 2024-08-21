@@ -163,13 +163,13 @@
           ./nixos/machines/splinter.nix
         ];
       };
-      innodellix = nixpkgs.lib.nixosSystem {
+      bebop = nixpkgs.lib.nixosSystem {
         specialArgs = {inherit inputs outputs;};
         modules = [
           nur.nixosModules.nur
           nix-index-database.nixosModules.nix-index
           ./nixos/configuration.nix
-          ./nixos/machines/innodellix.nix
+          ./nixos/machines/bebop.nix
         ];
       };
       rocksteady = nixpkgs.lib.nixosSystem {
@@ -185,9 +185,13 @@
     };
 
     homeConfigurations = {
-      "gurkan@innodellix" = home-manager.lib.homeManagerConfiguration {
+      "gurkan@bebop" = home-manager.lib.homeManagerConfiguration {
         pkgs = nixpkgs.legacyPackages.x86_64-linux; # Home-manager requires 'pkgs' instance
-        extraSpecialArgs = {inherit inputs outputs;};
+        extraSpecialArgs = {
+          inherit inputs outputs;
+          # Home-manager is not passing this for some reason?
+      osConfig = self.nixosConfigurations.bebop.config;
+        };
         modules = [
           nur.hmModules.nur
           ./home-manager/home.nix

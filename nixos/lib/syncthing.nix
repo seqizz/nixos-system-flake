@@ -61,9 +61,9 @@ in
               name = "nixosis";
               id = secrets.syncthingIDnixosis;
             };
-            innodellix = {
-              name = "innodellix";
-              id = secrets.syncthingIDinnodellix;
+            bebop = {
+              name = "bebop";
+              id = secrets.syncthingIDbebop;
             };
             splinter = {
               name = "splinter";
@@ -82,7 +82,7 @@ in
                 "nixosis"
                 "oneplusNord"
                 "rocksteady"
-                "innodellix"
+                "bebop"
                 "splinter"
               ];
             };

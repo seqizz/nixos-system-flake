@@ -98,7 +98,7 @@ in {
         Service.PrivateTmp = false;
       };
 
-      auto-rotate = lib.mkIf (osConfig.networking.hostName == "innodellix") {
+      auto-rotate = lib.mkIf (osConfig.networking.hostName == "bebop") {
         Unit = {
           Description = "Automatic screen rotation helper";
           After = [
