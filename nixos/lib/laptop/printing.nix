@@ -11,6 +11,7 @@
     ];
   };
   environment.systemPackages = with pkgs; [
+    hplip # Actual hp-setup binary
     cifs-utils
   ];
 }
