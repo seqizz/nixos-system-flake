@@ -11,3 +11,4 @@ user_pref("font.size.monospace.x-western", 22);
 user_pref("mail.uifontsize", 17);
 user_pref("mail.close_message_window.on_delete", true);
 user_pref("toolkit.legacyUserProfileCustomizations.stylesheets", true);
+user_pref("app.donation.eoy.url", "");
