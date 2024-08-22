@@ -142,4 +142,5 @@
       };
     };
   };
+  services.xserver.videoDrivers = [ "i915" "nvidia" ];
 }
