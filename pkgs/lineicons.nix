@@ -2,15 +2,15 @@
 
 let
   name = "lineicons";
-  version = "0.0.1";
-  sha256 = "13xdwx9ijdfdsi5qx1s7w77jjngnp598mfcbzhmf2q2ypv5gx0nn";
+  version = "4.0";
+  sha256 = "sha256-4vrZHSUoSC7LlwxSOfz5w+h7ygg75enO8OvenJy2P/Y=";
 in
 stdenv.mkDerivation {
 
   inherit name;
 
   src = fetchurl {
-    url = "https://lineicons.com/download/23710/";
+    url = "https://cdn.lineicons.com/4.0/lineicons-4.0-basic-free.zip";
     inherit sha256;
   };
 
@@ -22,7 +22,7 @@ stdenv.mkDerivation {
   installPhase = ''
     cp "$src" icons.zip
     unzip icons.zip
-    install -m444 -Dt $out/share/fonts/truetype WebFont/fonts/LineIcons.ttf
+    install -m444 -Dt $out/share/fonts/truetype web-font-files/fonts/lineicons.ttf
   '';
 
   meta = with lib; {

@@ -49,7 +49,7 @@
           stashfull = stash --include-untracked -m
 
       [safe]
-          directory = /shared/syncfolder/dotfiles/nixos/etc/nixos
+          directory = *
 
       [diff]
           colorMoved = default
