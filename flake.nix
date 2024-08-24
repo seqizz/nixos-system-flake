@@ -190,7 +190,7 @@
         extraSpecialArgs = {
           inherit inputs outputs;
           # Home-manager is not passing this for some reason?
-      osConfig = self.nixosConfigurations.bebop.config;
+          osConfig = self.nixosConfigurations.bebop.config;
         };
         modules = [
           nur.hmModules.nur
