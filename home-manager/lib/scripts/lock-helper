@@ -7,7 +7,7 @@ save_brightness () {
 dim_screen () {
     DISPLAY=:0 @libnotify@/bin/notify-send -t 2000 "Zzzzz"
     DISPLAY=:0 @awesome@/bin/awesome-client 'flash_toggle(client.focus)'
-    sleep 2
+    @coreutils@/bin/coreutils --coreutils-prog=sleep 2
     DISPLAY=:0 @awesome@/bin/awesome-client 'flash_toggle(client.focus)'
     @brightnessctl@/bin/brightnessctl s 20
 }
