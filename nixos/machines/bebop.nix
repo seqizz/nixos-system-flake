@@ -68,6 +68,7 @@ in {
       # lower the udev log level to show only errors or worse
       "rd.udev.log_level=3"
       "i915.modeset=1"
+      "intel_pstate=passive"
       "video=eDP-1:1920x1200@60"
     ];
   };
