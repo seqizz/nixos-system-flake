@@ -27,6 +27,7 @@
           "Inconsolata"
           "JetBrainsMono"
           "LiberationMono"
+          "DejaVuSansMono"
           "Overpass"
           "SourceCodePro"
           "Ubuntu"
