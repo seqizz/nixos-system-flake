@@ -51,6 +51,11 @@
       flake = false;
     };
 
+    slock-flexipatch-src = {
+      url = "git+https://git.gurkan.in/gurkan/slock-flexipatch.git";
+      flake = false;
+    };
+
     loose-src = {
       url = "git+https://git.gurkan.in/gurkan/loose.git";
       flake = false;

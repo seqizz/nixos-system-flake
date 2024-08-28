@@ -1,0 +1,35 @@
+{
+  pkgs,
+  inputs,
+  ...
+}:
+pkgs.stdenv.mkDerivation {
+  pname = "slock-flexipatch";
+  version = "master";
+
+  src = inputs.slock-flexipatch-src;
+
+  buildInputs = with pkgs; [
+    libxcrypt
+    xorg.libX11
+    xorg.libXext
+    xorg.libXrandr
+    imlib2
+  ];
+
+  installFlags = ["PREFIX=$(out)"];
+
+  postPatch = "sed -i '/chmod u+s/d' Makefile";
+
+  enableParallelBuilding = true;
+
+  makeFlags = ["CC:=$(CC)"];
+
+  meta = with pkgs.lib; {
+    description = "An slock build with preprocessor directives to decide which patches to include during build time";
+    homepage = "https://github.com/bakkeby/slock-flexipatch";
+    license = licenses.mit;
+    platforms = platforms.linux;
+    mainProgram = "slock";
+  };
+}

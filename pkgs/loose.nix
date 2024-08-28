@@ -10,7 +10,7 @@ in
 python3Packages.buildPythonApplication rec {
 
   pname = "loose";
-  version = "unstable-2024-01-18";
+  version = "master";
   pyproject = true;
 
   src = inputs.loose-src;
