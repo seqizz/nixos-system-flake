@@ -4,7 +4,19 @@
   modulesPath,
   lib,
   ...
-}: {
+}:
+let
+
+      fucknvidia = config.boot.kernelPackages.nvidiaPackages.mkDriver {
+        version = "555.58.02";
+        sha256_64bit = "sha256-xctt4TPRlOJ6r5S54h5W6PT6/3Zy2R4ASNFPu8TSHKM=";
+        sha256_aarch64 = "sha256-wb20isMrRg8PeQBU96lWJzBMkjfySAUaqt4EgZnhyF8=";
+        openSha256 = "sha256-8hyRiGB+m2hL3c9MDA/Pon+Xl6E788MZ50WrrAGUVuY=";
+        settingsSha256 = "sha256-ZpuVZybW6CFN/gz9rx+UJvQ715FZnAOYfHn5jt5Z2C8=";
+        persistencedSha256 = "sha256-a1D7ZZmcKFWfPjjH1REqPM5j/YLWKnbkP9qfRyIyxAw=";
+      };
+in
+{
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
     ../lib/laptop/common.nix
@@ -59,12 +71,18 @@
         };
       };
     };
-    extraModulePackages = [config.boot.kernelPackages.nvidiaPackages.latest];
-    kernelPackages = pkgs.unstable.linuxPackages_latest;
-    # @Reference, we can "extend" stuff
-    # kernelPackages = pkgs.unstable.linuxPackages_latest.extend (final: prev: {
-    #   nvidia_x11 = prev.nvidia_x11_beta;
-    # });
+    extraModulePackages = [fucknvidia];
+    # extraModulePackages = [config.boot.kernelPackages.nvidia_x11_production];
+    kernelPackages = pkgs.linuxPackages_latest;
+    kernelPatches = [
+      {
+        name = "fuck-your-soundwire";
+        patch = pkgs.fetchurl {
+          url = "https://github.com/torvalds/linux/commit/233a95fd574fde1c375c486540a90304a2d2d49f.diff";
+          hash = "sha256-E7K1gLmjwvk93m/dom19gXkBj3/o+5TLZGamv9Oesv0=";
+        };
+      }
+    ];
     kernelParams = [
       # prevent the kernel from blanking plymouth out of the fb
       "fbcon=nodefer"
@@ -78,10 +96,11 @@
       "rd.udev.log_level=3"
       # "i915.modeset=1"
       "intel_pstate=passive"
-      "pcie_aspm=force"
+      # "pcie_aspm=force"
       "i915.enable_fbc=1"
       "i915.enable_psr=2"
       # "video=eDP-1:1920x1200@60"
+      # "nvidia-drm.fbdev=1"
     ];
   };
 
@@ -131,7 +150,8 @@
     cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
     nvidia = {
       modesetting.enable = true;
-      package = config.boot.kernelPackages.nvidiaPackages.latest;
+      # package = config.boot.kernelPackages.nvidia_x11_production;
+      package = fucknvidia;
       prime = {
         sync.enable = false;
         offload = {
@@ -176,5 +196,4 @@
       "INTEL_GPU_BOOST_FREQ_ON_BAT" = 2250;
     };
   };
-  services.xserver.videoDrivers = [ "i915" "nvidia" ];
 }
