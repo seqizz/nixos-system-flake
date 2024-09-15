@@ -14,6 +14,7 @@ pkgs.stdenv.mkDerivation {
     xorg.libX11
     xorg.libXext
     xorg.libXrandr
+    xorg.libXinerama
     imlib2
   ];
 
