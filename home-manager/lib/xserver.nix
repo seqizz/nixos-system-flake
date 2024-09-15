@@ -18,12 +18,8 @@ in
   systemd.user.services.loose = {
     Unit = {
       Description = "Loose🫠 the Xrandr smasher";
-    };
-    Install = {
-      WantedBy = [
-        "multi-user.target"
-        "graphical-session.target"
-      ];
+      After = ["graphical-session-pre.target"];
+      PartOf = ["graphical-session.target"];
     };
     Service = {
       ExecStart = "${pkgs.loose}/bin/loose rotate -e";
