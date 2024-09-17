@@ -69,17 +69,17 @@ in {
       };
     };
     extraModulePackages = [fucknvidia];
-    # extraModulePackages = [config.boot.kernelPackages.nvidia_x11_production];
-    kernelPackages = pkgs.linuxPackages_latest;
-    kernelPatches = [
-      {
-        name = "fuck-your-soundwire";
-        patch = pkgs.fetchurl {
-          url = "https://github.com/torvalds/linux/commit/233a95fd574fde1c375c486540a90304a2d2d49f.diff";
-          hash = "sha256-E7K1gLmjwvk93m/dom19gXkBj3/o+5TLZGamv9Oesv0=";
-        };
-      }
-    ];
+    kernelPackages = pkgs.unstable.linuxPackages_latest;
+    # @Reference: In case I need to patch the kernel again :(
+    # kernelPatches = [
+    #   {
+    #     name = "fuck-your-soundwire";
+    #     patch = pkgs.fetchurl {
+    #       url = "https://github.com/torvalds/linux/commit/233a95fd574fde1c375c486540a90304a2d2d49f.diff";
+    #       hash = "sha256-E7K1gLmjwvk93m/dom19gXkBj3/o+5TLZGamv9Oesv0=";
+    #     };
+    #   }
+    # ];
     kernelParams = [
       # prevent the kernel from blanking plymouth out of the fb
       "fbcon=nodefer"
@@ -112,38 +112,11 @@ in {
     '';
   };
 
-  # IPU6 tests, not working yet
-  hardware.firmware = with pkgs.unstable; [
-    ipu6-camera-bins
-    ivsc-firmware
-  ];
-
-  services.udev.extraRules = ''
-    SUBSYSTEM=="intel-ipu6-psys", MODE="0660", GROUP="video"
-  '';
-
-  services.v4l2-relayd.instances.ipu6 = {
-    enable = true;
-
-    cardLabel = "Intel MIPI Camera";
-
-    extraPackages = [
-      pkgs.unstable.gst_all_1.icamerasrc-ipu6epmtl
-    ];
-
-    input = {
-      pipeline = "icamerasrc";
-      format = "NV12";
-    };
-  };
-
   hardware = {
-    # XXX: Webcam, almost same as above IPU6 section
-    # Waiting for https://github.com/NixOS/nixpkgs/pull/332240 to use built-in module
-    # ipu6 = {
-    # enable = true;
-    # platform = "ipu6epmtl";
-    # };
+    ipu6 = {
+      enable = true;
+      platform = "ipu6epmtl";
+    };
     cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
     nvidia = {
       modesetting.enable = true;
