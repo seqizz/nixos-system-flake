@@ -39,6 +39,7 @@ in
       kernel.sysctl = {
         "kernel.pty.max" = 24000;
         "kernel.sysrq" = 1;
+        "kernel.dmesg_restrict" = 0;
       };
     };
 
