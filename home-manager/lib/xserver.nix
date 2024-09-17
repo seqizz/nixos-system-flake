@@ -1,18 +1,18 @@
-{config, pkgs, ...}:
-
-let
+{
+  config,
+  pkgs,
+  ...
+}: let
   # baseconfig = { allowUnfree = true; };
   # unstable = import (
-    # fetchTarball https://github.com/NixOS/nixpkgs/archive/nixos-unstable.tar.gz
+  # fetchTarball https://github.com/NixOS/nixpkgs/archive/nixos-unstable.tar.gz
   # ) { config = baseconfig; };
   # @Reference from autorandr times, might be useful later
   # get_dpi_commands = list: [
-    # "${pkgs.xorg.xrandr}/bin/xrandr --dpi ${toString list.dpi}"
-    # "echo 'Xft.dpi: ${toString list.dpi}' | ${pkgs.xorg.xrdb}/bin/xrdb -merge"
+  # "${pkgs.xorg.xrandr}/bin/xrandr --dpi ${toString list.dpi}"
+  # "echo 'Xft.dpi: ${toString list.dpi}' | ${pkgs.xorg.xrdb}/bin/xrdb -merge"
   # ];
-in
-{
-
+in {
   home.keyboard.layout = "tr";
 
   systemd.user.services.loose = {
@@ -77,9 +77,9 @@ in
     scriptPath = ".hm-xsession";
     # ${pkgs.dbus}/bin/dbus-run-session ${pkgs.awesome}/bin/awesome
     windowManager.command = ''
-    ${pkgs.systemd}/bin/systemctl --user import-environment DISPLAY XAUTHORITY
-    ${pkgs.dbus}/bin/dbus-update-activation-environment --all --systemd --verbose
-    ${pkgs.awesome}/bin/awesome
+      ${pkgs.systemd}/bin/systemctl --user import-environment DISPLAY XAUTHORITY
+      ${pkgs.dbus}/bin/dbus-update-activation-environment --all --systemd --verbose
+      ${pkgs.awesome}/bin/awesome
     '';
     initExtra = ''
       # Trigger loose with reset switch
@@ -97,5 +97,4 @@ in
     name = "capitaine-cursors";
     size = 32;
   };
-
 }
