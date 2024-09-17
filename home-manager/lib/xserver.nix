@@ -18,7 +18,16 @@ in {
   systemd.user.services.loose = {
     Unit = {
       Description = "Loose🫠 the Xrandr smasher";
-      After = ["graphical-session-pre.target"];
+      after = [
+        "graphical-session-pre.target"
+        "sleep.target"
+        "systemd-suspend.service"
+        "systemd-hibernate.service"
+      ];
+      requiredBy = [
+        "systemd-suspend.service"
+        "systemd-hibernate.service"
+      ];
       PartOf = ["graphical-session.target"];
     };
     Service = {
