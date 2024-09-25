@@ -19,12 +19,10 @@ in {
     Unit = {
       Description = "Loose🫠 the Xrandr smasher";
       After = [
-        "graphical-session-pre.target"
         "sleep.target"
         "systemd-suspend.service"
         "systemd-hibernate.service"
       ];
-      PartOf = ["graphical-session.target"];
     };
     Service = {
       # Wait for X to be ready (NVIDIA©, amazing)
