@@ -8,8 +8,10 @@ in
     tailf = "tail -f";
     vimdiff = "nvim -d";
     # Using this "path:///" nonsense to automate the update because I am NOT including my secret files in the git repo, even encrypted: https://github.com/NixOS/nix/issues/7107#issuecomment-1366095373
-    # Waiting for https://github.com/NixOS/nix/pull/9352
-    update-flake-inputs = "nix flake update path://${myConfigPath}";
+    # Waiting for https://github.com/NixOS/nix/pull/9352 (p.s. it will never happen)
+    # update-flake-inputs = "nix flake update path://${myConfigPath}";
+    # Instead, I am using lix which does it differently:
+    update-flake-inputs = "nix flake update --flake ${myConfigPath}";
     homeup-noupdate = "home-manager switch --flake path://${myConfigPath}#gurkan@${config.networking.hostName} --option eval-cache false";
     sysup-noupdate = "sudo nixos-rebuild switch --flake path://${myConfigPath}#${config.networking.hostName} --verbose --upgrade --option eval-cache false";
     sysup = "update-flake-inputs && sysup-noupdate && if [[ $(whoami) == 'gurkan' ]]; then echo; echo \"Switching home-manager after waiting 15 sec...\"; sleep 15; homeup-noupdate; fi";
