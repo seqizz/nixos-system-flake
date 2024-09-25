@@ -61,7 +61,7 @@ in
           "https://nix-community.cachix.org"
         ];
       };
-      package = pkgs.nixFlakes;
+      package = pkgs.lix;
       extraOptions = ''
         keep-outputs = true
         keep-derivations = true

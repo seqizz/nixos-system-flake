@@ -22,11 +22,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    lix-module = {
-      url = "https://git.lix.systems/lix-project/nixos-module/archive/2.91.0.tar.gz";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     # wezterm = {
     #   url = "github:wez/wezterm?dir=nix";
     #   inputs.nixpkgs.follows = "nixpkgs";
@@ -140,7 +135,6 @@
     loose-src,
     nix-index-database,
     simple-nixos-mailserver,
-    lix-module,
     ...
   } @ inputs: let
     inherit (self) outputs;
@@ -170,7 +164,6 @@
           # { disko.devices.disk.disk1.device = "/dev/nvme0n1"; }
           nur.nixosModules.nur
           nix-index-database.nixosModules.nix-index
-          lix-module.nixosModules.default
           ./nixos/configuration.nix
           ./nixos/machines/splinter.nix
         ];
@@ -180,7 +173,6 @@
         modules = [
           nur.nixosModules.nur
           nix-index-database.nixosModules.nix-index
-          lix-module.nixosModules.default
           ./nixos/configuration.nix
           ./nixos/machines/bebop.nix
         ];
@@ -191,7 +183,6 @@
           self.nixosModules.yarr
           simple-nixos-mailserver.nixosModules.mailserver
           nix-index-database.nixosModules.nix-index
-          lix-module.nixosModules.default
           ./nixos/configuration.nix
           ./nixos/machines/rocksteady.nix
         ];
