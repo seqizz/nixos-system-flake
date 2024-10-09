@@ -23,6 +23,11 @@ in {
 
       "mimeapps.list".force = true;
 
+      "puppet_4chars.rb".text = ''
+        # Used for puppet-lint, makes default indentation 4 spaces
+        PuppetLint.configuration.chars_per_indent = 4
+      '';
+
       "Yubico/u2f_keys".text = secrets.yubicoU2FKeys;
       "Yubico/YKPersonalization.conf".source = ./config_files/YKPersonalization.conf;
 

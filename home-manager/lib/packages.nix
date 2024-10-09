@@ -10,6 +10,15 @@ in
       enable = true;
       allowUnfree = true;
       # Quick-overrides
+      packageOverrides = pkgs: {
+        nur-lunwill42 = import (
+          pkgs.fetchFromGitHub {
+            owner = "lunkwill42";
+            repo = "nur-packages";
+            rev = "master";
+            sha256 = "sha256-IewS/HSyPvyBiE2oWgQeVgvwcgbai1qfjiacYizg3RA=";
+          }) { inherit pkgs; };
+      };
       # packageOverrides = pkgs: rec {
         # browserpass = oldversion.browserpass;  # Reference override: https://github.com/NixOS/nixpkgs/issues/236074
         # @Reference patching apps
@@ -72,6 +81,7 @@ in
     # NUR packages @Reference, mostly does not work / maintained
     # config.nur.repos.wolfangaukang.vdhcoapp
     # config.nur.repos.mic92.reveal-md
+    nur-lunwill42.puppet-lint
 
     # Rest is sorted
     adbfs-rootless

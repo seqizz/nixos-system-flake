@@ -45,7 +45,6 @@
     nodePackages.fixjson
     pkgs.unstable.ruff
     pkgs.unstable.ruff-lsp
-    puppet-lint
     rubyPackages_3_3.rubocop
     shellcheck
     stylua
