@@ -51,3 +51,8 @@ findbar:not(:focus-within) {
     height: 0px !important;
     overflow: hidden !important;
 }
+
+/* Remove the bottom border of the navigation toolbar */
+#navigator-toolbox {
+    border-bottom: 0px !important;
+}
