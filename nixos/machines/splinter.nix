@@ -59,7 +59,7 @@ in {
         "vmd"
         "nvidia"
       ];
-      kernelModules = ["dm-snapshot" "i915"];
+      # kernelModules = ["dm-snapshot" "i915"];
       luks.devices = {
         crypted = {
           preLVM = true;
