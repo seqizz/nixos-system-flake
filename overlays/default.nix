@@ -45,7 +45,7 @@ in {
           unstable.libev
           unstable.xorg.xcbutil
           unstable.pcre2
-          unstable.epoxy
+          unstable.libepoxy
           unstable.asciidoctor
         ]
         ++ old.buildInputs;
