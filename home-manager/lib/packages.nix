@@ -126,12 +126,12 @@ in
     meld # GUI diff tool
     mpv
     my_scripts.bulb-toggle
+    my_scripts.firefox-tempprofile
     my_scripts.git-browse-origin
     my_scripts.git-cleanmerged
     my_scripts.psitool-script
     my_scripts.rofi-subsuper
     my_scripts.tarsnap-dotfiles
-    # my_scripts.workman-toggle
     my_scripts.xinput-toggle
     nfpm
     onboard # on-screen keyboard

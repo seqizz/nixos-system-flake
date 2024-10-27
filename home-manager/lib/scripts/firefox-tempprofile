@@ -1,0 +1,5 @@
+#!/usr/bin/env @bash@/bin/bash
+PROFILEDIR=`@coreutils@/bin/coreutils --coreutils-prog=mktemp -p /tmp -d tmp-fx-profile.XXXXXX.d`
+# Especially not substituting firefox
+firefox -profile $PROFILEDIR -no-remote -new-instance
+rm -rf $PROFILEDIR

@@ -72,4 +72,9 @@ in
     src = ./scripts/rofi-subsuper;
     inherit bash sed xclip;
   });
+  firefox-tempprofile = (writeSubbedBin {
+    name = "firefox-tempprofile";
+    src = ./scripts/firefox-tempprofile;
+    inherit bash coreutils;
+  });
 }
