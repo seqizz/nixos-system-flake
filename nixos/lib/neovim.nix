@@ -44,7 +44,8 @@
           pkgs.vim-yadi
           pkgs.yanky
           splitjoin-vim # Better split/join with gS/gJ
-          tagbar # sidebar
+          # tagbar # sidebar
+          aerial-nvim # sidebar
           telescope-nvim
           telescope-zoxide
           plenary-nvim # Needed by session-manager
