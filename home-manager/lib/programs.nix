@@ -1,14 +1,16 @@
-{config, pkgs, ...}:
-let
+{
+  config,
+  pkgs,
+  ...
+}: let
   # baseconfig = { allowUnfree = true; };
   # In case I want to use the packages I need on other channels
   # unstable = import (
-    # fetchTarball https://github.com/NixOS/nixpkgs/archive/nixos-unstable.tar.gz
+  # fetchTarball https://github.com/NixOS/nixpkgs/archive/nixos-unstable.tar.gz
   # ) { config = baseconfig; };
-  secrets = import ./secrets.nix {pkgs=pkgs;};
+  secrets = import ./secrets.nix {pkgs = pkgs;};
   gitConfigInnoPath = (pkgs.writeText "git-config-inno" secrets.gitConfigInno).outPath;
-in
-{
+in {
   programs = {
     git = {
       enable = true;
@@ -39,7 +41,7 @@ in
 
     browserpass = {
       enable = true;
-      browsers = [ "firefox" ];
+      browsers = ["firefox"];
     };
 
     # Bug: https://github.com/nix-community/home-manager/issues/1586
@@ -73,14 +75,14 @@ in
           USERNAME_field='login'
           help_color='#4872FF'
         '';
-        };
+      };
       font = "FiraCode Nerd Font 14";
       theme = "glue_pro_blue";
       extraConfig = {
         matching = "regex";
         max-history-size = 500;
         kb-clear-line = "Control+a";
-        kb-move-front = "" ;
+        kb-move-front = "";
         kb-cancel = "Control+c,Escape,Control+g,Control+bracketleft";
       };
     };
