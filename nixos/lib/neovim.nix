@@ -23,7 +23,7 @@
           coc-pyright
           colorizer # Colorize hex codes
           conform-nvim # Autoformat for various languages
-          context-vim # Keep the context on top
+          # context-vim # Keep the context on top
           gitlinker-nvim
           gitsigns-nvim # Show git changes in the gutter
           indent-blankline-nvim-lua # Visible indent lines
@@ -46,6 +46,8 @@
           splitjoin-vim # Better split/join with gS/gJ
           # tagbar # sidebar
           aerial-nvim # sidebar
+          nvim-treesitter-context
+          nvim-ts-context-commentstring
           telescope-nvim
           telescope-zoxide
           plenary-nvim # Needed by session-manager
