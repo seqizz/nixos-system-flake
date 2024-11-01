@@ -89,6 +89,8 @@ in
       enable = true;
       enableZshIntegration = true;
     };
+    mpv.enable = true;
   };
 }
 #  vim: set ts=2 sw=2 tw=0 et :
+

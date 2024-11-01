@@ -124,7 +124,6 @@ in
     # lxqt.lximage-qt
     nomacs
     meld # GUI diff tool
-    mpv
     my_scripts.bulb-toggle
     my_scripts.firefox-tempprofile
     my_scripts.git-browse-origin
