@@ -57,6 +57,10 @@ in
               name = "rocksteady";
               id = secrets.syncthingIDrocksteady;
             };
+            pihole = {
+              name = "pihole";
+              id = secrets.syncthingIDpihole;
+            };
             nixosis = {
               name = "nixosis";
               id = secrets.syncthingIDnixosis;
