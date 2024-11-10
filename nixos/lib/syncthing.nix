@@ -88,6 +88,7 @@ in
                 "rocksteady"
                 "bebop"
                 "splinter"
+                "pihole"
               ];
             };
           };
