@@ -15,6 +15,7 @@
   "image/png" = "org.nomacs.ImageLounge.desktop";
   "image/gif" = "org.nomacs.ImageLounge.desktop";
   "image/webp" = "org.nomacs.ImageLounge.desktop";
+  "image/svg+xml" = "org.nomacs.ImageLounge.desktop";
   "image/x-xcf" = "gimp.desktop";
   "inode/directory" = "pcmanfm.desktop";
   "application/x-directory" = "pcmanfm.desktop";
