@@ -74,6 +74,7 @@
     dnsutils
     docker-compose
     dstat
+    e2fsprogs
     ffmpeg
     file
     fzf

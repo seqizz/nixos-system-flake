@@ -64,6 +64,7 @@ in {
         crypted = {
           preLVM = true;
           allowDiscards = true;
+          bypassWorkqueues = true;
           device = "/dev/disk/by-partlabel/disk-main-luks";
         };
       };
