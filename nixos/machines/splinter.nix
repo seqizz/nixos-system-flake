@@ -166,4 +166,10 @@ in {
       "INTEL_GPU_BOOST_FREQ_ON_BAT" = 2250;
     };
   };
+  programs.steam = {
+    enable = true;
+    extraCompatPackages = with pkgs; [
+      proton-ge-bin
+    ];
+  };
 }

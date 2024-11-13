@@ -70,7 +70,6 @@ in
     ]))
 
     # non-stable stuff, subject to change
-    steam
     pkgs.unstable.tdesktop # telegram
     firefox # was unstable, broke webgl
     pkgs.unstable.wezterm
