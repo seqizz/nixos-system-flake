@@ -26,6 +26,11 @@ in {
 
   environment.systemPackages = with pkgs; [
     regenerateAsNginx
+    (pkgs.writeTextFile {
+      name = "git-disallow-robots";
+      destination = "/var/lib/gitea/custom/public/robots.txt";
+      source = ./config_files/gitrobotstxt;
+    })
   ];
 
   services = {
