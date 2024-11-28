@@ -20,6 +20,7 @@
 
 /* Expand sidebar if it's hovered for a while */
 #sidebar-box {
+  z-index: 999 !important;
   position: relative !important;
   overflow-x: hidden !important;
   min-width: var(--sidebar-normal-width) !important;
