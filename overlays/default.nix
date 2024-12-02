@@ -18,7 +18,7 @@ in {
     # };
     vimwiki-markdown = getSrcFromInput prev.vimwiki-markdown inputs.vimwiki-markdown-src;
     mpv = prev.mpv-unwrapped.override {
-      ffmpeg = prev.ffmpeg_5-full;
+      ffmpeg = prev.ffmpeg_6-full;
     };
     greenclip = getSrcFromInput prev.greenclip inputs.greenclip-src;
     sd-switch = inputs.sd-switch-src.packages.${final.system}.default;
@@ -35,20 +35,6 @@ in {
         # TODO: Find a way to define this on inputs?
         outputHash = "sha256-Iuri3dOLzrfTzHvwOKcZrVJFotqrGlM6EeuV29yqz+U=";
       });
-    });
-    picom = prev.picom.overrideAttrs (old: {
-      version = "master";
-      src = inputs.picom-src;
-      buildInputs = with final;
-        [
-          unstable.cmake
-          unstable.libev
-          unstable.xorg.xcbutil
-          unstable.pcre2
-          unstable.libepoxy
-          unstable.asciidoctor
-        ]
-        ++ old.buildInputs;
     });
 
     awesome = prev.awesome.overrideAttrs (old: rec {

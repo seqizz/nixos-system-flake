@@ -44,7 +44,6 @@
     alejandra # Nix
     nodePackages.fixjson
     pkgs.unstable.ruff
-    pkgs.unstable.ruff-lsp
     rubyPackages_3_3.rubocop
     shellcheck
     stylua

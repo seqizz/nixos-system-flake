@@ -18,11 +18,18 @@
 
     firmware = [pkgs.firmwareLinuxNonfree];
 
-    opengl = {
+    graphics = {
       enable = true;
-      driSupport = true;
-      driSupport32Bit = true;
+      enable32Bit = true;
       extraPackages = with pkgs; [
+        vaapiIntel
+        vaapiVdpau
+        libvdpau-va-gl
+        intel-media-driver
+        vulkan-loader
+        libva
+      ];
+      extraPackages32 = with pkgs.pkgsi686Linux; [
         vaapiIntel
         vaapiVdpau
         libvdpau-va-gl

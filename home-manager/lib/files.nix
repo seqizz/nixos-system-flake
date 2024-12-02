@@ -35,6 +35,8 @@ in {
 
       "tig/config".source = ./config_files/tig;
 
+      "flameshot/flameshot.ini".source = ./config_files/flameshot.ini;
+
       "loose/config.yaml".source = ./config_files/loose;
 
       "picom.conf".source = ./config_files/picom.conf;

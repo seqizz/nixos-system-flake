@@ -16,7 +16,7 @@ in
           echo "restarting iphone service" && \
           echo "if does not work, restart or kill-start usbmuxd service" && \
           sudo systemctl restart iphone \
-            && ${pkgs.xdg_utils}/bin/xdg-open ${cfg.directory}
+            && ${pkgs.xdg-utils}/bin/xdg-open ${cfg.directory}
       '')
     ];
     services.usbmuxd.enable = true;
