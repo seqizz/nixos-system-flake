@@ -120,7 +120,6 @@ in
     aspellDicts.en
     aspellDicts.tr
     loose # Fuck yeah
-    # lxqt.lximage-qt
     nomacs
     meld # GUI diff tool
     my_scripts.bulb-toggle
@@ -153,7 +152,6 @@ in
     spotify
     steam-run # helper tool for running shitty binaries
     tarsnap
-    # taskwarrior
     update-nix-fetchgit
     vial # QMK keyboard configurator
     wally-cli

@@ -38,7 +38,6 @@
 
     picom-src = {
       url = "github:yshui/picom/v12.5";
-      # url = "github:yshui/picom";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
