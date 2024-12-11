@@ -162,7 +162,7 @@
         modules = [
           disko.nixosModules.disko
           # { disko.devices.disk.disk1.device = "/dev/nvme0n1"; }
-          nur.nixosModules.nur
+          nur.modules.nixos.default
           nix-index-database.nixosModules.nix-index
           ./nixos/configuration.nix
           ./nixos/machines/splinter.nix
@@ -171,7 +171,7 @@
       bebop = nixpkgs.lib.nixosSystem {
         specialArgs = {inherit inputs outputs;};
         modules = [
-          nur.nixosModules.nur
+          nur.modules.nixos.default
           nix-index-database.nixosModules.nix-index
           ./nixos/configuration.nix
           ./nixos/machines/bebop.nix
@@ -198,7 +198,7 @@
           osConfig = self.nixosConfigurations.bebop.config;
         };
         modules = [
-          nur.hmModules.nur
+          nur.modules.homeManager.default
           ./home-manager/home.nix
         ];
       };
@@ -210,7 +210,7 @@
           osConfig = self.nixosConfigurations.splinter.config;
         };
         modules = [
-          nur.hmModules.nur
+          nur.modules.homeManager.default
           ./home-manager/home.nix
         ];
       };
