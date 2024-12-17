@@ -81,6 +81,10 @@
   };
 
   systemd = {
+    # Unbind network-online from multi-user.target to speed up boot
+    # https://discourse.nixos.org/t/get-to-the-login-screen-faster-on-nixos/57481
+    targets.network-online.wantedBy = lib.mkForce [ ];
+
     services = {
       # Do not restart these, since it fucks up the current session
       systemd-logind.restartIfChanged = false;
