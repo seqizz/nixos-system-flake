@@ -70,7 +70,26 @@ in {
       };
     };
     extraModulePackages = [fucknvidia];
-    kernelPackages = pkgs.unstable.linuxPackages_latest;
+    # kernelPackages = pkgs.unstable.linuxPackages_latest;
+    # @Reference: In case I need to override the kernel
+    # This one is for a broken upstream, I cannot upgrade kernel higher than 6.12.1
+    # thanks to: https://lore.kernel.org/all/20241211114905.368044-1-stanislaw.gruszka@linux.intel.com/
+    # which is not pulled yet to the mainline kernel 😒
+    # All below schenanigans are to make IPU6 work by overrides
+    kernelPackages =
+      (pkgs.linuxPackagesFor
+      (pkgs.linux_6_12.override {
+        argsOverride = rec {
+          src = pkgs.fetchurl {
+            url = "mirror://kernel/linux/kernel/v6.x/linux-${version}.tar.xz";
+            sha256 = "sha256-AZOx2G3TcuyJG655n22iDe7xb8GZ8wCApOqd6M7wxhk=";
+          };
+          version = "6.12.1";
+          modDirVersion = "6.12.1";
+        };
+      })).extend (_: _: {
+        ipu6-drivers = config.boot.kernelPackages.callPackage ./ipudrivers.nix {};
+      });
     # @Reference: In case I need to patch the kernel again :(
     # kernelPatches = [
     #   {
