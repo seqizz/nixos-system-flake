@@ -97,6 +97,13 @@ in {
     "STOP_CHARGE_THRESH_BAT0" = 80;
   };
 
+  programs.steam = {
+    enable = true;
+    extraCompatPackages = with pkgs; [
+      proton-ge-bin
+    ];
+  };
+
   fileSystems = {
     "/" = {
       device = "/dev/disk/by-uuid/5474a12e-4fcb-44cb-9107-e7f333392836";
