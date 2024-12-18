@@ -23,15 +23,25 @@
 
   # And now the depending services
   systemd.services = {
-    "rustypaste".unitConfig.RequiresMountsFor = "/shared";
-    "syncthing".unitConfig.RequiresMountsFor = "/shared";
+    "anayasa-bot".unitConfig.RequiresMountsFor = "/shared";
+    "bind".unitConfig.RequiresMountsFor = "/shared";
+    "bllk-timezone-bot".unitConfig.RequiresMountsFor = "/shared";
+    "comar-bot".unitConfig.RequiresMountsFor = "/shared";
+    "dns-rfc2136-conf".unitConfig.RequiresMountsFor = "/shared";
     "dovecot2".unitConfig.RequiresMountsFor = "/shared";
+    "forgejo".unitConfig.RequiresMountsFor = "/shared";
+    "forgejo-secrets".unitConfig.RequiresMountsFor = "/shared";
+    "kufur-bot".unitConfig.RequiresMountsFor = "/shared";
+    "mysql".unitConfig.RequiresMountsFor = "/shared";
+    "nginx".unitConfig.RequiresMountsFor = "/shared";
     "opendkim".unitConfig.RequiresMountsFor = "/shared";
     "postfix".unitConfig.RequiresMountsFor = "/shared";
-    "bind".unitConfig.RequiresMountsFor = "/shared";
     "remark-gurkanin".unitConfig.RequiresMountsFor = "/shared";
     "remark-siktirin".unitConfig.RequiresMountsFor = "/shared";
-    "nginx".unitConfig.RequiresMountsFor = "/shared";
+    "rspamd".unitConfig.RequiresMountsFor = "/shared";
+    "rustypaste".unitConfig.RequiresMountsFor = "/shared";
+    "syncthing".unitConfig.RequiresMountsFor = "/shared";
+    "yarr".unitConfig.RequiresMountsFor = "/shared";
     "acme-gurkan.in" = {
       unitConfig.RequiresMountsFor = "/shared";
       after = [
