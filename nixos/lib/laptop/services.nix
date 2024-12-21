@@ -83,6 +83,8 @@
   systemd = {
     # Unbind network-online from multi-user.target to speed up boot
     # https://discourse.nixos.org/t/get-to-the-login-screen-faster-on-nixos/57481
+    # Should be OK to remove after https://nixpk.gs/pr-tracker.html?pr=365809
+    # Which will be probably 25.04
     targets.network-online.wantedBy = lib.mkForce [ ];
 
     services = {
