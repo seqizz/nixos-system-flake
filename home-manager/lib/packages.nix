@@ -144,6 +144,7 @@ in
     playerctl
     poetry
     proxychains
+    qpwgraph # Graphical pipewire plumbing
     reveal-md
     rofi-pulse-select
     qpdfview
