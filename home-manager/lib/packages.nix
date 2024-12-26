@@ -129,6 +129,7 @@ in
     my_scripts.psitool-script
     my_scripts.rofi-subsuper
     my_scripts.tarsnap-dotfiles
+    my_scripts.update-song
     my_scripts.xinput-toggle
     nfpm
     onboard # on-screen keyboard

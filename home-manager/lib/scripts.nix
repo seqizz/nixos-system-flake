@@ -36,6 +36,10 @@ in
     name = "bulb-toggle";
     src = ./scripts/bulb-toggle;
   });
+  update-song = (writeSubbedBin {
+    name = "update-song";
+    src = ./scripts/update-song;
+  });
   innovpn-toggle = (writeSubbedBin {
     name = "innovpn-toggle";
     src = ./scripts/innovpn-toggle;

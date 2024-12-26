@@ -19,6 +19,7 @@
     ./shadowsocks.nix
     ./shared-folder.nix
     ./ssh.nix
+    ./updatesong.nix
     ./websites.nix
     ./yarr.nix
   ];

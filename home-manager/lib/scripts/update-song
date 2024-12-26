@@ -1,0 +1,50 @@
+#!/usr/bin/env bash
+
+# Check if credentials are provided
+if [ $# -ne 1 ]; then
+    echo "Usage: $0 username:password"
+    exit 1
+fi
+
+SERVER="https://gurkan.in/updatesong"
+CREDENTIALS="$1"
+
+# Check if Spotify is running and active
+check_spotify() {
+    pgrep spotify >/dev/null || return 1
+
+    status=$(dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.freedesktop.DBus.Properties.Get string:'org.mpris.MediaPlayer2.Player' string:'PlaybackStatus' 2>/dev/null | grep -A 1 "string" | tail -1 | cut -d'"' -f2)
+
+    [ "$status" = "Playing" ] || return 1
+    return 0
+}
+
+# Get Spotify metadata using D-Bus
+get_spotify_info() {
+    artist=$(dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.freedesktop.DBus.Properties.Get string:'org.mpris.MediaPlayer2.Player' string:'Metadata' 2>/dev/null | grep -A 2 "xesam:artist" | tail -1 | cut -d'"' -f2)
+    title=$(dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.freedesktop.DBus.Properties.Get string:'org.mpris.MediaPlayer2.Player' string:'Metadata' 2>/dev/null | grep -A 1 "xesam:title" | tail -1 | cut -d'"' -f2)
+    url=$(dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.freedesktop.DBus.Properties.Get string:'org.mpris.MediaPlayer2.Player' string:'Metadata' 2>/dev/null | grep -A 1 "xesam:url" | tail -1 | cut -d'"' -f2)
+}
+
+# Send update via nginx with basic auth
+send_update() {
+    if [ -n "$artist" ] && [ -n "$title" ] && [[ $url == *"spotify"* ]]; then
+        json="{\"current_song\": \"$artist - $title\", \"song_link\": \"$url\"}"
+        curl -X POST \
+             -H "Content-Type: application/json" \
+             --user "$CREDENTIALS" \
+             -d "$json" \
+             "$SERVER"
+        echo "Updated: $artist - $title"
+    else
+        echo "No valid Spotify song playing"
+    fi
+}
+
+# Main execution
+if check_spotify; then
+    get_spotify_info
+    send_update
+else
+    echo "Spotify is not running or not playing"
+fi

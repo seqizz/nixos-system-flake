@@ -24,25 +24,29 @@
 in {
   networking.firewall.allowedTCPPorts = [80 443];
 
-  environment.systemPackages = with pkgs; [
-    regenerateAsNginx
-    (pkgs.writeTextFile {
-      name = "git-disallow-robots";
-      destination = "/var/lib/gitea/custom/public/robots.txt";
-      text = ''
-        #  ▗▄▄▄▖▗▖_▗▖_▗▄▄▖▗▖_▗▖_____▗▄▖_▗▄▄▄▖▗▄▄▄▖
-        #  ▐▌___▐▌_▐▌▐▌___▐▌▗▞▘____▐▌_▐▌▐▌___▐▌___
-        #  ▐▛▀▀▘▐▌_▐▌▐▌___▐▛▚▖_____▐▌_▐▌▐▛▀▀▘▐▛▀▀▘
-        #  ▐▌___▝▚▄▞▘▝▚▄▄▖▐▌_▐▌____▝▚▄▞▘▐▌___▐▌___
-        #  _______________________________________
-        #  _______________________________________
-        #  _______________________________________
+  environment = {
+    systemPackages = with pkgs; [
+      regenerateAsNginx
+      (pkgs.writeTextFile {
+        name = "git-disallow-robots";
+        destination = "/var/lib/gitea/custom/public/robots.txt";
+        text = ''
+          #  ▗▄▄▄▖▗▖_▗▖_▗▄▄▖▗▖_▗▖_____▗▄▖_▗▄▄▄▖▗▄▄▄▖
+          #  ▐▌___▐▌_▐▌▐▌___▐▌▗▞▘____▐▌_▐▌▐▌___▐▌___
+          #  ▐▛▀▀▘▐▌_▐▌▐▌___▐▛▚▖_____▐▌_▐▌▐▛▀▀▘▐▛▀▀▘
+          #  ▐▌___▝▚▄▞▘▝▚▄▄▖▐▌_▐▌____▝▚▄▞▘▐▌___▐▌___
+          #  _______________________________________
+          #  _______________________________________
+          #  _______________________________________
 
-        User-agent: *
-        Disallow: /
-      '';
-    })
-  ];
+          User-agent: *
+          Disallow: /
+        '';
+      })
+    ];
+    # Not sure why I am doing this
+    etc."nginx/.updateSongSecret".text = secrets.updateSongSecret;
+  };
 
   services = {
     nginx = {
