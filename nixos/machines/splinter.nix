@@ -113,25 +113,26 @@ in {
       "rd.systemd.show_status=auto"
       # lower the udev log level to show only errors or worse
       "rd.udev.log_level=3"
-      # "i915.modeset=1"
+      "i915.modeset=1"
+      "nvidia.modeset=1"
       "intel_pstate=passive"
       # "pcie_aspm=force"
       "i915.enable_fbc=1"
       "i915.enable_psr=2"
       # "video=eDP-1:1920x1200@60"
-      # "nvidia-drm.fbdev=1"
+      "nvidia-drm.fbdev=1"
     ];
   };
 
   powerManagement = {
     cpuFreqGovernor = lib.mkDefault "powersave";
     # Disable hid driver (gyro/accel) while sleeping
-    powerDownCommands = ''
-      ${pkgs.kmod}/bin/modprobe -r intel_hid
-    '';
-    resumeCommands = ''
-      ${pkgs.kmod}/bin/modprobe intel_hid
-    '';
+    # powerDownCommands = ''
+      # ${pkgs.kmod}/bin/modprobe -r intel_hid
+    # '';
+    # resumeCommands = ''
+      # ${pkgs.kmod}/bin/modprobe intel_hid
+    # '';
   };
 
   hardware = {
@@ -157,7 +158,7 @@ in {
         enable = true;
         finegrained = true;
       };
-      open = true;
+      open = false;
     };
   };
   # XXX: There is a bug somewhere, this is a workaround

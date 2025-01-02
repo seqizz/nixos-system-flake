@@ -27,7 +27,7 @@ in {
     Service = {
       # Wait for X to be ready (NVIDIA©, amazing)
       ExecStartPre = "${pkgs.coreutils}/bin/sleep 3";
-      ExecStart = "${pkgs.loose}/bin/loose rotate -e";
+      ExecStart = "${pkgs.loose}/bin/loose rotate -e -v";
       Type = "oneshot";
       RemainAfterExit = true;
       # We'd like to be able to run anything available on system via hooks
@@ -88,7 +88,7 @@ in {
     '';
     initExtra = ''
       # Trigger loose with reset switch
-      ${pkgs.loose}/bin/loose rotate -r
+      ${pkgs.loose}/bin/loose rotate -r -v
       # Disable DPMS by default
       ${pkgs.xorg.xset}/bin/xset -dpms
       # Disable screensaver by default
