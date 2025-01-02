@@ -54,7 +54,7 @@
           terminus # terminal integration
           vim-fugitive # git helper
           vim-gutentags
-          vim-illuminate # highlight word under cursor everywhere
+          nvim-cursorline # highlight word under cursor everywhere
           vim-markdown
           vim-nix
           vim-oscyank
