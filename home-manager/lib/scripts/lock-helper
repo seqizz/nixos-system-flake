@@ -1,5 +1,8 @@
 #!/usr/bin/env @bash@/bin/bash
 action=$1
+# Enforce screen off when locking
+# Default to false if not provided, should pass "true" as second argument to enable
+do_screen_off=${2:-false}
 
 save_brightness () {
     @brightnessctl@/bin/brightnessctl g > /tmp/last_brightness
@@ -33,6 +36,7 @@ if [[ "$action" == "start" ]]; then
 
     save_brightness
     dim_screen
+    [[ "$do_screen_off" == "true" ]] && screen_off
 
 elif [[ "$action" == "cancel" ]]; then
     screen_on
@@ -41,6 +45,6 @@ elif [[ "$action" == "cancel" ]]; then
     fi
 
 elif [[ "$action" == "lock" ]]; then
-    screen_off
+    [[ "$do_screen_off" == "true" ]] && screen_off
     lock_screen
 fi
