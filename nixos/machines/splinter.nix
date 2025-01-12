@@ -70,28 +70,25 @@ in {
       };
     };
     extraModulePackages = [fucknvidia];
-    # kernelPackages = pkgs.linuxPackages_latest.extend (_: _: {
-    # ipu6-drivers = config.boot.kernelPackages.callPackage ./ipudrivers.nix {};
-    # });
     # @Reference: In case I need to override the kernel
-    # This one is for a broken upstream, I cannot upgrade kernel higher than 6.12.1
-    # thanks to: https://lore.kernel.org/all/20241211114905.368044-1-stanislaw.gruszka@linux.intel.com/
-    # which is not pulled yet to the mainline kernel 😒
-    # All below schenanigans are to make IPU6 work by overrides
-    kernelPackages = (pkgs.linuxPackagesFor
-      (pkgs.linux_6_12.override {
-        argsOverride = rec {
-          src = pkgs.fetchurl {
-            url = "mirror://kernel/linux/kernel/v6.x/linux-${version}.tar.xz";
-            sha256 = "sha256-AZOx2G3TcuyJG655n22iDe7xb8GZ8wCApOqd6M7wxhk=";
+    # Apparently having a USB webcam was too insecure so we had to invent new shit
+    # called IPU. I cannot use newer kernels since noone knows what they are doing
+    # upstream and WEBCAM DOES NOT WORK! Total dumbfuckery.
+    kernelPackages =
+      (pkgs.linuxPackagesFor
+        (pkgs.linux_6_12.override {
+          argsOverride = rec {
+            src = pkgs.fetchurl {
+              url = "mirror://kernel/linux/kernel/v6.x/linux-${version}.tar.xz";
+              sha256 = "sha256-AZOx2G3TcuyJG655n22iDe7xb8GZ8wCApOqd6M7wxhk=";
+            };
+            version = "6.12.1";
+            modDirVersion = "6.12.1";
           };
-          version = "6.12.1";
-          modDirVersion = "6.12.1";
-        };
-      }))
-    .extend (_: _: {
-      ipu6-drivers = config.boot.kernelPackages.callPackage ./ipudrivers.nix {};
-    });
+        }))
+      .extend (_: _: {
+        ipu6-drivers = config.boot.kernelPackages.callPackage ./ipudrivers.nix {};
+      });
     # @Reference: In case I need to patch the kernel again :(
     # kernelPatches = [
     #   {
@@ -105,9 +102,6 @@ in {
     kernelParams = [
       # prevent the kernel from blanking plymouth out of the fb
       "fbcon=nodefer"
-      # disable boot logo if any
-      # "logo.nologo"
-      # tell the kernel to not be verbose
       "quiet"
       # disable systemd status messages
       "rd.systemd.show_status=auto"
@@ -118,32 +112,23 @@ in {
       "intel_pstate=passive"
       # "pcie_aspm=force"
       "i915.enable_fbc=1"
-      "i915.enable_psr=2"
+      "i915.enable_psr=0"  # WTF is even this?
       # "video=eDP-1:1920x1200@60"
       "nvidia-drm.fbdev=1"
     ];
   };
 
-  powerManagement = {
-    cpuFreqGovernor = lib.mkDefault "powersave";
-    # Disable hid driver (gyro/accel) while sleeping
-    # powerDownCommands = ''
-      # ${pkgs.kmod}/bin/modprobe -r intel_hid
-    # '';
-    # resumeCommands = ''
-      # ${pkgs.kmod}/bin/modprobe intel_hid
-    # '';
-  };
+  powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
 
   hardware = {
     ipu6 = {
+      # Brain has left the chat
       enable = true;
       platform = "ipu6epmtl";
     };
     cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
     nvidia = {
       modesetting.enable = true;
-      # package = config.boot.kernelPackages.nvidia_x11_production;
       package = fucknvidia;
       prime = {
         sync.enable = false;
