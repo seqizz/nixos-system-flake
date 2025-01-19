@@ -24,6 +24,7 @@ in
     ];
 
     propagatedBuildInputs = with python3Packages; [
+      filelock
       jc
       pkgs.xorg.xrandr
       pyedid

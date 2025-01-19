@@ -57,7 +57,7 @@
     };
 
     loose-src = {
-      url = "git+https://git.gurkan.in/gurkan/loose.git?ref=g_debug1";
+      url = "git+https://git.gurkan.in/gurkan/loose.git";
       # url = "git+https://git.gurkan.in/gurkan/loose.git?ref=g_debug1";
       flake = false;
     };
