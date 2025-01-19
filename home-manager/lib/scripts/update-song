@@ -45,6 +45,6 @@ send_update() {
 if check_spotify; then
     get_spotify_info
     send_update
-else
-    echo "Spotify is not running or not playing"
+# else
+    # echo "Spotify is not running or not playing"
 fi

@@ -41,12 +41,28 @@
       alsa.enable = true;
       alsa.support32Bit = true;
       pulse.enable = true;
-      extraConfig.pipewire = {
-        "10-wtf-discord-fix" = {
-          "context.properties" = {
-            "default.clock.quantum" = 2048;
-            "default.clock.min-quantum" = 1024;
-            "default.clock.max-quantum" = 4096;
+      extraConfig = {
+        pipewire = {
+          "10-wtf-discord-fix" = {
+            "context.properties" = {
+              "default.clock.quantum" = 2048;
+              "default.clock.min-quantum" = 1024;
+              "default.clock.max-quantum" = 4096;
+            };
+          };
+          # Slack is adjusting the microphone volume automatically
+          # Even though I specifically tell it not to do so
+          "99-stop-microphone-auto-adjust" = {
+            "access.rules" = [
+              {
+                matches = [
+                  {
+                    "application.process.binary" = "slack";
+                  }
+                ];
+                actions.update-props.default_permissions = "rx";
+              }
+            ];
           };
         };
       };
