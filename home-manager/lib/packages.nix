@@ -1,10 +1,11 @@
-{ config, pkgs, inputs, ...}:
-
-let
-  my_scripts = (import ./scripts.nix {pkgs = pkgs;});
-in
-
 {
+  config,
+  pkgs,
+  inputs,
+  ...
+}: let
+  my_scripts = import ./scripts.nix {pkgs = pkgs;};
+in {
   nixpkgs = {
     config = {
       enable = true;
@@ -17,25 +18,26 @@ in
             repo = "nur-packages";
             rev = "master";
             sha256 = "sha256-IewS/HSyPvyBiE2oWgQeVgvwcgbai1qfjiacYizg3RA=";
-          }) { inherit pkgs; };
+          }
+        ) {inherit pkgs;};
       };
       # packageOverrides = pkgs: rec {
-        # browserpass = oldversion.browserpass;  # Reference override: https://github.com/NixOS/nixpkgs/issues/236074
-        # @Reference patching apps
-        # krunner-pass = pkgs.krunner-pass.overrideAttrs (attrs: {
-          # patches = attrs.patches ++ [ ~/syncfolder/dotfiles/nixos/home/gurkan/.config/nixpkgs/modules/packages/pass-dbus.patch ];
-        # });
-        # weechat = (pkgs.weechat.override {
-          # configure = { availablePlugins, ... }: {
-            # plugins = with availablePlugins; [
-              # (python.withPackages (ps: with ps; [
-                # websocket_client
-                # dbus-python
-                # notify
-              # ]))
-            # ];
-          # };
-        # });
+      # browserpass = oldversion.browserpass;  # Reference override: https://github.com/NixOS/nixpkgs/issues/236074
+      # @Reference patching apps
+      # krunner-pass = pkgs.krunner-pass.overrideAttrs (attrs: {
+      # patches = attrs.patches ++ [ ~/syncfolder/dotfiles/nixos/home/gurkan/.config/nixpkgs/modules/packages/pass-dbus.patch ];
+      # });
+      # weechat = (pkgs.weechat.override {
+      # configure = { availablePlugins, ... }: {
+      # plugins = with availablePlugins; [
+      # (python.withPackages (ps: with ps; [
+      # websocket_client
+      # dbus-python
+      # notify
+      # ]))
+      # ];
+      # };
+      # });
       # };
       # @Reference sometimes needed
       # allowBroken = true;
@@ -43,9 +45,10 @@ in
   };
 
   home.packages = with pkgs; [
-    ( gimp-with-plugins.override { plugins = with gimpPlugins; [ gmic ]; })
-    ( pass.withExtensions ( ps: with ps; [ pass-genphrase ]))
-    ( python3.withPackages ( ps: with ps; [
+    (gimp-with-plugins.override {plugins = with gimpPlugins; [gmic];})
+    (pass.withExtensions (ps: with ps; [pass-genphrase]))
+    (python3.withPackages (ps:
+      with ps; [
         adminapi
         coverage
         flake8
@@ -67,13 +70,17 @@ in
         virtualenv
         vulture # find unused code
         xlib
-    ]))
+      ]))
 
     # non-stable stuff, subject to change
     pkgs.unstable.tdesktop # telegram
     firefox # was unstable, broke webgl
-    # pkgs.unstable.wezterm
-    inputs.wezterm.packages.x86_64-linux.default # in case I want to build latest one
+    (
+      # Splinter is the only host which is powerful enough to compile rust 🤷
+      if osConfig.networking.hostName == "splinter"
+      then inputs.wezterm.packages.x86_64-linux.default
+      else pkgs.unstable.wezterm
+    )
     pkgs.unstable.discord
     thunderbird
 
@@ -99,7 +106,7 @@ in
     ffmpegthumbs
     flameshot
     geany
-    ghorg  # Clone whole organizations from git remotes
+    ghorg # Clone whole organizations from git remotes
     git-filter-repo # Amazing tool to rewrite history 😈
     gitstatus
     glxinfo
@@ -172,3 +179,4 @@ in
   ];
 }
 #  vim: set ts=2 sw=2 tw=0 et :
+
