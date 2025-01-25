@@ -75,12 +75,7 @@ in {
     # non-stable stuff, subject to change
     pkgs.unstable.tdesktop # telegram
     firefox # was unstable, broke webgl
-    (
-      # Splinter is the only host which is powerful enough to compile rust 🤷
-      if osConfig.networking.hostName == "splinter"
-      then inputs.wezterm.packages.x86_64-linux.default
-      else pkgs.unstable.wezterm
-    )
+    pkgs.unstable.wezterm
     pkgs.unstable.discord
     thunderbird
 

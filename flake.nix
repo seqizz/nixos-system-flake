@@ -22,10 +22,10 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    wezterm = {
-      url = "github:wez/wezterm?dir=nix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    # wezterm = {
+      # url = "github:wez/wezterm?dir=nix";
+      # inputs.nixpkgs.follows = "nixpkgs";
+    # };
 
     sd-switch-src = {
       url = "sourcehut:~rycee/sd-switch";
@@ -136,7 +136,7 @@
     loose-src,
     nix-index-database,
     simple-nixos-mailserver,
-    wezterm,
+    # wezterm,
     ...
   } @ inputs: let
     inherit (self) outputs;
