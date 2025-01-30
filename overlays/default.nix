@@ -67,6 +67,7 @@ in {
     copilot = plugin "copilot" inputs.copilot-src;
     undowarn = plugin "undowarn" inputs.undowarn-src;
     smoothcursor = plugin "smoothcursor" inputs.smoothcursor-src;
+    magentanvim = plugin "magentanvim" inputs.magentanvim-src;
   };
 
   # When applied, the unstable nixpkgs set (declared in the flake inputs) will

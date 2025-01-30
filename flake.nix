@@ -125,6 +125,10 @@
       url = "github:gen740/SmoothCursor.nvim";
       flake = false;
     };
+    magentanvim-src = {
+      url = "github:dlants/magenta.nvim";
+      flake = false;
+    };
   };
 
   outputs = {

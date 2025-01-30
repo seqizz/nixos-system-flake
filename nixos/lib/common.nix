@@ -67,6 +67,7 @@ in
         keep-derivations = true
         experimental-features = nix-command flakes
         access-tokens = github.com=${secrets.githubRateLimitAccessToken}
+        trusted-users = root gurkan
       '';
     };
   }

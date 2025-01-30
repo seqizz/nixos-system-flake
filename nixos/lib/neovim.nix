@@ -11,6 +11,7 @@
     defaultEditor = true;
     package = pkgs.unstable.neovim-unwrapped;
     # package = pkgs.neovim-unwrapped;
+    withNodeJs = true;
     configure = {
       customRC = ''
         source ~/.config/nvim/nix.vim
@@ -36,6 +37,7 @@
           pkgs.copilot # well, shit works
           pkgs.leap # Better movement with s
           pkgs.telescope-file-browser
+          pkgs.magentanvim
           pkgs.trailblazer # Better mark jumps Ctrl-S and Shift-Up/Down
           pkgs.undowarn # warn for over-undo
           pkgs.smoothcursor
