@@ -23,8 +23,8 @@
     };
 
     # wezterm = {
-      # url = "github:wez/wezterm?dir=nix";
-      # inputs.nixpkgs.follows = "nixpkgs";
+    # url = "github:wez/wezterm?dir=nix";
+    # inputs.nixpkgs.follows = "nixpkgs";
     # };
 
     sd-switch-src = {
@@ -125,9 +125,11 @@
       url = "github:gen740/SmoothCursor.nvim";
       flake = false;
     };
-    magentanvim-src = {
-      url = "github:dlants/magenta.nvim";
-      flake = false;
+    avante-nvim = {
+      url = "github:vinnymeller/avante-nvim-nightly-flake";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+      };
     };
   };
 
