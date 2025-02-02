@@ -88,6 +88,7 @@ in {
     adbfs-rootless
     alacritty
     alttab
+    appimage-run
     arandr # I might need manual xrandr one day
     arc-kde-theme # for theming kde apps
     arc-theme
@@ -97,6 +98,7 @@ in {
     calibre
     chromium
     dconf # some gnome apps keep its config in this shit e.g. shotwell
+    devenv
     ffmpeg
     ffmpegthumbs
     flameshot
