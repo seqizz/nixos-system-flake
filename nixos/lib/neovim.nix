@@ -28,6 +28,7 @@ in {
       '';
       packages.myVimPackages = with pkgs.unstable.vimPlugins; {
         start = [
+          neogit # Git integration
           inputs.avante-nvim.packages.${pkgs.system}.default # Custom Neovim configuration framework
           catppuccin-nvim # Modern, clean colorscheme
           dressing-nvim # Better UI for input and select dialogs
