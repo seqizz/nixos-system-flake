@@ -49,6 +49,7 @@
     stylua
     taplo # toml
     typstyle
+    jsbeautifier
 
     # Rest is sorted
     bandwhich
