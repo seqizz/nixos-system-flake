@@ -98,7 +98,6 @@ in {
     calibre
     chromium
     dconf # some gnome apps keep its config in this shit e.g. shotwell
-    devenv
     ffmpeg
     ffmpegthumbs
     flameshot
