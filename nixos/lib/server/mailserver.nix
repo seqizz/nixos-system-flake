@@ -9,6 +9,15 @@ in {
   # rainloop-community
   # ];
 
+  # My hosting company somehow got "abuse" mail because of this?
+  services.rspamd.locals."rbl.conf".text = ''
+  rbls {
+    nixspam {
+        enabled = false;
+    }
+  }
+  '';
+
   mailserver = {
     enable = true;
     fqdn = "mail.gurkan.in";
