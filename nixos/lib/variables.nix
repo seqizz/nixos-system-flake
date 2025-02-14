@@ -13,5 +13,7 @@
     # Workaround for wezterm issue: https://github.com/wez/wezterm/issues/3610
     XKB_DEFAULT_LAYOUT = "tr";
     XKB_DEFAULT_VARIANT= "";
+
+    DO_NOT_TRACK = "1";
   };
 }
