@@ -1,7 +1,10 @@
-{ pkgs, lib, config, ... }:
 {
-  imports =
-  [
+  pkgs,
+  lib,
+  config,
+  ...
+}: {
+  imports = [
     ../common.nix
 
     ./acme.nix
@@ -17,7 +20,6 @@
     ./mailserver.nix
     ./rustypaste.nix
     ./shadowsocks.nix
-    ./shared-folder.nix
     ./ssh.nix
     ./updatesong.nix
     ./websites.nix
@@ -25,7 +27,7 @@
   ];
 
   environment.systemPackages = with pkgs; [
-    zoxide  # Not available as an option yet, configured on home-manager separately
+    zoxide # Not available as an option yet, configured on home-manager separately
   ];
 
   boot.kernel.sysctl = {
@@ -33,12 +35,7 @@
     "vm.swappiness" = 50;
   };
 
-  services.my_snapper = {
-    subvolume = "/shared";
-  };
-
-  services.my_syncthing= {
+  services.my_syncthing = {
     repoPath = "/shared/syncfolder";
   };
-
 }

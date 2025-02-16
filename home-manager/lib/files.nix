@@ -7,8 +7,9 @@ in {
     portal = {
       enable = true;
       config.common.default = "gtk";
-      extraPortals = [
-        pkgs.xdg-desktop-portal-gtk
+      extraPortals = with pkgs;[
+        xdg-desktop-portal-gtk
+        xdg-desktop-portal
       ];
     };
     mimeApps = {
