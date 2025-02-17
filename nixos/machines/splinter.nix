@@ -6,12 +6,12 @@
   ...
 }: let
   fucknvidia = config.boot.kernelPackages.nvidiaPackages.mkDriver {
-    version = "565.57.01";
-    sha256_64bit = "sha256-buvpTlheOF6IBPWnQVLfQUiHv4GcwhvZW3Ks0PsYLHo=";
-    sha256_aarch64 = "sha256-aDVc3sNTG4O3y+vKW87mw+i9AqXCY29GVqEIUlsvYfE=";
-    openSha256 = "sha256-/tM3n9huz1MTE6KKtTCBglBMBGGL/GOHi5ZSUag4zXA=";
-    settingsSha256 = "sha256-H7uEe34LdmUFcMcS6bz7sbpYhg9zPCb/5AmZZFTx1QA=";
-    persistencedSha256 = "sha256-hdszsACWNqkCh8G4VBNitDT85gk9gJe1BlQ8LdrYIkg=";
+    version = "570.86.16";
+    sha256_64bit = "sha256-RWPqS7ZUJH9JEAWlfHLGdqrNlavhaR1xMyzs8lJhy9U=";
+    sha256_aarch64 = "sha256-RiO2njJ+z0DYBo/1DKa9GmAjFgZFfQ1/1Ga+vXG87vA=";
+    openSha256 = "sha256-DuVNA63+pJ8IB7Tw2gM4HbwlOh1bcDg2AN2mbEU9VPE=";
+    settingsSha256 = "sha256-9rtqh64TyhDF5fFAYiWl3oDHzKJqyOW3abpcf2iNRT8=";
+    persistencedSha256 = "sha256-3mp9X/oV8o2TH9720NnoXROxQ4g98nNee+DucXpQy3w=";
   };
 in {
   imports = [
@@ -70,25 +70,39 @@ in {
       };
     };
     extraModulePackages = [fucknvidia];
+    kernelPackages = pkgs.linuxPackages_latest.extend (self: super: {
+      ipu6-drivers = super.ipu6-drivers.overrideAttrs (
+        final: previous: rec {
+          src = builtins.fetchGit {
+            url = "https://github.com/intel/ipu6-drivers.git";
+            ref = "master";
+            rev = "b4ba63df5922150ec14ef7f202b3589896e0301a";
+          };
+          patches = [
+            "${src}/patches/0001-v6.10-IPU6-headers-used-by-PSYS.patch"
+          ];
+        }
+      );
+    });
     # @Reference: In case I need to override the kernel
     # Apparently having a USB webcam was too insecure so we had to invent new shit
     # called IPU. I cannot use newer kernels since noone knows what they are doing
     # upstream and WEBCAM DOES NOT WORK! Total dumbfuckery.
-    kernelPackages =
-      (pkgs.linuxPackagesFor
-        (pkgs.linux_6_12.override {
-          argsOverride = rec {
-            src = pkgs.fetchurl {
-              url = "mirror://kernel/linux/kernel/v6.x/linux-${version}.tar.xz";
-              sha256 = "sha256-AZOx2G3TcuyJG655n22iDe7xb8GZ8wCApOqd6M7wxhk=";
-            };
-            version = "6.12.1";
-            modDirVersion = "6.12.1";
-          };
-        }))
-      .extend (_: _: {
-        ipu6-drivers = config.boot.kernelPackages.callPackage ./ipudrivers.nix {};
-      });
+    # kernelPackages =
+    #   (pkgs.linuxPackagesFor
+    #     (pkgs.linux_6_12.override {
+    #       argsOverride = rec {
+    #         src = pkgs.fetchurl {
+    #           url = "mirror://kernel/linux/kernel/v6.x/linux-${version}.tar.xz";
+    #           sha256 = "sha256-AZOx2G3TcuyJG655n22iDe7xb8GZ8wCApOqd6M7wxhk=";
+    #         };
+    #         version = "6.12.1";
+    #         modDirVersion = "6.12.1";
+    #       };
+    #     }))
+    #   .extend (_: _: {
+    #     ipu6-drivers = config.boot.kernelPackages.callPackage ./ipudrivers.nix {};
+    #   });
     # @Reference: In case I need to patch the kernel again :(
     # kernelPatches = [
     #   {
@@ -112,7 +126,7 @@ in {
       "intel_pstate=passive"
       # "pcie_aspm=force"
       "i915.enable_fbc=1"
-      "i915.enable_psr=0"  # WTF is even this?
+      "i915.enable_psr=0" # WTF is even this?
       # "video=eDP-1:1920x1200@60"
       "nvidia-drm.fbdev=1"
     ];
