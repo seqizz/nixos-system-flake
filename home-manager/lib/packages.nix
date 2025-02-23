@@ -85,6 +85,7 @@ in {
     nur-lunwill42.puppet-lint
 
     # Rest is sorted
+    # Commented ones are either not needed or reminder for single-use
     adbfs-rootless
     alacritty
     alttab
@@ -152,6 +153,7 @@ in {
     rofi-pulse-select
     qpdfview
     # qt5ct # QT5 theme selector
+    # sieve-editor-gui # Mail filter editor
     simplescreenrecorder
     slock
     spotify

@@ -55,7 +55,6 @@ in {
           nvim-treesitter-context # Show code context while scrolling
           nvim-ts-context-commentstring # Better commenting for embedded languages
           plenary-nvim # Lua functions library used by many plugins
-          plenary-nvim # Needed by session-manager
           splitjoin-vim # Better split/join with gS/gJ
           telescope-nvim # Highly extendable fuzzy finder
           telescope-zoxide # Zoxide integration for telescope
