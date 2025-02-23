@@ -17,6 +17,7 @@ in {
     ./packages.nix
     ./printing.nix
     ./services.nix
+    ./snapper.nix
     ./sound.nix
     ./virt.nix
     ./xserver.nix
