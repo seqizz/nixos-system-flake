@@ -32,10 +32,11 @@ in {
     # keyFile = "/var/lib/acme/git.gurkan.in/key.pem";
     loginAccounts = secrets.mailAccounts;
     enableImap = true;
-    enablePop3 = true;
+    enablePop3 = false;
     enableImapSsl = true;
-    enablePop3Ssl = true;
+    enablePop3Ssl = false;
     enableManageSieve = true;
+    sieveDirectory = "/shared/mail/sieve_scripts";
     virusScanning = false;
     localDnsResolver = false;
     # Just reject those spoofers of known domains, will increase the list later
@@ -67,3 +68,31 @@ in {
     };
   };
 }
+
+# Random references, if needed later:
+
+# fullTextSearch = {
+#   enable = true;
+#   # index new email as they arrive
+#   autoIndex = true;
+#   enforced = "body";
+# };
+
+# postfix = {
+#   dnsBlacklists = [
+#     "all.s5h.net"
+#     "b.barracudacentral.org"
+#     "bl.spamcop.net"
+#     "blacklist.woody.ch"
+#   ];
+#
+#   dnsBlacklistOverrides = ''
+#     ${rdomain} OK
+#     ${config.mailserver.fqdn} OK
+#     127.0.0.0/8 OK
+#     10.0.0.0/8 OK
+#     192.168.0.0/16 OK
+#   '';
+#
+#   config.smtp_hello_name = config.mailserver.fqdn;
+# };
