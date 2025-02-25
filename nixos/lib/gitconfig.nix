@@ -57,6 +57,10 @@
 
       [rerere]
           enabled = true
+          autoupdate = true
+
+      [branch]
+          sort = committerdate
     '';
   };
 
