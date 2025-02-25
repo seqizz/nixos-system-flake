@@ -45,6 +45,7 @@
   /* display: none !important; */
   /* Hack for a bug: https://github.com/piroor/treestyletab/discussions/3407 */
   width: 1px !important;
+  min-width: 1px !important;
 }
 
 /* Close find bar if it loses focus */
