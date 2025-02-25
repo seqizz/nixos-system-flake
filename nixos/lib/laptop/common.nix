@@ -17,7 +17,7 @@ in {
     ./packages.nix
     ./printing.nix
     ./services.nix
-    ./snapper.nix
+    ../snapper.nix # Called from common dir, maybe one day again..
     ./sound.nix
     ./virt.nix
     ./xserver.nix
