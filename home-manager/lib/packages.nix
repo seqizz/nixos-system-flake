@@ -143,6 +143,7 @@ in {
     pasystray
     pavucontrol
     pcmanfm-qt # A file-manager which fucking works
+    pcsx2 # PS2 emulator
     picom # X compositor which sucks, also do not use services.picom
     pkgs.unstable.pinentry-rofi
     playerctl
