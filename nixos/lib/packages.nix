@@ -119,6 +119,7 @@
     universal-ctags
     unzip
     usbutils
+    uv
     vgrep
     vimwiki-markdown
     wget
