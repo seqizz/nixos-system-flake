@@ -43,6 +43,7 @@ in
     };
 
     services = {
+      envfs.enable = true;
       journald.extraConfig = ''
         SystemMaxUse=1G
       '';

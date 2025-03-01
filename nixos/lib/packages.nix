@@ -3,9 +3,15 @@
   config,
   lib,
   ...
-}:
-{
+}: {
   programs = {
+    nix-ld = {
+      enable = true;
+      libraries = with pkgs; [
+        stdenv.cc.cc.lib
+        zlib
+      ];
+    };
     zsh = {
       enable = true;
       enableGlobalCompInit = false;
