@@ -15,8 +15,13 @@ in {
       "pypoetry/auth.toml".text = secrets.poetryAuthInno;
     };
   };
-  home.packages = with pkgs; [
-    pkgs.unstable.slack
-    my_scripts.innovpn-toggle
-  ];
+  home ={
+    file = {
+      ".netrc".text = secrets.netrcInno;
+    };
+    packages = with pkgs; [
+      pkgs.unstable.slack
+      my_scripts.innovpn-toggle
+    ];
+  };
 }
