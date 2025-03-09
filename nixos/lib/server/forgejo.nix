@@ -32,6 +32,7 @@
       repository = {
         DEFAULT_REPO_UNITS = "repo.code,repo.releases";
         DEFAULT_BRANCH = "master";
+        DISABLE_DOWNLOAD_SOURCE_ARCHIVES = true;
       };
       server = {
         ROOT_URL = "https://git.gurkan.in";
