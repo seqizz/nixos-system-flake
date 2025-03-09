@@ -44,8 +44,16 @@ in {
         '';
       })
     ];
-    # Not sure why I am doing this
-    etc."nginx/.updateSongSecret".text = secrets.updateSongSecret;
+    etc = {
+      # Not sure why I am doing this
+      "nginx/.updateSongSecret".text = secrets.updateSongSecret;
+      # Later
+      # "fail2ban/filter.d/nginx-probing.conf".text = ''
+        # [Definition]
+        # failregex = ^<HOST>.*GET.*/\.env HTTP/\d.\d\" 404.*$
+                    # ^<HOST>.*GET.*/\.env HTTP/\d.\d\" 404.*$
+      # '';
+    };
   };
 
   services = {
