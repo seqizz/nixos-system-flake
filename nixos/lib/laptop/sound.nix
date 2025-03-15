@@ -50,17 +50,22 @@
               "default.clock.max-quantum" = 4096;
             };
           };
-          # Slack is adjusting the microphone volume automatically
-          # Even though I specifically tell it not to do so
-          "99-stop-microphone-auto-adjust" = {
-            "access.rules" = [
+        };
+        # Prevent any app to fuck up the mic volumes
+        pipewire-pulse = {
+          "99-disable-auto-gain-control" = {
+            "pulse.rules" = [
               {
+                actions = {
+                  quirks = [
+                    "block-source-volume"
+                  ];
+                };
                 matches = [
                   {
-                    "application.process.binary" = "slack";
+                    "application.process.binary" = "~.*";
                   }
                 ];
-                actions.update-props.default_permissions = "rx";
               }
             ];
           };
