@@ -106,10 +106,12 @@
           Type = "simple";
         };
         before = [
-          "pre-sleep.service"
+          "sleep.target"
+          "suspend.target"
         ];
         wantedBy = [
-          "pre-sleep.service"
+          "sleep.target"
+          "suspend.target"
         ];
         environment = {
           DISPLAY = ":0";
