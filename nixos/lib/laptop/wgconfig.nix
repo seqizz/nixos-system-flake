@@ -3,6 +3,10 @@
   pkgs,
   ...
 }: let
+  pihole_wg = import ../helper-modules/nm-wg-config.nix ({
+      inherit pkgs;
+    }
+    // (import ../secrets.nix).generatedWG-pihole-opts);
   primary_wg = import ../helper-modules/nm-wg-config.nix ({
       inherit pkgs;
     }
@@ -22,6 +26,10 @@ in
       "NetworkManager/system-connections/${secondary_wg.name}.nmconnection" = {
         mode = "0600";
         text = secondary_wg.wgConfig;
+      };
+      "NetworkManager/system-connections/${pihole_wg.name}.nmconnection" = {
+        mode = "0600";
+        text = pihole_wg.wgConfig;
       };
     };
     networking.networkmanager.dispatcherScripts = [ {
