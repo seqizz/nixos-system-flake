@@ -8,7 +8,7 @@
 in {
   imports = [
     ../lib/laptop/vpnconfig.nix
-    ../lib/laptop/wgconfig.nix
+    ../lib/laptop/wgconfig-inno.nix
   ];
 
   security.pki.certificates = [

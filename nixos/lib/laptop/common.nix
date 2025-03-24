@@ -20,6 +20,7 @@ in {
     ../snapper.nix # Called from common dir, maybe one day again..
     ./sound.nix
     ./virt.nix
+    ./wgconfig.nix
     ./xserver.nix
     ./yubikey.nix
   ];
