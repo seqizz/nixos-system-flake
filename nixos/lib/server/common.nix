@@ -18,6 +18,7 @@
     ./gotosocial.nix
     ./logrotate.nix
     ./mailserver.nix
+    ./monitor.nix
     ./rustypaste.nix
     ./shadowsocks.nix
     ./ssh.nix
