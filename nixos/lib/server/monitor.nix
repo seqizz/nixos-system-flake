@@ -7,7 +7,7 @@
   checkLoadAvg = pkgs.writeScript "check-loadavg" ''
     #! ${pkgs.bash}/bin/bash
     loadavg=$(cat /proc/loadavg | cut -d' ' -f1)
-    if (( $(echo "$loadavg > 1.0" | ${pkgs.bc}/bin/bc -l) )); then
+    if (( $(echo "$loadavg > 3.0" | ${pkgs.bc}/bin/bc -l) )); then
       exit 0
     else
       exit 1
