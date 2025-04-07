@@ -24,7 +24,7 @@ in
       AUTH_GITHUB_CID = secrets.remarkGithubCidSiktirin;
       AUTH_GITHUB_CSEC = secrets.remarkGithubCsecSiktirin;
       ADMIN_SHARED_ID = secrets.remarkAdminSharedID;
-      TELEGRAM_TOKEN = secrets.remarkTelegramToken;
+      TELEGRAM_TOKEN = secrets.remarkTelegramTokenSiktirin;
       AUTH_TELEGRAM = "true";
       NOTIFY_ADMINS = "telegram";
       NOTIFY_TELEGRAM_CHAN = secrets.remarkTelegramChannel;
@@ -55,7 +55,7 @@ in
       AUTH_GOOGLE_CID = secrets.remarkGoogleCid;
       AUTH_GOOGLE_CSEC = secrets.remarkGoogleCsec;
       ADMIN_SHARED_ID = secrets.remarkAdminSharedID;
-      TELEGRAM_TOKEN = secrets.remarkTelegramAuthToken;
+      TELEGRAM_TOKEN = secrets.remarkTelegramTokenGurkanin;
       AUTH_TELEGRAM = "true";
       NOTIFY_ADMINS = "telegram";
       NOTIFY_TELEGRAM_CHAN = secrets.remarkTelegramChannel;
