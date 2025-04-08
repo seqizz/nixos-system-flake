@@ -13,6 +13,7 @@ in
     # Instead, I am using lix which does it differently:
     update-flake-inputs = "nix flake update --flake ${myConfigPath}";
     homeup-noupdate = "home-manager switch --flake path://${myConfigPath}#gurkan@${config.networking.hostName} --option eval-cache false";
+    home-news = "home-manager news --flake path:///${myConfigPath}#gurkan@${config.networking.hostName} --option eval-cache false";
     sysup-noupdate = "sudo nixos-rebuild switch --flake path://${myConfigPath}#${config.networking.hostName} --verbose --upgrade --option eval-cache false";
     sysup = "update-flake-inputs && sysup-noupdate && if [[ $(whoami) == 'gurkan' ]]; then echo; echo \"Switching home-manager after waiting 15 sec...\"; sleep 15; homeup-noupdate; fi";
     homeup = "update-flake-inputs && homeup-noupdate";
