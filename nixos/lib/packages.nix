@@ -29,16 +29,21 @@
     yazi = {
       enable = true;
       package = pkgs.unstable.yazi;
-      settings.yazi.manager = {
-        ratio          = [ 1 4 3 ];
-        sort_by        = "mtime";
-        sort_sensitive = false;
-        sort_reverse 	 = false;
-        sort_dir_first = true;
-        show_hidden    = false;
-        show_symlink   = true;
-        scrolloff      = 5;
-        mouse_events   = [ "click" "scroll" ];
+      settings = {
+        yazi.manager = {
+          ratio = [1 4 3];
+          sort_by = "mtime";
+          sort_sensitive = false;
+          sort_reverse = false;
+          sort_dir_first = true;
+          show_hidden = false;
+          show_symlink = true;
+          scrolloff = 5;
+          mouse_events = ["click" "scroll"];
+        };
+        theme.manager = {
+          tab_width = 20;
+        };
       };
     };
   };
