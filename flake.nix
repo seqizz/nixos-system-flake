@@ -131,6 +131,12 @@
         nixpkgs.follows = "nixpkgs";
       };
     };
+
+    # Yazi plugins
+    yazi-xclip-systemclipboard-src = {
+      url = "git+https://git.gurkan.in/gurkan/xclip-system-clipboard.yazi.git";
+      flake = false;
+    };
   };
 
   outputs = {

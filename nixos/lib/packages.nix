@@ -29,6 +29,9 @@
     yazi = {
       enable = true;
       package = pkgs.unstable.yazi;
+      plugins = {
+        "xclip-system-clipboard.yazi" = pkgs.yazi-xclip-systemclipboard;
+      };
       settings = {
         yazi.manager = {
           ratio = [1 4 3];
@@ -44,6 +47,12 @@
         theme.manager = {
           tab_width = 20;
         };
+        keymap.manager.prepend_keymap = [
+          {
+            on = ["<C-y>"];
+            run = "plugin xclip-system-clipboard";
+          }
+        ];
       };
     };
   };
