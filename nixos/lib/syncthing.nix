@@ -77,6 +77,10 @@ in
               name = "oneplusNord";
               id = secrets.syncthingIDoneplusNord;
             };
+            truenas = {
+              name = "truenas";
+              id = secrets.syncthingIDtruenas;
+            };
           };
           folders = {
             mainrepo = {
@@ -89,6 +93,7 @@ in
                 "bebop"
                 "splinter"
                 "pihole"
+                "truenas"
               ];
             };
           };
