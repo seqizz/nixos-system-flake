@@ -38,7 +38,38 @@ in {
     themePackages = [pkgs.lol-plymouth];
   };
 
-  security.sudo.wheelNeedsPassword = false;
+  security = {
+    sudo.wheelNeedsPassword = false;
+    pki.certificates = [
+      ''
+        TrueNAS local CA
+        =========
+        -----BEGIN CERTIFICATE-----
+        MIIDzzCCAregAwIBAgIDP7ImMA0GCSqGSIb3DQEBCwUAMG8xCzAJBgNVBAYTAkdH
+        MRAwDgYDVQQIDAdIYW1idXJnMRcwFQYDVQQHDA5IYWFhYW1idXV1dXJyZzEPMA0G
+        A1UECgwGTXlzZWxmMSQwIgYJKoZIhvcNAQkBFhV0ZXJyYW1hc3RlckBndXJrYW4u
+        aW4wIBcNMjUwNDE1MTk0NjI1WhgPMjA1MjA4MzAxOTQ2MjVaMG8xCzAJBgNVBAYT
+        AkdHMRAwDgYDVQQIDAdIYW1idXJnMRcwFQYDVQQHDA5IYWFhYW1idXV1dXJyZzEP
+        MA0GA1UECgwGTXlzZWxmMSQwIgYJKoZIhvcNAQkBFhV0ZXJyYW1hc3RlckBndXJr
+        YW4uaW4wggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQCO8b/bUDpHVfO8
+        UeQrbXMEUF6l1+W5NfRG2zhcV+sRaVgh9uyZ+tFVS6C1Wr1eh8dON51FbIH7E7jK
+        t/TTBwKbgXa02BkJSJDT2W2RniSpBfjt18y2lJMnJUkZa0+TBQ4WuA/JEm9ieJM/
+        cE6OLttiRlGhSapzRHdHxMT3J440Wq/VsTXOcp11TqIIvFxCTHqR6h0PRoKjrrHq
+        4vklI1Th1TMYA1t4zWmDdIfWST3C0cAscOPX7LIgfc24SPT0BR8Ocm0imaahTQuz
+        ZY75MDuBIYcunRWFZ0kKJma8h6FoMFkB686g3GOYMA07XCV0E2UZ3YAM499neBkN
+        YExMsZjjAgMBAAGjcjBwMBYGA1UdEQQPMA2CC2JpZ2NodW5nLnVzMB0GA1UdDgQW
+        BBRFF9xb9Ghw1xrDM/AdEJbiNX4HeTAPBgNVHRMBAf8EBTADAQH/MBYGA1UdJQEB
+        /wQMMAoGCCsGAQUFBwMBMA4GA1UdDwEB/wQEAwIBBjANBgkqhkiG9w0BAQsFAAOC
+        AQEASCLdVu/j1rblfRNlthBZBQV3mubjbjdvdKO8usrNzw4PMvEoXP6OX79jqI8A
+        rY6yoOEm5XNlRUeuET1aahMZQARAH5kYoDbkX1ok8pqG5YvTyoSwLbimdOqR1OfY
+        E+FpuPMXw1BH8PciQTDgjX8PqKdFXVvbiWc6Pjz941rnGlVRpKshAmo2JEFbXBFb
+        0mHYok+RLor70aVWMDoLwU3icVwbvfqfTaObtkAPp7Zd9lmvjxHxDBJWOrqlwcEL
+        IVimxBw9Xp+rPYNmf7WVPi70wRdFQkcuPOJ6obCLzeOnvzLIRK3NfifSu9/+yncK
+        w+6a1Fjbzw6UMDvgjt2Z1o/kAA==
+        -----END CERTIFICATE-----
+      ''
+    ];
+  };
 
   users = {
     groups.gurkan.gid = 1000;
