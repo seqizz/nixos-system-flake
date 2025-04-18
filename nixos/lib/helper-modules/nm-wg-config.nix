@@ -8,8 +8,9 @@
   preSharedKey ? null,
   allowedIps,
   ipv4Address,
-  ipv6Address,
-  dnsAddress ? null,
+  ipv6Address ? null,
+  v4dnsAddress ? null,
+  v6dnsAddress ? null,
   dnsSearchAddress ? null,
   mtu ? null,
   fwmark ? null,
@@ -52,15 +53,18 @@ in {
     method=manual
     ${if routeTable != null then "route-table=${routeTable}" else ""}
     ${if routeMetric != null then "route-metric=${routeMetric}" else ""}
+    ${if v4dnsAddress != null then "dns=${v4dnsAddress}" else ""}
 
-    [ipv6]
-    addr-gen-mode=stable-privacy
-    address1=${ipv6Address}
-    ${if dnsAddress != null then "dns=${dnsAddress}" else ""}
-    ${if dnsSearchAddress != null then "dns-search=${dnsSearchAddress}" else ""}
-    method=manual
-    ${if routeTable != null then "route-table=${routeTable}" else ""}
-    ${if routeMetric != null then "route-metric=${routeMetric}" else ""}
+    ${if ipv6Address != null then ''
+      [ipv6]
+      addr-gen-mode=stable-privacy
+      address1=${ipv6Address}
+      ${if v6dnsAddress != null then "dns=${v6dnsAddress}" else ""}
+      ${if dnsSearchAddress != null then "dns-search=${dnsSearchAddress}" else ""}
+      method=manual
+      ${if routeTable != null then "route-table=${routeTable}" else ""}
+      ${if routeMetric != null then "route-metric=${routeMetric}" else ""}
+    '' else ""}
 
     [proxy]
   '';
