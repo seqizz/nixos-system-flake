@@ -6,10 +6,6 @@
   ...
 }: let
   baseconfig = {allowUnfree = true;};
-  # In case I want to use the packages I need on other channels
-  unstable = import (
-    fetchTarball https://github.com/NixOS/nixpkgs/archive/nixos-unstable.tar.gz
-  ) {config = baseconfig;};
   lock-helper = (import ./scripts.nix {pkgs = pkgs;}).lock-helper;
   auto-rotate = (import ./scripts.nix {pkgs = pkgs;}).auto-rotate;
   secrets = import ./secrets.nix {pkgs = pkgs;};

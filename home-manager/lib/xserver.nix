@@ -2,17 +2,7 @@
   config,
   pkgs,
   ...
-}: let
-  # baseconfig = { allowUnfree = true; };
-  # unstable = import (
-  # fetchTarball https://github.com/NixOS/nixpkgs/archive/nixos-unstable.tar.gz
-  # ) { config = baseconfig; };
-  # @Reference from autorandr times, might be useful later
-  # get_dpi_commands = list: [
-  # "${pkgs.xorg.xrandr}/bin/xrandr --dpi ${toString list.dpi}"
-  # "echo 'Xft.dpi: ${toString list.dpi}' | ${pkgs.xorg.xrdb}/bin/xrdb -merge"
-  # ];
-in {
+}: {
   home.keyboard.layout = "tr";
 
   systemd.user.services.loose = {
