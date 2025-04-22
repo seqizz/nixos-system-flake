@@ -112,6 +112,7 @@
     e2fsprogs
     ffmpeg
     file
+    fx # JSON viewer
     fzf
     gcc
     glibcLocales
