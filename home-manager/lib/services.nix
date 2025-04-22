@@ -71,16 +71,6 @@ in {
 
   systemd.user = {
     startServices = "sd-switch";
-    timers.updatesong = {
-      Unit = {
-        Description = "Update last played song on blog";
-      };
-
-      Timer = {
-        OnBootSec = "90";
-        OnUnitActiveSec = "60s";
-      };
-    };
     services = {
       updatesong = {
         Unit = {
@@ -94,8 +84,8 @@ in {
         };
         Service = {
           ExecStart = "${config.home.profileDirectory}/bin/update-song ${secrets.updateSongSecret}";
-          RestartSec = 60;
-          Restart = "always";
+          Type = "oneshot";
+          RemainAfterExit = true;
         };
       };
 
