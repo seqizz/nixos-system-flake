@@ -8,6 +8,7 @@
     ../common.nix
 
     ./acme.nix
+    ./anubis.nix
     ./bind.nix
     ./bots/anayasa-bot.nix
     ./bots/comar-bot.nix
