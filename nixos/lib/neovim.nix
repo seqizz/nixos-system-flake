@@ -22,14 +22,13 @@ in {
     enable = true;
     vimAlias = true;
     defaultEditor = true;
-    package = pkgs.unstable.neovim-unwrapped;
-    # package = pkgs.neovim-unwrapped;
+    package = pkgs.neovim-unwrapped;
     withNodeJs = true;
     configure = {
       customRC = ''
         source ~/.config/nvim/nix.vim
       '';
-      packages.myVimPackages = with pkgs.unstable.vimPlugins; {
+      packages.myVimPackages = with pkgs.vimPlugins; {
         start =
           [
             # temporarily? disabled ones
