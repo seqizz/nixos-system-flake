@@ -2,7 +2,7 @@
 bind main B +sh -c "git checkout -b `echo -n %(commit) | head -c 10 | sed 's/^/g_pick_/'` %(commit) && echo Switched to a new branch!"
 
 # copy commit id to clipboard
-bind generic c +sh -c "echo -n %(commit) | xclip -selection c && echo Commit it copied to clipboard!"
+bind generic c +sh -c "echo -n %(commit) | xclip -selection c && echo Commit hash copied to clipboard!"
 
 # export current diff to a file
 bind main x +git format-patch -1 -N %(commit) -o /tmp/
