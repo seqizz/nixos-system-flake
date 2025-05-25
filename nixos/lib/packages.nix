@@ -108,7 +108,7 @@
     dmidecode
     dnsutils
     docker-compose
-    dstat
+    dool
     e2fsprogs
     ffmpeg
     file

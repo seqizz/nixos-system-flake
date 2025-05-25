@@ -41,7 +41,7 @@ in {
       enable = true;
       defaultCacheTtl = 86400;
       maxCacheTtl = 86400;
-      pinentryPackage = pkgs.pinentry-rofi;
+      pinentry.package = pkgs.pinentry-rofi;
       extraConfig = ''
         pinentry-program ${pinentryRofi}/bin/pinentry-rofi-with-env
         auto-expand-secmem

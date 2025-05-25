@@ -1,8 +1,9 @@
 { lib
-, python3
+, python
+, buildPythonPackage
 , fetchFromGitHub
 }:
-python3.pkgs.buildPythonPackage {
+buildPythonPackage {
   pname = "TapoP100";
   version = "unstable-2022-11-03";
 
@@ -19,7 +20,7 @@ python3.pkgs.buildPythonPackage {
       --replace 'pycryptodome==3.9.8' 'pycryptodome'
   '';
 
-  propagatedBuildInputs = with python3.pkgs; [
+  propagatedBuildInputs = with python.pkgs; [
     (callPackage ./pkcs7.nix {})
     pycryptodome
     requests

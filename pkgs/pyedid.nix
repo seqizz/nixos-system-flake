@@ -1,9 +1,10 @@
 { stdenv
 , lib
 , fetchFromGitHub
-, python3Packages
+, buildPythonPackage
+, requests
 }:
-python3Packages.buildPythonPackage rec {
+buildPythonPackage rec {
 
   pname = "pyedid";
   version = "unstable-2023-08-01";
@@ -15,7 +16,7 @@ python3Packages.buildPythonPackage rec {
     sha256 = "1rsn48zkq5wlfvsx9hyikzc1xjx9c7gbc6ksdcd2yiakpybkamfz";
   };
 
-  propagatedBuildInputs = with python3Packages; [
+  propagatedBuildInputs = [
     requests
   ];
 

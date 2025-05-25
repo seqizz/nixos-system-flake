@@ -2,28 +2,37 @@
   lib,
   pkgs,
   installShellFiles,
-  python3Packages,
   inputs,
+  jc,
+  filelock,
+  pyyaml,
+  typing-extensions,
+  xdg-base-dirs,
+  yamale,
+  shtab,
+  callPackage,
+  buildPythonApplication,
+  poetry-core,
 }: let
-  pyedid = python3Packages.callPackage ./pyedid.nix {};
+  pyedid = callPackage ./pyedid.nix {};
 in
-  python3Packages.buildPythonApplication rec {
+  buildPythonApplication rec {
     pname = "loose";
     version = "master";
     pyproject = true;
 
     src = inputs.loose-src;
 
-    nativeBuildInputs = with python3Packages; [
+    nativeBuildInputs = [
       poetry-core
       installShellFiles
     ];
 
-    buildInputs = with python3Packages; [
+    buildInputs = [
       shtab # For command line completion
     ];
 
-    propagatedBuildInputs = with python3Packages; [
+    propagatedBuildInputs = [
       filelock
       jc
       pkgs.xorg.xrandr

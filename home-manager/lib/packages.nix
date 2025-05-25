@@ -93,14 +93,12 @@ in {
     arandr # I might need manual xrandr one day
     arc-kde-theme # for theming kde apps
     arc-theme
-    ark
     blueman
     brightnessctl
     calibre
     chromium
     dconf # some gnome apps keep its config in this shit e.g. shotwell
     ffmpeg
-    ffmpegthumbs
     flameshot
     geany
     ghorg # Clone whole organizations from git remotes
@@ -114,6 +112,8 @@ in {
     jmtpfs # mount MTP devices easily
     # kde-cli-tools # required to open kde-gtk-config
     # kde-gtk-config # best GTK theme selector
+    kdePackages.ark
+    kdePackages.ffmpegthumbs
     libnotify
     libreoffice
     hunspell # For spellcheck on Libreoffice
@@ -172,7 +172,7 @@ in {
     xorg.xkill
     xorg.xmodmap
     xorg.xwininfo
-    xournal # annotate pdfs
+    xournalpp # annotate pdfs
     xsel
     yamlfix
   ];

@@ -1,8 +1,10 @@
 { lib
 , fetchFromGitHub
-, python3Packages
+, buildPythonPackage
+, netaddr
+, paramiko
 }:
-python3Packages.buildPythonPackage rec {
+buildPythonPackage rec {
 
   pname = "adminapi";
   version = "unstable-2023-11-03";
@@ -14,7 +16,7 @@ python3Packages.buildPythonPackage rec {
     sha256 = "01gbndrfw9sz8is4qzd2f54rrq6v6c9ab2dbns2l0f46imq6lfnx";
   };
 
-  pythonPath = with python3Packages; [
+  pythonPath = [
     netaddr
     paramiko
   ];
