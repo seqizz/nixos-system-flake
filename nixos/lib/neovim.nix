@@ -67,6 +67,7 @@ in {
             vim-trailing-whitespace # Highlight and remove trailing whitespace
             vim-yaml # YAML syntax and filetype support
             vimwiki # Personal wiki and note-taking plugin
+            yanky-nvim # Advanced yank and put functionality
             # Needed for commentnvim
             (nvim-treesitter.withPlugins (p: [
               p.bash
@@ -111,7 +112,7 @@ in {
             vim-colorschemes-forked # Additional colorschemes collection
             vim-puppet-4tabs # Puppet syntax with 4-space tabs
             vim-yadi # Yet Another Detect Indent plugin
-            yanky # Advanced yank and put functionality
+            # yanky # Advanced yank and put functionality
           ]);
       };
     };

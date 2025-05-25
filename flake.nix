@@ -72,9 +72,9 @@
       flake = false;
     };
 
-    xidlehook-src = {
-      url = "github:realSaltyFish/xidlehook";
-    };
+    # xidlehook-src = {
+      # url = "github:realSaltyFish/xidlehook";
+    # };
 
     # Vim plugins
     vim-puppet-4tabs-src = {
@@ -85,10 +85,10 @@
       url = "github:timakro/vim-yadi";
       flake = false;
     };
-    yanky-src = {
-      url = "github:gbprod/yanky.nvim";
-      flake = false;
-    };
+    # yanky-src = {
+      # url = "github:gbprod/yanky.nvim";
+      # flake = false;
+    # };
     leap-src = {
       url = "github:ggandor/leap.nvim";
       flake = false;

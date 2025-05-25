@@ -27,15 +27,15 @@ in {
     lol-plymouth = final.callPackage ../pkgs/lol-plymouth.nix {inherit inputs;};
     # @Reference: Overriding rust stuff via cargoDeps
     # Seems like original author has passed away, RIP @jD91mZM2
-    xidlehook = prev.xidlehook.overrideAttrs (out: rec {
-      version = "unstable-2022-05-18";
-      src = inputs.xidlehook-src;
-      cargoDeps = out.cargoDeps.overrideAttrs (_: {
-        inherit src; # We need to pass "src" here again
-        # TODO: Find a way to define this on inputs?
-        outputHash = "sha256-Iuri3dOLzrfTzHvwOKcZrVJFotqrGlM6EeuV29yqz+U=";
-      });
-    });
+    # xidlehook = prev.xidlehook.overrideAttrs (out: rec {
+    #   version = "unstable-2022-05-18";
+    #   src = inputs.xidlehook-src;
+    #   cargoDeps = out.cargoDeps.overrideAttrs (_: {
+    #     inherit src; # We need to pass "src" here again
+    #     # TODO: Find a way to define this on inputs?
+    #     outputHash = "sha256-Iuri3dOLzrfTzHvwOKcZrVJFotqrGlM6EeuV29yqz+U=";
+    #   });
+    # });
 
     awesome = prev.awesome.overrideAttrs (old: rec {
       pname = "myAwesome";
@@ -57,7 +57,7 @@ in {
       };
     vim-puppet-4tabs = plugin "vim-puppet-4tabs" inputs.vim-puppet-4tabs-src;
     vim-yadi = plugin "vim-yadi" inputs.vim-yadi-src;
-    yanky = plugin "yanky" inputs.yanky-src;
+    # yanky = plugin "yanky" inputs.yanky-src;
     leap = plugin "leap" inputs.leap-src;
     trailblazer = plugin "trailblazer" inputs.trailblazer-src;
     commentnvim = plugin "commentnvim" inputs.commentnvim-src;
