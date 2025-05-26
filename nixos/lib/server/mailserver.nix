@@ -40,9 +40,10 @@ in {
     virusScanning = false;
     localDnsResolver = false;
     # Just reject those spoofers of known domains, will increase the list later
-    policydSPFExtraConfig = ''
-      Reject_Not_Pass_Domains = live.com,aol.com,hotmail.com,gmail.com,yahoo.com
-    '';
+    # XXX: this is migrated to rspamd, should be automatic, wipe later if spam-wise ok
+    # policydSPFExtraConfig = ''
+      # Reject_Not_Pass_Domains = live.com,aol.com,hotmail.com,gmail.com,yahoo.com
+    # '';
     rejectRecipients = secrets.mailRejectRecipients;
     mailboxes = {
       Trash = {
