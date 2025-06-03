@@ -22,7 +22,7 @@ in
     '';
 
     boot.extraModulePackages = with config.boot.kernelPackages; [
-      pkgs.v4l2loopback
+      v4l2loopback
     ];
 
     boot.kernelModules = [

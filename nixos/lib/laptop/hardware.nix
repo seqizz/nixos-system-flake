@@ -11,7 +11,7 @@
 
   hardware = {
     bluetooth.enable = true;
-    v4l2loopback.enable = false; # FIXME: Broken on latest for now
+    v4l2loopback.enable = true;
     logitech.wireless.enable = true;
     keyboard.qmk.enable = true;
     enableRedistributableFirmware = true;
