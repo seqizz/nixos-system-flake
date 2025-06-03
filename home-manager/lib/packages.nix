@@ -137,7 +137,6 @@ in {
     my_scripts.xinput-toggle
     nfpm
     onboard # on-screen keyboard
-    opera # Good to have as alternative
     pamixer # pulseaudio mixer
     papirus-icon-theme
     pasystray
