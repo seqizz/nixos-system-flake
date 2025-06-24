@@ -33,7 +33,7 @@
         "xclip-system-clipboard.yazi" = pkgs.yazi-xclip-systemclipboard;
       };
       settings = {
-        yazi.manager = {
+        yazi.mgr = {
           ratio = [1 4 3];
           sort_by = "mtime";
           sort_sensitive = false;
@@ -44,10 +44,10 @@
           scrolloff = 5;
           mouse_events = ["click" "scroll"];
         };
-        theme.manager = {
+        theme.mgr = {
           tab_width = 20;
         };
-        keymap.manager.prepend_keymap = [
+        keymap.mgr.prepend_keymap = [
           {
             on = ["<C-y>"];
             run = "plugin xclip-system-clipboard";
