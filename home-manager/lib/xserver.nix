@@ -78,7 +78,7 @@
     '';
     initExtra = ''
       # Trigger loose with reset switch
-      ${pkgs.loose}/bin/loose rotate -r -v
+      ${pkgs.loose}/bin/loose rotate -r -i -v > ~/.Xlog-initial-loose.log 2>&1
       # Disable DPMS by default
       ${pkgs.xorg.xset}/bin/xset -dpms
       # Disable screensaver by default
