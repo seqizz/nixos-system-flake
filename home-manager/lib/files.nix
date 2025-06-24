@@ -1,4 +1,9 @@
-{pkgs, inputs, config, ...}: let
+{
+  pkgs,
+  inputs,
+  config,
+  ...
+}: let
   sync = "/home/gurkan/syncfolder";
   secrets = import ./secrets.nix {pkgs = pkgs;};
   fileAssociations = import ./file-associations.nix;
@@ -7,7 +12,7 @@ in {
     portal = {
       enable = true;
       config.common.default = "gtk";
-      extraPortals = with pkgs;[
+      extraPortals = with pkgs; [
         xdg-desktop-portal-gtk
         xdg-desktop-portal
       ];
@@ -67,8 +72,7 @@ in {
   };
 
   home.file = {
-    ".zshnix".source = pkgs.substituteAll {
-      src = ./config_files/zsh_nix;
+    ".zshnix".source = pkgs.replaceVars ./config_files/zsh_nix {
       openscPath = "${pkgs.opensc.outPath}";
     };
 
