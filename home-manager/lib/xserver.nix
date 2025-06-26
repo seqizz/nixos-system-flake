@@ -92,4 +92,13 @@
     name = "capitaine-cursors";
     size = 32;
   };
+
+  home.packages = [
+    (pkgs.writeScriptBin "get-ddc-current-brightness" ''
+      sudo ddcutil --brief getvcp 10 | awk '{print $4}'
+    '')
+    (pkgs.writeScriptBin "get-ddc-max-brightness" ''
+      sudo ddcutil --brief getvcp 10 | awk '{print $5}'
+    '')
+  ];
 }

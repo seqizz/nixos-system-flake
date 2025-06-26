@@ -98,6 +98,7 @@ in {
     calibre
     chromium
     dconf # some gnome apps keep its config in this shit e.g. shotwell
+    ddcutil # tool to change external screen brightness
     ffmpeg
     flameshot
     geany
