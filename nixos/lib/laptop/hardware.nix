@@ -14,6 +14,7 @@
     v4l2loopback.enable = true;
     logitech.wireless.enable = true;
     keyboard.qmk.enable = true;
+    i2c.enable = true;
     enableRedistributableFirmware = true;
 
     firmware = [pkgs.firmwareLinuxNonfree];

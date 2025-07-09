@@ -87,6 +87,7 @@ in {
           "audio"
           "disk"
           "docker"
+          "i2c"
           "incus-admin"
           "input"
           "libvirtd"
