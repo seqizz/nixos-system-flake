@@ -126,7 +126,7 @@
       flake = false;
     };
     avante-nvim = {
-      url = "github:vinnymeller/avante-nvim-nightly-flake/1a198dee9786747f7010d215129011cebf568445";
+      url = "github:vinnymeller/avante-nvim-nightly-flake/2363a2e46b80687f680e8ce75c82831ed848558b";
       inputs = {
         nixpkgs.follows = "nixpkgs";
       };

@@ -6,20 +6,12 @@
   ...
 }: let
   fucknvidia = config.boot.kernelPackages.nvidiaPackages.mkDriver {
-    version = "575.57.08";
-    sha256_64bit = "sha256-KqcB2sGAp7IKbleMzNkB3tjUTlfWBYDwj50o3R//xvI=";
-    sha256_aarch64 = "sha256-VJ5z5PdAL2YnXuZltuOirl179XKWt0O4JNcT8gUgO98=";
-    openSha256 = "sha256-DOJw73sjhQoy+5R0GHGnUddE6xaXb/z/Ihq3BKBf+lg=";
-    settingsSha256 = "sha256-AIeeDXFEo9VEKCgXnY3QvrW5iWZeIVg4LBCeRtMs5Io=";
-    persistencedSha256 = "sha256-Len7Va4HYp5r3wMpAhL4VsPu5S0JOshPFywbO7vYnGo=";
-    patches = [gpl_symbols_linux_615_patch]; # WTF is this?
-  };
-
-  gpl_symbols_linux_615_patch = pkgs.fetchpatch {
-    url = "https://github.com/CachyOS/kernel-patches/raw/914aea4298e3744beddad09f3d2773d71839b182/6.15/misc/nvidia/0003-Workaround-nv_vm_flags_-calling-GPL-only-code.patch";
-    hash = "sha256-YOTAvONchPPSVDP9eJ9236pAPtxYK5nAePNtm2dlvb4=";
-    stripLen = 1;
-    extraPrefix = "kernel/";
+    version = "575.64";
+    sha256_64bit = "sha256-6wG8/nOwbH0ktgg8J+ZBT2l5VC8G5lYBQhtkzMCtaLE=";
+    sha256_aarch64 = lib.fakeHash;
+    openSha256 = "sha256-y93FdR5TZuurDlxc/p5D5+a7OH93qU4hwQqMXorcs/g=";
+    settingsSha256 = "sha256-3BvryH7p0ioweNN4S8oLDCTSS47fQPWVYwNq4AuWQgQ=";
+    persistencedSha256 = lib.fakeHash;
   };
 in {
   imports = [
@@ -139,6 +131,9 @@ in {
       # "video=eDP-1:1920x1200@60"
       "nvidia-drm.fbdev=1"
     ];
+    extraModprobeConfig = lib.mkMerge [
+      "options nvidia NVreg_UsePageAttributeTable=1"
+    ];
   };
 
   powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
@@ -166,7 +161,7 @@ in {
         enable = true;
         finegrained = true;
       };
-      open = false;
+      open = true;
     };
   };
   # XXX: There is a bug somewhere, this is a workaround
