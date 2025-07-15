@@ -74,3 +74,7 @@ user_pref("browser.newtabpage.activity-stream.showSponsored", false);
 user_pref("browser.newtabpage.activity-stream.discoverystream.sponsored-collections.enabled", false);
 user_pref("services.sync.prefs.sync.browser.newtabpage.activity-stream.showSponsored", false);
 user_pref("services.sync.prefs.sync.browser.newtabpage.activity-stream.showSponsoredTopSites", false);
+
+/* Ah yes everyone needs LLMs, right?? */
+user_pref("browser.ml.chat.enabled", false);
+user_pref("browser.ml.chat.sidebar", false);
