@@ -1,3 +1,4 @@
+# Dell XPS 9310 2-in-1
 {
   config,
   pkgs,

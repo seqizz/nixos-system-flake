@@ -1,3 +1,4 @@
+# VM, currently on Vultr
 {
   config,
   pkgs,
