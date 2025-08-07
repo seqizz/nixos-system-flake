@@ -77,6 +77,7 @@ in {
     firefox # was unstable, broke webgl
     pkgs.unstable.wezterm
     pkgs.unstable.discord
+    pkgs.unstable.claude-code
     thunderbird
 
     # NUR packages @Reference, mostly does not work / maintained

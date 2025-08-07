@@ -4,8 +4,6 @@
   config,
   ...
 }: let
-  # Comes from its own flake
-  avante = inputs.avante-nvim.packages.${pkgs.system}.default;
   secrets = import ../lib/secrets.nix;
 in {
   environment = {
@@ -13,9 +11,6 @@ in {
       fd # Needed for telescope
       nodejs # Not all plugins are well-integrated with nixpkgs
     ];
-    variables = {
-      ANTHROPIC_API_KEY = secrets.ANTHROPIC_API_KEY; # Needed for Avante
-    };
   };
 
   programs.neovim = {
@@ -94,7 +89,8 @@ in {
           ++ (
             if config.networking.hostName == "splinter"
             then [
-              avante # AI, only needed on one host
+              # LLM, only needed on one host
+              pkgs.unstable.vimPlugins.claude-code-nvim
             ]
             else []
           )

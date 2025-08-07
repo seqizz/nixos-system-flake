@@ -125,12 +125,6 @@
       url = "github:gen740/SmoothCursor.nvim";
       flake = false;
     };
-    avante-nvim = {
-      url = "github:vinnymeller/avante-nvim-nightly-flake/2363a2e46b80687f680e8ce75c82831ed848558b";
-      inputs = {
-        nixpkgs.follows = "nixpkgs";
-      };
-    };
 
     # Yazi plugins
     yazi-xclip-systemclipboard-src = {
