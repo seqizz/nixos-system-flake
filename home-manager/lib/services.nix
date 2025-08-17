@@ -49,6 +49,7 @@ in {
     };
 
     xidlehook = {
+      package = pkgs.yidlehook;
       enable = true;
       not-when-fullscreen = true;
       environment = {

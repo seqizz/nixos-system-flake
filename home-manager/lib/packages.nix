@@ -126,6 +126,7 @@ in {
     aspellDicts.en
     aspellDicts.tr
     loose # Fuck yeah
+    yidlehook
     nomacs
     meld # GUI diff tool
     my_scripts.bulb-toggle

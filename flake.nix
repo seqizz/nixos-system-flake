@@ -62,6 +62,11 @@
       flake = false;
     };
 
+    yidlehook-src = {
+      url = "git+https://git.gurkan.in/gurkan/yidlehook.git";
+      flake = false;
+    };
+
     lol-plymouth-src = {
       url = "git+https://git.gurkan.in/gurkan/lol-plymouth.git";
       flake = false;
@@ -140,6 +145,7 @@
     nur,
     disko,
     loose-src,
+    yidlehook-src,
     nix-index-database,
     simple-nixos-mailserver,
     # wezterm,
