@@ -7,11 +7,11 @@
   ...
 }: let
   fucknvidia = config.boot.kernelPackages.nvidiaPackages.mkDriver {
-    version = "575.64";
-    sha256_64bit = "sha256-6wG8/nOwbH0ktgg8J+ZBT2l5VC8G5lYBQhtkzMCtaLE=";
+    version = "570.172.08";
+    sha256_64bit = "sha256-AlaGfggsr5PXsl+nyOabMWBiqcbHLG4ij617I4xvoX0=";
     sha256_aarch64 = lib.fakeHash;
-    openSha256 = "sha256-y93FdR5TZuurDlxc/p5D5+a7OH93qU4hwQqMXorcs/g=";
-    settingsSha256 = "sha256-3BvryH7p0ioweNN4S8oLDCTSS47fQPWVYwNq4AuWQgQ=";
+    openSha256 = "sha256-aTV5J4zmEgRCOavo6wLwh5efOZUG+YtoeIT/tnrC1Hg=";
+    settingsSha256 = "sha256-N/1Ra8Teq93U3T898ImAT2DceHjDHZL1DuriJeTYEa4=";
     persistencedSha256 = lib.fakeHash;
   };
 in {
@@ -71,19 +71,15 @@ in {
       };
     };
     extraModulePackages = [fucknvidia];
-    # kernelPackages = pkgs.linuxPackages_latest;
-    kernelPackages = pkgs.linuxPackages_6_15;
+    kernelPackages = pkgs.linuxPackages_6_12;
     # kernelPackages = pkgs.linuxPackages_latest.extend (self: super: {
     #   ipu6-drivers = super.ipu6-drivers.overrideAttrs (
     #     final: previous: rec {
     #       src = builtins.fetchGit {
     #         url = "https://github.com/intel/ipu6-drivers.git";
     #         ref = "master";
-    #         rev = "b4ba63df5922150ec14ef7f202b3589896e0301a";
+    #         rev = "4bb5b4d8128fbf7f4730cd364a8f7fc13a0ef65b";
     #       };
-    #       patches = [
-    #         "${src}/patches/0001-v6.10-IPU6-headers-used-by-PSYS.patch"
-    #       ];
     #     }
     #   );
     # });
@@ -134,7 +130,7 @@ in {
       "nvidia-drm.fbdev=1"
     ];
     extraModprobeConfig = lib.mkMerge [
-      "options nvidia NVreg_UsePageAttributeTable=1"
+      "options nvidia NVreg_UsePageAttributeTable=1 NVreg_PreserveVideoMemoryAllocations=1"
     ];
   };
 
