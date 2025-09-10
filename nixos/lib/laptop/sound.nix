@@ -35,6 +35,11 @@
     pulseaudio
   ];
 
+  # Looks like I need SOF firmware for some laptops
+  hardware.firmware = with pkgs; [
+    sof-firmware
+  ];
+
   services = {
     pipewire = {
       enable = true;

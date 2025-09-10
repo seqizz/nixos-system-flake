@@ -56,7 +56,7 @@ in {
       };
     };
     kernelModules = ["kvm-intel" "i915"];
-    kernelPackages = pkgs.unstable.linuxPackages_latest;
+    kernelPackages = pkgs.linuxPackages_latest;
     kernelParams = [
       # prevent the kernel from blanking plymouth out of the fb
       "fbcon=nodefer"
