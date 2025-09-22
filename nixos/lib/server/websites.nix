@@ -49,14 +49,27 @@ in {
       "nginx/.updateSongSecret".text = secrets.updateSongSecret;
       # Later
       # "fail2ban/filter.d/nginx-probing.conf".text = ''
-        # [Definition]
-        # failregex = ^<HOST>.*GET.*/\.env HTTP/\d.\d\" 404.*$
-                    # ^<HOST>.*GET.*/\.env HTTP/\d.\d\" 404.*$
+      # [Definition]
+      # failregex = ^<HOST>.*GET.*/\.env HTTP/\d.\d\" 404.*$
+      # ^<HOST>.*GET.*/\.env HTTP/\d.\d\" 404.*$
       # '';
     };
   };
 
   services = {
+    geoipupdate = {
+      enable = true;
+      settings = {
+        EditionIDs = [
+          "GeoLite2-ASN"
+          "GeoLite2-City"
+          "GeoLite2-Country"
+        ];
+        AccountID = secrets.maxmindUserID;
+        LicenseKey = {_secret = "/shared/.maxmind_key";};
+        DatabaseDirectory = "/var/lib/GeoIP";
+      };
+    };
     nginx = {
       enable = true;
       recommendedGzipSettings = true;
@@ -65,6 +78,9 @@ in {
       recommendedTlsSettings = true;
       commonHttpConfig = secrets.nginxCommonHttpConfig;
       virtualHosts = secrets.nginxVirtualHostConfig;
+      additionalModules = with pkgs.nginxModules; [
+        geoip2
+      ];
     };
     # @Reference, I don't do that shit anymore
     # mysql = {

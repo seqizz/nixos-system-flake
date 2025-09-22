@@ -36,6 +36,7 @@ in {
             coc-pyright # Python language support for CoC
             colorizer # Colorize hex codes
             conform-nvim # Autoformat for various languages
+            diffview-nvim # Git diff viewing mode
             dressing-nvim # Better UI for input and select dialogs
             gitlinker-nvim # Create shareable file permalinks for Git hosts
             gitsigns-nvim # Show git changes in the gutter
