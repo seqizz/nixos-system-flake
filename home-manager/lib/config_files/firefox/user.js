@@ -75,6 +75,13 @@ user_pref("browser.newtabpage.activity-stream.discoverystream.sponsored-collecti
 user_pref("services.sync.prefs.sync.browser.newtabpage.activity-stream.showSponsored", false);
 user_pref("services.sync.prefs.sync.browser.newtabpage.activity-stream.showSponsoredTopSites", false);
 
-/* Ah yes everyone needs LLMs, right?? */
+/* Ah yes everyone needs LLMs, right?? Also HOLY SHIT how many of these */
 user_pref("browser.ml.chat.enabled", false);
 user_pref("browser.ml.chat.sidebar", false);
+user_pref("browser.ml.chat.menu", false); // remove "Ask a chatbot" from tab context menu
+user_pref("browser.ml.chat.page", false); // remove option in page context menu (https://github.com/mozilla/policy-templates/issues/1230)
+user_pref("browser.ml.linkPreview.enabled", false);
+user_pref("browser.tabs.groups.smart.enabled", false); // "Use AI to suggest tabs and a name for tab groups" in settings
+user_pref("browser.tabs.groups.smart.userEnabled", false);
+user_pref("pdfjs.enableAltTextModelDownload", false); // "This prevents downloading the AI model unless the user opts in (by enabling the toggle to "Create alt text automatically" from "Image alt text settings" when viewing a PDF)"
+user_pref("pdfjs.enableGuessAltText", false);
