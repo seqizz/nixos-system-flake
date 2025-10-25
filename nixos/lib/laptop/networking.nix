@@ -23,6 +23,7 @@
       # appendNameservers = ["127.0.0.1"];
       # insertNameservers = ["51.158.168.202"];
       enable = true;
+      # TODO: set dns = "dnsmasq" and fix the confusion with wireguard networks
       wifi.powersave = true;
       # Randomize mac address on connections
       settings = {

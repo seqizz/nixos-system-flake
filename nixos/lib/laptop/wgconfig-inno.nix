@@ -36,12 +36,14 @@ in
         esac
 
         if [ "$NM_DISPATCHER_ACTION" = "up" ]; then
+            # Route unmarked packets through table 42 (wg)
             ${pkgs.iproute2}/bin/ip -4 ru add prio 42 not fwmark 0x42 lookup 42
             ${pkgs.iproute2}/bin/ip -6 ru add prio 42 not fwmark 0x42 lookup 42
         fi
 
 
         if [ "$NM_DISPATCHER_ACTION" = "down" ]; then
+            # Remove routing rule for table 42
             ${pkgs.iproute2}/bin/ip -4 ru del prio 42
             ${pkgs.iproute2}/bin/ip -6 ru del prio 42
         fi
