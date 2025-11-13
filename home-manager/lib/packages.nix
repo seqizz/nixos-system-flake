@@ -73,7 +73,7 @@ in {
       ]))
 
     # non-stable stuff, subject to change
-    pkgs.unstable.tdesktop # telegram
+    pkgs.unstable.telegram-desktop
     firefox # was unstable, broke webgl
     pkgs.unstable.wezterm
     pkgs.unstable.discord

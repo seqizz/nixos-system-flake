@@ -1,8 +1,10 @@
-{ lib, config, ... }:
-let
-  secrets = import ../secrets.nix;
-in
 {
+  lib,
+  config,
+  ...
+}: let
+  secrets = import ../secrets.nix;
+in {
   networking.firewall = {
     allowedTCPPorts = [
       5008
@@ -12,6 +14,12 @@ in
       12345
     ];
   };
+
+  # TODO: shadowsocks 🙄
+  nixpkgs.config.permittedInsecurePackages = [
+    "mbedtls-2.28.10"
+  ];
+
   services = {
     shadowsocks = {
       enable = true;

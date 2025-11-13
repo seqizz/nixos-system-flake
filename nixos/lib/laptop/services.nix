@@ -33,6 +33,7 @@
     avahi = {
       enable = true;
       nssmdns4 = true;
+      nssmdns6 = true;
       openFirewall = true;
     };
     samba.enable = true;
@@ -79,13 +80,16 @@
       dataDir = "/home/gurkan/.local/share/syncthing";
     };
   };
+  environment.systemPackages = with pkgs; [
+    nssmdns
+  ];
 
   systemd = {
     # Unbind network-online from multi-user.target to speed up boot
     # https://discourse.nixos.org/t/get-to-the-login-screen-faster-on-nixos/57481
     # Should be OK to remove after https://nixpk.gs/pr-tracker.html?pr=365809
     # Which will be probably 25.04
-    targets.network-online.wantedBy = lib.mkForce [ ];
+    targets.network-online.wantedBy = lib.mkForce [];
 
     services = {
       # Do not restart these, since it fucks up the current session
