@@ -1,5 +1,8 @@
-{ config, pkgs, ... }:
 {
+  config,
+  pkgs,
+  ...
+}: {
   environment.etc = {
     "gitignore".text = ''
       .envrc
@@ -42,9 +45,6 @@
           # usage: git pr <source> <PR number> (git pr origin 1010)
           pr = !sh -c 'git fetch $1 pull/$2/head:$2 && git checkout $2' -
 
-          # push to current branch without forcing, for new branches
-          ptb = !sh -c 'git push origin $(git rev-parse --abbrev-ref HEAD)'
-
           # stash the whole thing, including untracked files, requires comment
           stashfull = stash --include-untracked -m
 
@@ -70,15 +70,7 @@
     (pkgs.writeScriptBin "git-cleanmerged" ''
       git fetch --all && for branch in $(git branch -l | grep -v `git-default-branch`); do git branch -d $branch ; done && git remote prune origin
     '')
-    # Gitlab MR push, restrictive but works on basic level
-    (pkgs.writeScriptBin "git-gmr" ''
-        #!/usr/bin/env sh
-        if [[ -z $1 ]]
-        then
-            echo give an assignee name please
-            exit 1
-        fi
-        git push -o merge_request.create -o merge_request.target=$(git-default-branch) -o merge_request.remove_source_branch -o merge_request.assign="$1" origin $(git symbolic-ref --short HEAD)
-    '')
+    # Push The Branch with optional GitLab push options (see script for usage)
+    (pkgs.writers.writePython3Bin "git-ptb" {} (builtins.readFile ./scripts/git-ptb.py))
   ];
 }
