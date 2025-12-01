@@ -1,11 +1,13 @@
-{ lib
-, python
-, buildPythonPackage
-, fetchFromGitHub
+{
+  lib,
+  python,
+  buildPythonPackage,
+  fetchFromGitHub,
 }:
 buildPythonPackage {
   pname = "TapoP100";
   version = "unstable-2022-11-03";
+  format = "setuptools";
 
   src = fetchFromGitHub {
     owner = "fishbigger";
@@ -28,9 +30,8 @@ buildPythonPackage {
 
   meta = with lib; {
     description = "Controller for TP-Link Tapo devices including the P100, P105, P110 plugs and the L530 and L510E bulbs";
-    homepage    = "https://github.com/fishbigger/TapoP100";
-    license     = licenses.mit;
-    maintainers =  with maintainers; [ seqizz ];
+    homepage = "https://github.com/fishbigger/TapoP100";
+    license = licenses.mit;
+    maintainers = with maintainers; [seqizz];
   };
 }
-

@@ -18,7 +18,7 @@ python3Packages.buildPythonPackage rec {
 
   meta = with lib; {
     description = "Biktiran sikko bahaneler";
-    homepage = https://github.com/seqizz/anayasaya-noldu;
+    homepage = "https://github.com/seqizz/anayasaya-noldu";
     license = licenses.mit;
     maintainers = [ "seqizz" ] ;
     platforms = platforms.linux;

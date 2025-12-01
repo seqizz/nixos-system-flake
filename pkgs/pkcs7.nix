@@ -8,6 +8,7 @@
 in
   buildPythonPackage {
     inherit pname version;
+    format = "setuptools";
 
     src = fetchPypi {
       inherit pname version;

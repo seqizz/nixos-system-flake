@@ -94,6 +94,10 @@ in {
     arandr # I might need manual xrandr one day
     arc-kde-theme # for theming kde apps
     arc-theme
+    aspell # If any app uses aspell
+    aspellDicts.de
+    aspellDicts.en
+    aspellDicts.tr
     blueman
     brightnessctl
     calibre
@@ -106,29 +110,21 @@ in {
     ghorg # Clone whole organizations from git remotes
     git-filter-repo # Amazing tool to rewrite history 😈
     gitstatus
-    glxinfo
     graphviz # some rarely-needed weird tools
     home-manager # wow, flakes are amazing 😒
+    hunspell # For spellcheck on Libreoffice
+    hunspellDicts.de_DE
+    hunspellDicts.en_US
     imagemagick
     inotify-tools
     jmtpfs # mount MTP devices easily
-    # kde-cli-tools # required to open kde-gtk-config
-    # kde-gtk-config # best GTK theme selector
     kdePackages.ark
     kdePackages.ffmpegthumbs
     libnotify
     libreoffice
-    hunspell # For spellcheck on Libreoffice
-    hunspellDicts.de_DE
-    hunspellDicts.en_US
-    aspell # If any app uses aspell
-    aspellDicts.de
-    aspellDicts.en
-    aspellDicts.tr
     loose # Fuck yeah
-    yidlehook
-    nomacs
     meld # GUI diff tool
+    mesa-demos
     my_scripts.bulb-toggle
     my_scripts.firefox-tempprofile
     my_scripts.git-browse-origin
@@ -139,6 +135,7 @@ in {
     my_scripts.update-song
     my_scripts.xinput-toggle
     nfpm
+    nomacs
     onboard # on-screen keyboard
     pamixer # pulseaudio mixer
     papirus-icon-theme
@@ -151,12 +148,10 @@ in {
     playerctl
     poetry
     proxychains
+    qpdfview
     qpwgraph # Graphical pipewire plumbing
     reveal-md
     rofi-pulse-select
-    qpdfview
-    # qt5ct # QT5 theme selector
-    # sieve-editor-gui # Mail filter editor
     simplescreenrecorder
     slock
     spotify
@@ -177,6 +172,12 @@ in {
     xournalpp # annotate pdfs
     xsel
     yamlfix
+    yidlehook
+    # optional ones below, just as reminder
+    # kde-cli-tools # required to open kde-gtk-config
+    # kde-gtk-config # best GTK theme selector
+    # qt5ct # QT5 theme selector
+    # sieve-editor-gui # Mail filter editor
   ];
 }
 #  vim: set ts=2 sw=2 tw=0 et :

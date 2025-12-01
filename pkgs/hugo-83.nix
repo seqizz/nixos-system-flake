@@ -21,7 +21,7 @@ stdenv.mkDerivation rec {
   '';
 
   meta = with lib; {
-    homepage = https://gohugo.io;
+    homepage = "https://gohugo.io";
     description = "A static site generator, older version to support my stuff";
     platforms = platforms.linux;
     maintainers = with maintainers; [ seqizz ];

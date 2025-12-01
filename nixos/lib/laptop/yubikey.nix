@@ -37,7 +37,7 @@
     ccid
     gnupg
     opensc
-    pcsctools
+    pcsc-tools
     pcsclite
     # those 2 are only needed for initial setup
     # yubikey-manager

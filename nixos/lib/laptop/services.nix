@@ -10,7 +10,10 @@
   services = {
     acpid.enable = true;
     fwupd.enable = true;
-    gnome.gnome-keyring.enable = true;
+    gnome = {
+      gnome-keyring.enable = true;
+      gcr-ssh-agent.enable = false; # disable gnome ssh agent (conflicts)
+    };
     greenclip = {
       enable = true; # clipboard daemon
       # @Reference to unmark a broken haskell package, wth..
@@ -38,10 +41,10 @@
     };
     samba.enable = true;
 
-    logind.extraConfig = ''
-      HandleSuspendKey=ignore
-      HandlePowerKey=ignore
-    '';
+    logind.settings.Login = {
+      "HandleSuspendKey" = "ignore";
+      "HandlePowerKey" = "ignore";
+    };
 
     udev = {
       extraRules = lib.mkMerge [
@@ -85,12 +88,6 @@
   ];
 
   systemd = {
-    # Unbind network-online from multi-user.target to speed up boot
-    # https://discourse.nixos.org/t/get-to-the-login-screen-faster-on-nixos/57481
-    # Should be OK to remove after https://nixpk.gs/pr-tracker.html?pr=365809
-    # Which will be probably 25.04
-    targets.network-online.wantedBy = lib.mkForce [];
-
     services = {
       # Do not restart these, since it fucks up the current session
       systemd-logind.restartIfChanged = false;

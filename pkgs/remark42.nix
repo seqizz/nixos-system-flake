@@ -21,7 +21,7 @@ stdenv.mkDerivation rec {
   '';
 
   meta = with lib; {
-    homepage = https://remark42.com;
+    homepage = "https://remark42.com";
     description = "A comment engine";
     platforms = platforms.linux;
     maintainers = with maintainers; [ seqiz ];

@@ -18,7 +18,7 @@ python3Packages.buildPythonPackage rec {
 
   meta = with lib; {
     description = "Awesome swears";
-    homepage = https://github.com/seqizz/kufur-generator;
+    homepage = "https://github.com/seqizz/kufur-generator";
     license = licenses.mit;
     maintainers = ["seqizz"];
     platforms = platforms.linux;

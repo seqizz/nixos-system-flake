@@ -15,7 +15,7 @@
           # What is this hipster bullshit "main"? THERE IS NO "SLAVE" IN THIS FUCKING CONTEXT.
           defaultBranch = master
       [core]
-          pager = ${pkgs.gitAndTools.delta}/bin/delta --dark
+          pager = ${pkgs.delta}/bin/delta --dark
           excludesfile = /etc/gitignore
       [pull]
         ff = only

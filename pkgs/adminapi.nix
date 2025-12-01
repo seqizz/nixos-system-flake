@@ -1,13 +1,14 @@
-{ lib
-, fetchFromGitHub
-, buildPythonPackage
-, netaddr
-, paramiko
+{
+  lib,
+  fetchFromGitHub,
+  buildPythonPackage,
+  netaddr,
+  paramiko,
 }:
 buildPythonPackage rec {
-
   pname = "adminapi";
   version = "unstable-2023-11-03";
+  format = "setuptools";
 
   src = fetchFromGitHub {
     owner = "innogames";
@@ -28,9 +29,9 @@ buildPythonPackage rec {
 
   meta = with lib; {
     description = "Central server database management system of InnoGames - client module";
-    homepage = https://github.com/innogames/serveradmin;
+    homepage = "https://github.com/innogames/serveradmin";
     license = licenses.mit;
-    maintainers = [ "gurkan.gur" ] ;
+    maintainers = ["gurkan.gur"];
     platforms = platforms.linux;
   };
 }

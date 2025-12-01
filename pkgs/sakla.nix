@@ -26,7 +26,7 @@ python3Packages.buildPythonApplication rec {
 
   meta = with lib; {
     description = "A simple CLI interface for todoist";
-    homepage = https://git.gurkan.in/gurkan/sakla.git;
+    homepage = "https://git.gurkan.in/gurkan/sakla.git";
     license = licenses.agpl3;
     maintainers = [ "seqizz" ] ;
     platforms = platforms.linux;

@@ -9,15 +9,9 @@ in {
   programs = {
     git = {
       enable = true;
-      userEmail = secrets.gitUserEmail;
-      userName = secrets.gitUserName;
-      delta = {
-        enable = true;
-        options = {
-          dark = "true";
-          true-color = "always";
-          features = "mytheme";
-        };
+      settings.user = {
+        email = secrets.gitUserEmail;
+        name = secrets.gitUserName;
       };
       includes = [
         {
@@ -32,6 +26,16 @@ in {
           path = "/home/gurkan/.config/delta-theme.gitconfig";
         }
       ];
+    };
+
+    delta = {
+      enable = true;
+      enableGitIntegration = true;
+      options = {
+        dark = "true";
+        true-color = "always";
+        features = "mytheme";
+      };
     };
 
     browserpass = {

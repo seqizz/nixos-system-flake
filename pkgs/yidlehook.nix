@@ -25,7 +25,7 @@ buildPythonApplication rec {
 
   meta = with lib; {
     description = "A poor drop-in replacement for xidlehook, written in Python";
-    homepage = https://git.gurkan.in/gurkan/yidlehook;
+    homepage = "https://git.gurkan.in/gurkan/yidlehook";
     license = licenses.gpl3;
     maintainers = ["seqizz"];
     platforms = platforms.linux;

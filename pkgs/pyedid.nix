@@ -1,13 +1,14 @@
-{ stdenv
-, lib
-, fetchFromGitHub
-, buildPythonPackage
-, requests
+{
+  stdenv,
+  lib,
+  fetchFromGitHub,
+  buildPythonPackage,
+  requests,
 }:
 buildPythonPackage rec {
-
   pname = "pyedid";
   version = "unstable-2023-08-01";
+  format = "setuptools";
 
   src = fetchFromGitHub {
     owner = "dd4e";
@@ -25,9 +26,9 @@ buildPythonPackage rec {
 
   meta = with lib; {
     description = "Python library for parsing EDID";
-    homepage = https://github.com/dd4e/pyedid;
+    homepage = "https://github.com/dd4e/pyedid";
     license = licenses.mit;
-    maintainers = [ "seqizz" ] ;
+    maintainers = ["seqizz"];
     platforms = platforms.linux;
   };
 }

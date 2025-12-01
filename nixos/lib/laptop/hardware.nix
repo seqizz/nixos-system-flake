@@ -17,22 +17,22 @@
     i2c.enable = true;
     enableRedistributableFirmware = true;
 
-    firmware = [pkgs.firmwareLinuxNonfree];
+    firmware = [pkgs.linux-firmware];
 
     graphics = {
       enable = true;
       enable32Bit = true;
       extraPackages = with pkgs; [
-        vaapiIntel
-        vaapiVdpau
+        intel-vaapi-driver
+        libva-vdpau-driver
         libvdpau-va-gl
         intel-media-driver
         vulkan-loader
         libva
       ];
       extraPackages32 = with pkgs.pkgsi686Linux; [
-        vaapiIntel
-        vaapiVdpau
+        intel-vaapi-driver
+        libva-vdpau-driver
         libvdpau-va-gl
         intel-media-driver
         vulkan-loader

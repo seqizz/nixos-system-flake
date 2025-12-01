@@ -21,7 +21,7 @@ in {
       ffmpeg = prev.ffmpeg_6-full;
     };
     greenclip = getSrcFromInput prev.greenclip inputs.greenclip-src;
-    sd-switch = inputs.sd-switch-src.packages.${final.system}.default;
+    sd-switch = inputs.sd-switch-src.packages.${final.stdenv.hostPlatform.system}.default;
     loose = final.python3Packages.callPackage ../pkgs/loose.nix {inherit inputs;};
     yidlehook = final.python3Packages.callPackage ../pkgs/yidlehook.nix {inherit inputs;};
     slock = final.callPackage ../pkgs/slock.nix {inherit inputs;};
@@ -77,7 +77,7 @@ in {
   # be accessible through 'pkgs.unstable'
   unstable-packages = final: _prev: {
     unstable = import inputs.nixpkgs-unstable {
-      system = final.system;
+      system = final.stdenv.hostPlatform.system;
       config.allowUnfree = true;
     };
   };

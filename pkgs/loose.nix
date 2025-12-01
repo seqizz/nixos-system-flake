@@ -55,7 +55,7 @@ in
 
     meta = with lib; {
       description = "Another xrandr wrapper for multi-monitor setups";
-      homepage = https://git.gurkan.in/gurkan/loose;
+      homepage = "https://git.gurkan.in/gurkan/loose";
       license = licenses.gpl3;
       maintainers = ["seqizz"];
       platforms = platforms.linux;

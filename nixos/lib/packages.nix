@@ -101,7 +101,7 @@
       http3Support = true;
       idnSupport = true;
       brotliSupport = true;
-      openssl = pkgs.quictls;
+      zlibSupport = true;
       zstdSupport = true;
     })
     direnv # .envrc runner
@@ -123,7 +123,7 @@
     inetutils # telnet
     iotop
     jq
-    linuxPackages.perf
+    perf
     lsof
     man-pages
     mcrypt # for nc file encryption

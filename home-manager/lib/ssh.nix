@@ -5,8 +5,7 @@ in
 {
   programs.ssh = {
     enable = true;
-    serverAliveInterval = 60;
-    hashKnownHosts = true;
+    enableDefaultConfig = false;
     matchBlocks = secrets.sshMatchBlocks;
   };
 }
