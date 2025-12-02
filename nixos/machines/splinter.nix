@@ -30,8 +30,8 @@ in {
     networkmanager = {
       plugins = with pkgs; [
         networkmanager-openvpn
+        networkmanager-strongswan
       ];
-      enableStrongSwan = true;
     };
   };
 
@@ -166,7 +166,9 @@ in {
   };
   # XXX: There is a bug somewhere, this is a workaround
   systemd = {
-    extraConfig = "DefaultTimeoutStopSec=10s";
+    settings.Manager = {
+      DefaultTimeoutStopSec = "10s";
+    };
     user.extraConfig = "DefaultTimeoutStopSec=10s";
   };
   services = {
