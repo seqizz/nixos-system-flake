@@ -43,6 +43,15 @@ in {
       browsers = ["firefox"];
     };
 
+    # WhatsApp PWA
+    zapzap.enable = true;
+
+    # TODO for when I'm not lazy
+    # claude-code = {
+    #   enable = true;
+    #   skills = secrets.claudeSkills;
+    # };
+
     # Bug: https://github.com/nix-community/home-manager/issues/1586
     # firefox = {
     #   enable = true;

@@ -70,9 +70,9 @@ in {
         };
       };
     };
-    extraModulePackages = [fucknvidia];
-    kernelPackages = pkgs.linuxPackages_6_12;
-    # kernelPackages = pkgs.linuxPackages_latest;
+    # extraModulePackages = [fucknvidia];
+    # kernelPackages = pkgs.linuxPackages_6_12;
+    kernelPackages = pkgs.linuxPackages_latest;
     # kernelPackages = pkgs.linuxPackages_latest.extend (self: super: {
     #   ipu6-drivers = super.ipu6-drivers.overrideAttrs (
     #     final: previous: rec {
@@ -117,12 +117,11 @@ in {
       # prevent the kernel from blanking plymouth out of the fb
       "fbcon=nodefer"
       "quiet"
+      "nomodeset"
       # disable systemd status messages
       "rd.systemd.show_status=auto"
       # lower the udev log level to show only errors or worse
       "rd.udev.log_level=3"
-      "i915.modeset=1"
-      "nvidia.modeset=1"
       "intel_pstate=passive"
       # "pcie_aspm=force"
       "i915.enable_fbc=1"
@@ -147,7 +146,7 @@ in {
     nvidia = {
       nvidiaSettings = false;
       modesetting.enable = true;
-      package = fucknvidia;
+      # package = fucknvidia;
       prime = {
         sync.enable = false;
         offload = {
