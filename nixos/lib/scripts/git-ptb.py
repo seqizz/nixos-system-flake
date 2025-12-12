@@ -7,11 +7,14 @@ Modifiers (order doesn't matter):
   m - create merge request
   r - remove source branch after merge
   d - mark as draft
+  f - force push (uses --force-with-lease)
+  F - force push (without lease, fuk it)
 
 Examples:
   git ptb          # plain push
   git ptb s        # skip CI
   git ptb ms       # MR + skip CI (same as 'sm')
+  git ptb mfs      # MR + force-with-lease + skip CI
   git ptb mrd joe  # MR + remove branch + draft + assign to joe
 """
 
@@ -41,10 +44,18 @@ def main():
     assignee = sys.argv[2] if len(sys.argv) > 2 else None
 
     # Validate modifiers
-    unknown = modifiers - set(MODIFIERS.keys())
+    unknown = modifiers - set(MODIFIERS.keys()) - {'f', 'F'}
     if unknown:
         print(f'Unknown modifier(s): {", ".join(unknown)}', file=sys.stderr)
         print(__doc__, file=sys.stderr)
+        sys.exit(1)
+
+    # Check for conflicting force flags
+    if 'f' in modifiers and 'F' in modifiers:
+        print(
+            'Error: Cannot use both "f" and "F" modifiers together',
+            file=sys.stderr,
+        )
         sys.exit(1)
 
     branch = get_branch()
@@ -53,11 +64,18 @@ def main():
     # Build push options
     opts = []
     for mod in modifiers:
-        for opt in MODIFIERS[mod]:
-            opts.extend(['-o', opt.format(default_branch=default_branch)])
+        if mod in MODIFIERS:
+            for opt in MODIFIERS[mod]:
+                opts.extend(['-o', opt.format(default_branch=default_branch)])
 
     if assignee:
         opts.extend(['-o', f'merge_request.assign={assignee}'])
+
+    # Add force flag if requested
+    if 'f' in modifiers:
+        opts.append('--force-with-lease')
+    elif 'F' in modifiers:
+        opts.append('--force')
 
     cmd = ['git', 'push'] + opts + ['origin', branch]
     print(f'+ {" ".join(cmd)}')
