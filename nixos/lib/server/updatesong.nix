@@ -28,7 +28,9 @@
       mv bin/blog-song-updater $out/bin/blog-song-updater
     '';
     # Ensure proper CGO settings
-    CGO_ENABLED = "0";
+    env = {
+      CGO_ENABLED = "0";
+    };
     # Remove version reference
     ldflags = [];
   };

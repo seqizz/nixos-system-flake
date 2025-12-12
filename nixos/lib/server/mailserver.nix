@@ -20,6 +20,7 @@ in {
 
   mailserver = {
     enable = true;
+    stateVersion = 3;
     fqdn = "mail.gurkan.in";
     domains = ["gurkan.in" "siktir.in"];
     mailDirectory = "/shared/mail";

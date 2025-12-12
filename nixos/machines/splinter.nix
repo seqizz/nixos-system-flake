@@ -71,8 +71,8 @@ in {
       };
     };
     # extraModulePackages = [fucknvidia];
-    # kernelPackages = pkgs.linuxPackages_6_12;
-    kernelPackages = pkgs.linuxPackages_latest;
+    kernelPackages = pkgs.linuxPackages_6_17;
+    # kernelPackages = pkgs.linuxPackages_latest;
     # kernelPackages = pkgs.linuxPackages_latest.extend (self: super: {
     #   ipu6-drivers = super.ipu6-drivers.overrideAttrs (
     #     final: previous: rec {
@@ -117,7 +117,7 @@ in {
       # prevent the kernel from blanking plymouth out of the fb
       "fbcon=nodefer"
       "quiet"
-      "nomodeset"
+      # "nomodeset"
       # disable systemd status messages
       "rd.systemd.show_status=auto"
       # lower the udev log level to show only errors or worse
@@ -127,11 +127,11 @@ in {
       "i915.enable_fbc=1"
       "i915.enable_psr=0" # WTF is even this?
       # "video=eDP-1:1920x1200@60"
-      "nvidia-drm.fbdev=1"
+      # "nvidia-drm.fbdev=1"
     ];
-    extraModprobeConfig = lib.mkMerge [
-      "options nvidia NVreg_UsePageAttributeTable=1 NVreg_PreserveVideoMemoryAllocations=1"
-    ];
+    # extraModprobeConfig = lib.mkMerge [
+      # "options nvidia NVreg_UsePageAttributeTable=1 NVreg_PreserveVideoMemoryAllocations=1"
+    # ];
   };
 
   powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
