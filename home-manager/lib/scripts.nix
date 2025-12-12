@@ -1,6 +1,6 @@
 {pkgs, ... }:
 let
-  writeSubbedBin = (import ./helper-modules/writeSubbedBin.nix {
+  writeSubbedBin = (import ../../nixos/lib/helper-modules/writeSubbedBin.nix {
     pkgs = pkgs;
   }).writeSubbedBin;
 
