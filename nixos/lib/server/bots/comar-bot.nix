@@ -1,28 +1,11 @@
-{ config, pkgs, ...}:
+{ config, pkgs, lib, ...}:
 let
   secrets = import ../../secrets.nix;
+  helpers = import ../../helper-modules/telegram-bot-service.nix { inherit config pkgs lib; };
 in
-{
-  systemd.services.comar-bot = {
-    enable = true;
-    wantedBy = [
-      "multi-user.target"
-    ];
-    description = "Comar bot";
-    serviceConfig = {
-      ExecStart = let
-        python-with-telegram = pkgs.python3.withPackages (ps: with ps; [
-          python-telegram-bot
-          setuptools
-        ]);
-      in
-        "${python-with-telegram.interpreter} /shared/scripts/comar-generator/comar-generator/telegram-comarbot.py";
-      Restart = "always";
-      RestartSec = 30;
-      StandardOutput = "syslog";
-    };
-    environment = {
-      TELEGRAM_TOKEN = secrets.telegramTokenComarbot;
-    };
-  };
+helpers.mkTelegramBotService {
+  serviceName = "comar-bot";
+  description = "Comar bot";
+  scriptPath = "/shared/scripts/comar-generator/comar-generator/telegram-comarbot.py";
+  telegramToken = secrets.telegramTokenComarbot;
 }

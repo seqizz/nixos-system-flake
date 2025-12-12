@@ -1,28 +1,11 @@
-{ config, pkgs, ...}:
+{ config, pkgs, lib, ...}:
 let
   secrets = import ../../secrets.nix;
+  helpers = import ../../helper-modules/telegram-bot-service.nix { inherit config pkgs lib; };
 in
-{
-  systemd.services.anayasa-bot= {
-    enable = true;
-    wantedBy = [
-      "multi-user.target"
-    ];
-    description = "Anayasa Bot";
-    serviceConfig = {
-      ExecStart = let
-        python-with-telegram = pkgs.python3.withPackages (ps: with ps; [
-          python-telegram-bot
-          setuptools
-        ]);
-      in
-        "${python-with-telegram.interpreter} /shared/scripts/anayasaya-noldu/anayasaya-noldu/telegram-anayasabot.py";
-      Restart = "always";
-      RestartSec = 30;
-      StandardOutput = "syslog";
-    };
-    environment = {
-      TELEGRAM_TOKEN = secrets.telegramTokenAnayasabot;
-    };
-  };
+helpers.mkTelegramBotService {
+  serviceName = "anayasa-bot";
+  description = "Anayasa Bot";
+  scriptPath = "/shared/scripts/anayasaya-noldu/anayasaya-noldu/telegram-anayasabot.py";
+  telegramToken = secrets.telegramTokenAnayasabot;
 }
