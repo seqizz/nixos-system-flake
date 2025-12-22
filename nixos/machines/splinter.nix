@@ -7,11 +7,11 @@
   ...
 }: let
   fucknvidia = config.boot.kernelPackages.nvidiaPackages.mkDriver {
-    version = "575.64.05";
-    sha256_64bit = "sha256-hfK1D5EiYcGRegss9+H5dDr/0Aj9wPIJ9NVWP3dNUC0=";
-    settingsSha256 = "sha256-o2zUnYFUQjHOcCrB0w/4L6xI1hVUXLAWgG2Y26BowBE=";
-    openSha256 = "sha256-mcbMVEyRxNyRrohgwWNylu45vIqF+flKHnmt47R//KU=";
+    version = "590.44.01";
+    sha256_64bit = "sha256-VbkVaKwElaazojfxkHnz/nN/5olk13ezkw/EQjhKPms=";
     sha256_aarch64 = lib.fakeHash;
+    openSha256 = "sha256-ft8FEnBotC9Bl+o4vQA1rWFuRe7gviD/j1B8t0MRL/o=";
+    settingsSha256 = "sha256-wVf1hku1l5OACiBeIePUMeZTWDQ4ueNvIk6BsW/RmF4=";
     persistencedSha256 = lib.fakeHash;
   };
 in {
@@ -70,9 +70,9 @@ in {
         };
       };
     };
-    # extraModulePackages = [fucknvidia];
-    kernelPackages = pkgs.linuxPackages_6_17;
-    # kernelPackages = pkgs.linuxPackages_latest;
+    extraModulePackages = [fucknvidia];
+    # kernelPackages = pkgs.linuxPackages_6_17;
+    kernelPackages = pkgs.linuxPackages_latest;
     # kernelPackages = pkgs.linuxPackages_latest.extend (self: super: {
     #   ipu6-drivers = super.ipu6-drivers.overrideAttrs (
     #     final: previous: rec {
@@ -130,7 +130,7 @@ in {
       # "nvidia-drm.fbdev=1"
     ];
     # extraModprobeConfig = lib.mkMerge [
-      # "options nvidia NVreg_UsePageAttributeTable=1 NVreg_PreserveVideoMemoryAllocations=1"
+    # "options nvidia NVreg_UsePageAttributeTable=1 NVreg_PreserveVideoMemoryAllocations=1"
     # ];
   };
 
