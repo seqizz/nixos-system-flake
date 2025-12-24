@@ -66,11 +66,17 @@ tab-item.active .label-content {
   color: #d79921 !important;
 }
 
-/* Reference: BLUR
+/* Reference: BLUR unused
 tab-item:not(.active):not(.faviconized) {
   filter: blur(0.7px) grayscale(0.36);
 }
 */
+
+/* Pinned tabs aligned to left so hovering doesn't make them move */
+.tabs.pinned {
+  display: flex !important;
+  justify-content: flex-end !important;
+}
 
 /* Sprinkle some color */
 tab-item.active tab-item-substance .background {
@@ -84,3 +90,9 @@ tab-item:is(.faviconized) {
   transform: scale(120%);
 }
 
+/* theme overrides */
+:root,
+body,
+#background {
+  background-color: #1d2021;
+}
