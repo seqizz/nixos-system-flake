@@ -11,10 +11,12 @@ pkgs.stdenv.mkDerivation {
 
   buildInputs = with pkgs; [
     libxcrypt
-    xorg.libX11
-    xorg.libXext
-    xorg.libXrandr
-    xorg.libXinerama
+    xorg.libX11.dev
+    xorg.libXext.dev
+    xorg.libXrandr.dev
+    xorg.libXinerama.dev
+    xorg.libXtst
+    xorg.libXi.dev
     imlib2
   ];
 

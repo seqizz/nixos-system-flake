@@ -146,7 +146,7 @@ in {
     nvidia = {
       nvidiaSettings = false;
       modesetting.enable = true;
-      # package = fucknvidia;
+      package = fucknvidia;
       prime = {
         sync.enable = false;
         offload = {
