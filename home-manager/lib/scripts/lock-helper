@@ -27,7 +27,7 @@ restore_brightness () {
 }
 
 lock_screen () {
-    /run/wrappers/bin/sudo @slock@/bin/slock
+    /run/wrappers/bin/sudo @slock@/bin/slock &
 }
 
 if [[ "$action" == "start" ]]; then
