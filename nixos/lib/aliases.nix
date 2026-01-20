@@ -17,7 +17,7 @@ in
     sysup-noupdate = "sudo nixos-rebuild switch --flake path://${myConfigPath}#${config.networking.hostName} --verbose --upgrade --option eval-cache false";
     sysup = "update-flake-inputs && sysup-noupdate && if [[ $(whoami) == 'gurkan' ]]; then echo; echo \"Switching home-manager after waiting 15 sec...\"; sleep 15; homeup-noupdate; fi";
     homeup = "update-flake-inputs && homeup-noupdate";
-    sysclean = "if [[ $(whoami) == 'gurkan' ]]; then echo \"Clearing home-manager...\"; home-manager expire-generations \"-20 days\"; fi; sudo nix-env -p /nix/var/nix/profiles/system --delete-generations +3 && sudo nix-collect-garbage; sudo nix-store --optimize";
+    sysclean = "if [[ $(whoami) == 'gurkan' ]]; then echo \"Clearing home-manager...\"; home-manager expire-generations \"-20 days\"; fi; sudo nix-env -p /nix/var/nix/profiles/system --delete-generations +3 && nix-env -p ~/.local/state/nix/profiles/profile --delete-generations 20d && sudo nix-collect-garbage; sudo nix-store --optimize";
     syslist = "echo 'System:' ; sudo nix-env -p /nix/var/nix/profiles/system --list-generations; if [[ $(whoami) == 'gurkan' ]]; then echo; echo 'Home-manager:'; home-manager generations; fi";
   };
 }
