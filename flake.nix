@@ -94,10 +94,10 @@
       # url = "github:gbprod/yanky.nvim";
       # flake = false;
     # };
-    leap-src = {
-      url = "github:ggandor/leap.nvim";
-      flake = false;
-    };
+    # leap-src = {
+    #   url = "git+ssh://codeberg.org/andyg/leap.nvim";
+    #   flake = false;
+    # };
     trailblazer-src = {
       url = "github:LeonHeidelbach/trailblazer.nvim";
       flake = false;

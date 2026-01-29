@@ -59,7 +59,7 @@ in {
     vim-puppet-4tabs = plugin "vim-puppet-4tabs" inputs.vim-puppet-4tabs-src;
     vim-yadi = plugin "vim-yadi" inputs.vim-yadi-src;
     # yanky = plugin "yanky" inputs.yanky-src;
-    leap = plugin "leap" inputs.leap-src;
+    # leap = plugin "leap" inputs.leap-src;
     trailblazer = plugin "trailblazer" inputs.trailblazer-src;
     commentnvim = plugin "commentnvim" inputs.commentnvim-src;
     telescope-file-browser = plugin "telescope-file-browser" inputs.telescope-file-browser-src;

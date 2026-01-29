@@ -42,6 +42,7 @@ in {
             gitsigns-nvim # Show git changes in the gutter
             indent-blankline-nvim-lua # Visible indent lines
             indent-o-matic # Automatic indentation detection
+            leap-nvim # Better movement with s
             limelight-vim # Focus helper
             lualine-nvim # Statusline
             neogit # Git integration
@@ -101,7 +102,7 @@ in {
             coc-ruff # Ruff (Python linter) support for CoC
             commentnvim # Smart commenting plugin
             copilot # well, shit works
-            leap # Better movement with s
+            # leap # Better movement with s
             smoothcursor # Smooth cursor movement animation
             telescope-file-browser # File browser extension for telescope
             trailblazer # Better mark jumps Ctrl-S and Shift-Up/Down
