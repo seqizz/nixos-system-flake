@@ -52,15 +52,15 @@ in {
         "ahci"
         "battery"
         "i915"
+        "nvidia"
         "nvme"
         "rtsx_pci_sdmmc"
         "sd_mod"
         "usb_storage"
-        "xhci_pci"
         "vmd"
-        "nvidia"
+        "xhci_pci"
       ];
-      # kernelModules = ["dm-snapshot" "i915"];
+      # kernelModules = ["iwlmvm" "iwlwifi"];
       luks.devices = {
         crypted = {
           preLVM = true;
@@ -200,5 +200,19 @@ in {
     extraCompatPackages = with pkgs; [
       proton-ge-bin
     ];
+  };
+
+  # Hack time!
+  boot.blacklistedKernelModules = ["iwlwifi" "iwlmvm"];
+
+  systemd.services.load-iwlwifi = {
+    description = "Load iwlwifi after boot because ordering is broken";
+    wantedBy = ["multi-user.target"];
+    before = ["NetworkManager.service"];
+    serviceConfig = {
+      Type = "oneshot";
+      RemainAfterExit = true;
+      ExecStart = "${pkgs.kmod}/bin/modprobe iwlwifi";
+    };
   };
 }
