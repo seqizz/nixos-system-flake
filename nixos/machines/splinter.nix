@@ -74,6 +74,19 @@ in {
     # kernelPackages = pkgs.linuxPackages_6_17;
     kernelPackages = pkgs.linuxPackages_latest;
     # kernelPackages = pkgs.linuxPackages_latest.extend (self: super: {
+    #   kernel = super.kernel.override {
+    #     argsOverride = rec {
+    #       version = "6.18.6";
+    #       modDirVersion = version;
+    #       src = pkgs.fetchurl {
+    #         url = "mirror://kernel/linux/kernel/v6.x/linux-${version}.tar.xz";
+    #         hash = "sha256-RySXGXsvaNTb8bwyzG3GacoiD/TA6w3Dmpz/moj5oxs="; # will fail, gives you real hash
+    #       };
+    #     };
+    #   };
+    # });
+
+    # kernelPackages = pkgs.linuxPackages_latest.extend (self: super: {
     #   ipu6-drivers = super.ipu6-drivers.overrideAttrs (
     #     final: previous: rec {
     #       src = builtins.fetchGit {
@@ -203,16 +216,16 @@ in {
   };
 
   # Hack time!
-  boot.blacklistedKernelModules = ["iwlwifi" "iwlmvm"];
-
-  systemd.services.load-iwlwifi = {
-    description = "Load iwlwifi after boot because ordering is broken";
-    wantedBy = ["multi-user.target"];
-    before = ["NetworkManager.service"];
-    serviceConfig = {
-      Type = "oneshot";
-      RemainAfterExit = true;
-      ExecStart = "${pkgs.kmod}/bin/modprobe iwlwifi";
-    };
-  };
+  # boot.blacklistedKernelModules = ["iwlwifi" "iwlmvm"];
+  #
+  # systemd.services.load-iwlwifi = {
+  #   description = "Load iwlwifi after boot because ordering is broken";
+  #   wantedBy = ["multi-user.target"];
+  #   before = ["NetworkManager.service"];
+  #   serviceConfig = {
+  #     Type = "oneshot";
+  #     RemainAfterExit = true;
+  #     ExecStart = "${pkgs.kmod}/bin/modprobe iwlwifi";
+  #   };
+  # };
 }

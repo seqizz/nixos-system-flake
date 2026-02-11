@@ -1,17 +1,24 @@
-{ config, pkgs, ...}:
 {
+  config,
+  pkgs,
+  ...
+}: {
   networking = {
-
     firewall = {
-
       allowedTCPPortRanges = [
         # kdeConnect
-        { from = 1714; to = 1764; }
+        {
+          from = 1714;
+          to = 1764;
+        }
       ];
 
       allowedUDPPortRanges = [
         # kdeConnect
-        { from = 1714; to = 1764; }
+        {
+          from = 1714;
+          to = 1764;
+        }
       ];
       # Wireguard needs this:
       # https://discourse.nixos.org/t/solved-minimal-firewall-setup-for-wireguard-client/7577/2
@@ -42,3 +49,4 @@
   };
 }
 #  vim: set ts=2 sw=2 tw=0 et :
+
