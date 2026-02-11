@@ -125,6 +125,17 @@
   virtualisation.docker = {
     enable = true;
     enableOnBoot = false;
+    # Enable clashing with my wireguard networks
+    daemon.settings = {
+      bip = "172.44.1.5/24";
+      fixed-cidr = "172.44.1.0/25";
+      default-address-pools = [
+        {
+          base = "172.44.0.0/16";
+          size = 24;
+        }
+      ];
+    };
   };
 
   # iphone settings
