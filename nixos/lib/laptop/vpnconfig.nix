@@ -3,22 +3,22 @@
   pkgs,
   ...
 }: let
-  payment-af-vpn = import ../helper-modules/nm-vpn-config.nix ({
-      inherit pkgs;
-    }
-    // (import ../secrets.nix).generatedVPN-AF-PAY-opts);
-  payment-aw-vpn = import ../helper-modules/nm-vpn-config.nix ({
-      inherit pkgs;
-    }
-    // (import ../secrets.nix).generatedVPN-AW-PAY-opts);
-  aw-vpn = import ../helper-modules/nm-vpn-config.nix ({
-      inherit pkgs;
-    }
-    // (import ../secrets.nix).generatedVPN-AW-opts);
-  af-vpn = import ../helper-modules/nm-vpn-config.nix ({
-      inherit pkgs;
-    }
-    // (import ../secrets.nix).generatedVPN-AF-opts);
+  # payment-af-vpn = import ../helper-modules/nm-vpn-config.nix ({
+  #     inherit pkgs;
+  #   }
+  #   // (import ../secrets.nix).generatedVPN-AF-PAY-opts);
+  # payment-aw-vpn = import ../helper-modules/nm-vpn-config.nix ({
+  #     inherit pkgs;
+  #   }
+  #   // (import ../secrets.nix).generatedVPN-AW-PAY-opts);
+  # aw-vpn = import ../helper-modules/nm-vpn-config.nix ({
+  #     inherit pkgs;
+  #   }
+  #   // (import ../secrets.nix).generatedVPN-AW-opts);
+  # af-vpn = import ../helper-modules/nm-vpn-config.nix ({
+  #     inherit pkgs;
+  #   }
+  #   // (import ../secrets.nix).generatedVPN-AF-opts);
   hardware-aw-vpn = import ../helper-modules/nm-vpn-config.nix ({
       inherit pkgs;
     }
@@ -35,22 +35,22 @@ in
   # This is pain in the ass. Someone needs to write a proper NetworkManager generator 😿
   {
     environment.etc = {
-      "NetworkManager/system-connections/${payment-af-vpn.name}.nmconnection" = {
-        mode = "0600";
-        text = payment-af-vpn.vpnConfig;
-      };
-      "NetworkManager/system-connections/${payment-aw-vpn.name}.nmconnection" = {
-        mode = "0600";
-        text = payment-aw-vpn.vpnConfig;
-      };
-      "NetworkManager/system-connections/${af-vpn.name}.nmconnection" = {
-        mode = "0600";
-        text = af-vpn.vpnConfig;
-      };
-      "NetworkManager/system-connections/${aw-vpn.name}.nmconnection" = {
-        mode = "0600";
-        text = aw-vpn.vpnConfig;
-      };
+      # "NetworkManager/system-connections/${payment-af-vpn.name}.nmconnection" = {
+      #   mode = "0600";
+      #   text = payment-af-vpn.vpnConfig;
+      # };
+      # "NetworkManager/system-connections/${payment-aw-vpn.name}.nmconnection" = {
+      #   mode = "0600";
+      #   text = payment-aw-vpn.vpnConfig;
+      # };
+      # "NetworkManager/system-connections/${af-vpn.name}.nmconnection" = {
+      #   mode = "0600";
+      #   text = af-vpn.vpnConfig;
+      # };
+      # "NetworkManager/system-connections/${aw-vpn.name}.nmconnection" = {
+      #   mode = "0600";
+      #   text = aw-vpn.vpnConfig;
+      # };
       "NetworkManager/system-connections/${hardware-aw-vpn.name}.nmconnection" = {
         mode = "0600";
         text = hardware-aw-vpn.vpnConfig;

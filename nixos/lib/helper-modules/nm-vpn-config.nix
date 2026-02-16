@@ -5,6 +5,8 @@
 , ca
 , cert
 , key
+, v4dnssearch
+, v6dnssearch ? v4dnssearch
 , ta
 , pass ? ""
 , cipher ? "AES-256-CBC"
@@ -48,13 +50,13 @@ in
     cert-pass=${pass}
 
     [ipv4]
-    dns-search=
+    dns-search=${v4dnssearch}
     method=auto
     never-default=true
 
     [ipv6]
     addr-gen-mode=stable-privacy
-    dns-search=
+    dns-search=${v6dnssearch}
     ip6-privacy=0
     method=auto
 
