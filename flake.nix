@@ -12,11 +12,6 @@
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     nur.url = "github:nix-community/NUR";
 
-    microvm = {
-      url = "github:microvm-nix/microvm.nix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     nix-index-database = {
       url = "github:nix-community/nix-index-database";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -181,7 +176,6 @@
         modules = [
           disko.nixosModules.disko
           # { disko.devices.disk.disk1.device = "/dev/nvme0n1"; }
-          inputs.microvm.nixosModules.host
           nur.modules.nixos.default
           nix-index-database.nixosModules.nix-index
           ./nixos/configuration.nix

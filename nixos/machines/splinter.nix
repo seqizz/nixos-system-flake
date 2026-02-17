@@ -18,7 +18,6 @@ in {
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
     ../lib/laptop/common.nix
-    ../lib/laptop/microvm.nix
     ../lib/inno.nix
     ./splinter-disko.nix
   ];
