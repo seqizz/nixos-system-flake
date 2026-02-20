@@ -108,7 +108,6 @@ in {
             trailblazer # Better mark jumps Ctrl-S and Shift-Up/Down
             undowarn # warn for over-undo
             vim-colorschemes-forked # Additional colorschemes collection
-            vim-puppet-4tabs # Puppet syntax with 4-space tabs
             vim-yadi # Yet Another Detect Indent plugin
             # yanky # Advanced yank and put functionality
           ]);

@@ -82,10 +82,6 @@
     # };
 
     # Vim plugins
-    vim-puppet-4tabs-src = {
-      url = "git+https://git.gurkan.in/gurkan/vim-puppet.git";
-      flake = false;
-    };
     vim-yadi-src = {
       url = "github:timakro/vim-yadi";
       flake = false;
