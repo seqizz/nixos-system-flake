@@ -22,7 +22,7 @@ in {
     };
     greenclip = getSrcFromInput prev.greenclip inputs.greenclip-src;
     sd-switch = inputs.sd-switch-src.packages.${final.stdenv.hostPlatform.system}.default;
-    loose = final.python3Packages.callPackage ../pkgs/loose.nix {inherit inputs;};
+    loose = inputs.loose-src.packages.${final.stdenv.hostPlatform.system}.default;
     yidlehook = final.python3Packages.callPackage ../pkgs/yidlehook.nix {inherit inputs;};
     slock = final.callPackage ../pkgs/slock.nix {inherit inputs;};
     lol-plymouth = final.callPackage ../pkgs/lol-plymouth.nix {inherit inputs;};
