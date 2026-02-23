@@ -71,8 +71,8 @@ in {
       };
     };
     extraModulePackages = [fucknvidia];
-    # kernelPackages = pkgs.linuxPackages_6_17;
-    kernelPackages = pkgs.linuxPackages_latest;
+    kernelPackages = pkgs.linuxPackages_6_18;
+    # kernelPackages = pkgs.linuxPackages_latest;
     # kernelPackages = pkgs.linuxPackages_latest.extend (self: super: {
     #   kernel = super.kernel.override {
     #     argsOverride = rec {
