@@ -8,11 +8,18 @@
 in {
   programs = {
     git = {
+      # XXX: Duplicated settings, also defined in nixos/lib/packages.nix, fix later
       enable = true;
+      lfs.enable = true;
+      package = pkgs.unstable.git;
       settings.user = {
         email = secrets.gitUserEmail;
         name = secrets.gitUserName;
       };
+      # XXX: Unsafe before 2.53
+      # settings.blame = {
+        # ignoreRevsFile = ":(optional).git-blame-ignore-revs";
+      # };
       includes = [
         {
           condition = "gitdir:devel/ig/**";

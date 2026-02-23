@@ -25,6 +25,7 @@
     git = {
       enable = true;
       lfs.enable = true;
+      package = pkgs.unstable.git;
     };
     yazi = {
       enable = true;
