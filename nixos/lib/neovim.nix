@@ -29,6 +29,7 @@ in {
             # temporarily? disabled ones
             # context-vim # Keep the context on top, broke some stuff
             # tagbar # sidebar, superseded by aerial
+            advanced-git-search-nvim # Search git history with telescope
             aerial-nvim # Code outline sidebar and navigation
             catppuccin-nvim # Modern, clean colorscheme
             coc-lua # Lua language support for CoC
@@ -39,7 +40,16 @@ in {
             diffview-nvim # Git diff viewing mode
             dressing-nvim # Better UI for input and select dialogs
             gitlinker-nvim # Create shareable file permalinks for Git hosts
-            gitsigns-nvim # Show git changes in the gutter
+            # gitsigns-nvim # Show git changes in the gutter
+            (gitsigns-nvim.overrideAttrs (old: {
+              version = "01-colorhint";
+              src = pkgs.fetchFromGitHub {
+                owner = "seqizz";
+                repo = "gitsigns.nvim";
+                rev = "g_colorhint";
+                sha256 = "sha256-Rlh1E12s+BB8FW7eePgGKsNAAzJvjOosfxMI/y4c/ug=";
+              };
+            }))
             indent-blankline-nvim-lua # Visible indent lines
             indent-o-matic # Automatic indentation detection
             leap-nvim # Better movement with s
