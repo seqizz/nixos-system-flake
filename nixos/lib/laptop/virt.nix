@@ -8,5 +8,12 @@
   programs.dconf.enable = true;
   environment.systemPackages = with pkgs; [virt-manager];
   systemd.services.libvirtd.restartIfChanged = false;
-  systemd.services.incus-preseed.restartIfChanged = false;
+  systemd.services.incus-preseed = {
+    restartIfChanged = false;
+    stopIfChanged = false;
+  };
+  systemd.user.services.incus-preseed = {
+    restartIfChanged = false;
+    stopIfChanged = false;
+  };
 }
