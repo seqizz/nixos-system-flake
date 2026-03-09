@@ -8,6 +8,7 @@ in
       secrets.innoSSHPub
       secrets.plutoSSHPub
       secrets.siktirinSSHPub
+      secrets.truenasSSHPub
     ];
     # For emergencies
     hashedPassword = secrets.rocksteadyRootPass;
