@@ -29,7 +29,6 @@ in {
             # temporarily? disabled ones
             # context-vim # Keep the context on top, broke some stuff
             # tagbar # sidebar, superseded by aerial
-            advanced-git-search-nvim # Search git history with telescope
             aerial-nvim # Code outline sidebar and navigation
             catppuccin-nvim # Modern, clean colorscheme
             coc-lua # Lua language support for CoC
