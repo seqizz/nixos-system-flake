@@ -47,6 +47,16 @@ in
       journald.extraConfig = ''
         SystemMaxUse=1G
       '';
+      below = {
+        enable = true;
+        retention.size = 104857600; # 100 MiB
+        compression.enable = true;
+        collect = {
+          ioStats = true;
+          diskStats = true;
+          exitStats = true;
+        };
+      };
     };
 
     nix = {
