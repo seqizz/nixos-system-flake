@@ -157,7 +157,7 @@ in {
               };
               root = {
                 "path" = "/";
-                "pool" = "default";
+                "pool" = "btrfs-host";
                 "type" = "disk";
               };
             };
@@ -166,13 +166,12 @@ in {
         ];
         storage_pools = [
           {
-            config = {
-              size = "16GiB";
-              source = "/var/lib/incus/disks/default.img";
-            };
-            description = "My Incus storage";
-            name = "default";
+            name = "btrfs-host";
             driver = "btrfs";
+            description = "Incus btrfs pool on host fs";
+            config = {
+              source = "/var/lib/incus/storage-pools/btrfs-host";
+            };
           }
         ];
       };
