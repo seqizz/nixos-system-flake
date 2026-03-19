@@ -79,7 +79,6 @@ in {
         };
         Install = {
           WantedBy = [
-            "multi-user.target"
             "graphical-session.target"
           ];
         };
@@ -88,6 +87,7 @@ in {
           Type = "oneshot";
           RemainAfterExit = true;
         };
+        restartIfChanged = false;
       };
 
       baglan = {
@@ -96,7 +96,6 @@ in {
         };
         Install = {
           WantedBy = [
-            "multi-user.target"
             "graphical-session.target"
           ];
         };
