@@ -53,10 +53,6 @@ in
     src = ./scripts/git-browse-origin;
     inherit bash;
   });
-  git-cleanmerged = (writeSubbedBin {
-    name = "git-cleanmerged";
-    src = ./scripts/git-cleanmerged;
-  });
   tarsnap-dotfiles = (writeSubbedBin {
     name = "tarsnap-dotfiles";
     src = ./scripts/tarsnap-dotfiles;
