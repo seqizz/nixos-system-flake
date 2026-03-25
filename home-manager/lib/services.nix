@@ -87,7 +87,6 @@ in {
           Type = "oneshot";
           RemainAfterExit = true;
         };
-        restartIfChanged = false;
       };
 
       baglan = {

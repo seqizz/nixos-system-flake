@@ -4,9 +4,6 @@
   pkgs,
   ...
 }: {
-  # Lorri is a daemon which can write stuff, workaround
-  systemd.user.services.lorri.serviceConfig.ProtectHome = lib.mkForce false;
-
   services = {
     acpid.enable = true;
     fwupd.enable = true;
@@ -88,6 +85,13 @@
   ];
 
   systemd = {
+    # I guess we can also do these on home-manager side too but I could not find a way
+    user.services = {
+      # Lorri is a daemon which can write stuff, workaround
+      lorri.serviceConfig.ProtectHome = lib.mkForce false;
+      updatesong.restartIfChanged = false;
+    };
+
     services = {
       # Do not restart these, since it fucks up the current session
       systemd-logind.restartIfChanged = false;

@@ -12,8 +12,4 @@
     restartIfChanged = false;
     stopIfChanged = false;
   };
-  systemd.user.services.incus-preseed = {
-    restartIfChanged = false;
-    stopIfChanged = false;
-  };
 }
