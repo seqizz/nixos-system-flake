@@ -67,6 +67,18 @@
   # Fun tip: If you add an executable like git-x to your path, you can
   # call it with `git x`.
   environment.systemPackages = with pkgs; [
+    (pkgs.writeScriptBin "git-fullgrep" ''
+      # grep across all local and remote branches
+      if [ -z "$1" ]; then
+        echo "Usage: git fullgrep <pattern> [git-grep-options...]"
+        exit 1
+      fi
+      pattern="$1"
+      shift
+      echo "Fetching all remotes..."
+      git fetch --all
+      git grep -n --heading "$pattern" "$@" $(git for-each-ref --format='%(refname:short)' refs/heads refs/remotes)
+    '')
     (pkgs.writeScriptBin "git-cleanmerged" ''
       git fetch --all && for branch in $(git branch -l | grep -v `git-default-branch`); do git branch -d $branch ; done && git remote prune origin
     '')
