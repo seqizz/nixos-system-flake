@@ -1,7 +1,7 @@
 # This file defines overlays
 {inputs, ...}: let
   getSrcFromInput = pkg: src: pkg.overrideAttrs (_: {inherit src;});
-in {
+in rec {
   # This one brings our custom packages from the 'pkgs' directory
   additions = final: _prev:
     import ../pkgs {
@@ -87,4 +87,7 @@ in {
   #     config.allowUnfree = true;
   #   };
   # };
+
+  # Combined list — single source of truth for both NixOS and home-manager configs
+  all = [additions modifications unstable-packages inputs.skyepkgs.overlays.default];
 }

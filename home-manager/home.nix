@@ -11,14 +11,8 @@
   ];
 
   nixpkgs = {
-    overlays = [
-      # overlays of own flake exports (from overlays and pkgs dir):
-      outputs.overlays.additions
-      outputs.overlays.modifications
-      outputs.overlays.unstable-packages
-      # outputs.overlays.oldversion-packages
-      inputs.skyepkgs.overlays.default
-    ];
+    # All overlays defined in overlays/default.nix (single source of truth)
+    overlays = outputs.overlays.all;
     config = {
       allowUnfree = true;
     };
