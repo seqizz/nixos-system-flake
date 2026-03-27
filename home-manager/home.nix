@@ -17,6 +17,7 @@
       outputs.overlays.modifications
       outputs.overlays.unstable-packages
       # outputs.overlays.oldversion-packages
+      inputs.skyepkgs.overlays.default
     ];
     config = {
       allowUnfree = true;

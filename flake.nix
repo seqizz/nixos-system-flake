@@ -12,6 +12,9 @@
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     nur.url = "github:nix-community/NUR";
 
+    skyepkgs.url = "github:skyethepinkcat/skyepkgs";
+    skyepkgs.inputs.nixpkgs.follows = "nixpkgs";
+
     nix-index-database = {
       url = "github:nix-community/nix-index-database";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -78,7 +81,7 @@
     };
 
     # xidlehook-src = {
-      # url = "github:realSaltyFish/xidlehook";
+    # url = "github:realSaltyFish/xidlehook";
     # };
 
     # Vim plugins
@@ -87,8 +90,8 @@
       flake = false;
     };
     # yanky-src = {
-      # url = "github:gbprod/yanky.nvim";
-      # flake = false;
+    # url = "github:gbprod/yanky.nvim";
+    # flake = false;
     # };
     # leap-src = {
     #   url = "git+ssh://codeberg.org/andyg/leap.nvim";

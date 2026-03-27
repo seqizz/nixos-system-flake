@@ -83,7 +83,7 @@ in {
     # NUR packages @Reference, mostly does not work / maintained
     # config.nur.repos.wolfangaukang.vdhcoapp
     # config.nur.repos.mic92.reveal-md
-    nur-lunwill42.puppet-lint
+    # nur-lunwill42.puppet-lint
 
     # Rest is sorted
     # Commented ones are either not needed or reminder for single-use
@@ -136,6 +136,7 @@ in {
     nfpm
     nomacs
     onboard # on-screen keyboard
+    openvox-lint
     pamixer # pulseaudio mixer
     papirus-icon-theme
     pasystray

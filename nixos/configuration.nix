@@ -23,6 +23,7 @@
       # outputs.overlays.oldversion-packages
 
       # You can also add overlays exported from other flakes:
+      inputs.skyepkgs.overlays.default
       # neovim-nightly-overlay.overlays.default
 
       # Or define it inline, for example:
