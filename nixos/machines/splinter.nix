@@ -25,15 +25,7 @@ in {
   # (needed for flakes)
   nixpkgs.hostPlatform = "x86_64-linux";
 
-  networking = {
-    hostName = "splinter";
-    networkmanager = {
-      plugins = with pkgs; [
-        networkmanager-openvpn
-        networkmanager-strongswan
-      ];
-    };
-  };
+  networking.hostName = "splinter";
 
   system.stateVersion = "24.05";
 
@@ -205,15 +197,6 @@ in {
       "INTEL_GPU_BOOST_FREQ_ON_AC" = 2250;
       "INTEL_GPU_BOOST_FREQ_ON_BAT" = 2250;
     };
-  };
-  programs.steam = {
-    enable = true;
-    remotePlay.openFirewall = true;
-    localNetworkGameTransfers.openFirewall = true;
-    extraCompatPackages = with pkgs; [
-      proton-ge-bin
-      pkgs.nur.repos.forkprince.proton-cachyos-v4-bin
-    ];
   };
 
   # Hack time!

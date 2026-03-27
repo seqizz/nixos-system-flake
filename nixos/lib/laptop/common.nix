@@ -38,6 +38,16 @@ in {
     themePackages = [pkgs.lol-plymouth];
   };
 
+  programs.steam = {
+    enable = true;
+    remotePlay.openFirewall = true;
+    localNetworkGameTransfers.openFirewall = true;
+    extraCompatPackages = with pkgs; [
+      proton-ge-bin
+      pkgs.nur.repos.forkprince.proton-cachyos-v4-bin
+    ];
+  };
+
   security = {
     sudo.wheelNeedsPassword = false;
     pki.certificates = [

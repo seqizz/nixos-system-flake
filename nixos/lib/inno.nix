@@ -19,4 +19,14 @@ in {
   ];
 
   hardware.printers.ensurePrinters = secrets.officePrinters;
+
+  networking.networkmanager = {
+    plugins = with pkgs; [
+      networkmanager-openvpn
+      networkmanager-strongswan
+    ];
+  };
+
+  # Wireguard pushes DNS, but I wanna use my local except for company domains
+  services.resolved.enable = true;
 }
