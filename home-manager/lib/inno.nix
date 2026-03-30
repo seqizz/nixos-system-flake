@@ -6,7 +6,6 @@
   ...
 }: let
   secrets = import ./secrets.nix {pkgs = pkgs;};
-  my_scripts = (import ./scripts.nix {pkgs = pkgs;});
 in {
   xdg = {
     configFile = {
@@ -21,7 +20,6 @@ in {
     };
     packages = with pkgs; [
       pkgs.unstable.slack
-      my_scripts.vpn-toggle
     ];
   };
 }

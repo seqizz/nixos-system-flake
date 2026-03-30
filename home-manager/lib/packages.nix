@@ -132,6 +132,7 @@ in {
     my_scripts.rofi-subsuper
     my_scripts.tarsnap-dotfiles
     my_scripts.update-song
+    my_scripts.vpn-toggle
     my_scripts.xinput-toggle
     nfpm
     nomacs
