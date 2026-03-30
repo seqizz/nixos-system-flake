@@ -40,9 +40,9 @@ in
     name = "update-song";
     src = ./scripts/update-song;
   });
-  innovpn-toggle = (writeSubbedBin {
-    name = "innovpn-toggle";
-    src = ./scripts/innovpn-toggle;
+  vpn-toggle = (writeSubbedBin {
+    name = "vpn-toggle";
+    src = ./scripts/vpn-toggle;
   });
   psitool-script = (writeSubbedBin {
     name = "psitool-script";

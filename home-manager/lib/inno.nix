@@ -21,7 +21,7 @@ in {
     };
     packages = with pkgs; [
       pkgs.unstable.slack
-      my_scripts.innovpn-toggle
+      my_scripts.vpn-toggle
     ];
   };
 }
