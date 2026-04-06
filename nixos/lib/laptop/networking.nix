@@ -19,6 +19,11 @@
           from = 1714;
           to = 1764;
         }
+        # AusweisApp 🇩🇪
+        {
+          from = 24727;
+          to = 24727;
+        }
       ];
       # Wireguard needs this:
       # https://discourse.nixos.org/t/solved-minimal-firewall-setup-for-wireguard-client/7577/2
