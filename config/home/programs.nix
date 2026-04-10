@@ -18,7 +18,7 @@ in {
       };
       # XXX: Unsafe before 2.53
       # settings.blame = {
-        # ignoreRevsFile = ":(optional).git-blame-ignore-revs";
+      # ignoreRevsFile = ":(optional).git-blame-ignore-revs";
       # };
       includes = [
         {
@@ -75,6 +75,17 @@ in {
     #     userChrome = builtins.readFile ./config_files/firefox/userChrome.css;
     #   };
     # };
+
+    rbw = {
+      enable = true;
+      settings = {
+        base_url = secrets.passwordVaultBaseUrl;
+        email = secrets.passwordVaultEmail;
+        pinentry = pkgs.unstable.pinentry-rofi;
+        identity_url = secrets.passwordVaultBaseUrl + "identity";
+        lock_timeout = 64800; # 18 hours
+      };
+    };
 
     rofi = {
       enable = true;

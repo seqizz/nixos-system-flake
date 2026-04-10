@@ -77,7 +77,7 @@ in {
     firefox # was unstable, broke webgl
     pkgs.unstable.wezterm
     pkgs.unstable.discord
-    pkgs.claude-code  # version managed via grafts/drop-in/claude-code/
+    claude-code
     thunderbird
 
     # NUR packages @Reference, mostly does not work / maintained
@@ -153,6 +153,7 @@ in {
     qpwgraph # Graphical pipewire plumbing
     reveal-md
     rofi-pulse-select
+    rofi-rbw-x11
     simplescreenrecorder
     slock
     spotify
