@@ -85,3 +85,9 @@ user_pref("browser.tabs.groups.smart.enabled", false); // "Use AI to suggest tab
 user_pref("browser.tabs.groups.smart.userEnabled", false);
 user_pref("pdfjs.enableAltTextModelDownload", false); // "This prevents downloading the AI model unless the user opts in (by enabling the toggle to "Create alt text automatically" from "Image alt text settings" when viewing a PDF)"
 user_pref("pdfjs.enableGuessAltText", false);
+
+// Disable Firefox built-in password saving / filling UI - Using bitwarden these days
+user_pref("signon.rememberSignons", false);      // "Ask to save logins and passwords"
+user_pref("signon.autofillForms", false);        // "Autofill logins and passwords"
+user_pref("signon.generation.enabled", false);   // Password generator
+user_pref("signon.management.page.breach-alerts.enabled", false); // Breach alerts
