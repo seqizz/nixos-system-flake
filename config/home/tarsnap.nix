@@ -24,7 +24,7 @@ in {
       Description = "Timer for tarsnap-dotfiles";
     };
     Timer = {
-      OnCalendar = "*-01,04,07,10-01 00:00:00";
+      OnCalendar = "monthly";
       Persistent = true;
       RandomizedDelaySec = "1h";
     };
