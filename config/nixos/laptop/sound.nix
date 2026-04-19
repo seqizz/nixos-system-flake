@@ -86,6 +86,14 @@
     # ''ACTION=="add",	SUBSYSTEM=="sound", ENV{ID_TYPE}=="audio", RUN+="${signal_script} org.custom.gurkan.sound_device_added"''
     # ''ACTION=="remove",	SUBSYSTEM=="sound", ENV{DEVPATH}=="*/card[0-9]", ENV{ID_TYPE}=="audio", RUN+="${signal_script} org.custom.gurkan.sound_device_removed"''
     # ];
+
+    # Disable KEY_MICMUTE (scancode b002f) from Zone Vibe 125 headset.
+    # The headset sends a toggle key event on mic flip but also handles mute in hardware,
+    # causing double-toggle with the keyboard's XF86AudioMicMute binding.
+    udev.extraHwdb = ''
+      evdev:input:b0003v046Dp0AEE*
+       KEYBOARD_KEY_b002f=reserved
+    '';
   };
 }
 #  vim: set ts=2 sw=2 tw=0 et :
