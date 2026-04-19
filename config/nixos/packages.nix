@@ -129,6 +129,7 @@
     lsof
     man-pages
     mcrypt # for nc file encryption
+    mlc # markup link checker
     moreutils
     mtr
     ncdu # fancy du

@@ -110,6 +110,7 @@ in {
     ghorg # Clone whole organizations from git remotes
     git-filter-repo # Amazing tool to rewrite history 😈
     gitstatus
+    glab # Gitlab helper
     graphviz # some rarely-needed weird tools
     home-manager # wow, flakes are amazing 😒
     hunspell # For spellcheck on Libreoffice
