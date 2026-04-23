@@ -61,7 +61,7 @@
 
     slock-flexipatch-src = {
       url = "git+https://git.gurkan.in/gurkan/slock-flexipatch.git";
-      flake = false;
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     loose-src = {
