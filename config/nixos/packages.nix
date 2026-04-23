@@ -128,8 +128,8 @@
     perf
     lsof
     man-pages
+    markuplinkchecker
     mcrypt # for nc file encryption
-    mlc # markup link checker
     moreutils
     mtr
     ncdu # fancy du
