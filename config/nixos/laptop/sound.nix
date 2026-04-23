@@ -76,9 +76,26 @@
           };
         };
       };
-      # config.pipewire-pulse."context.exec" = [
-      #   { "path" = "${pkgs.pulseaudio}/bin/pactl"; "args" = "load-module module-switch-on-connect blacklist=\"USB|Dock\""; }
-      # ];
+      wireplumber.extraConfig = {
+        "50-logitech-zone-vibe-soft-mixer" = {
+          "monitor.alsa.rules" = [
+            {
+              matches = [
+                {
+                  "device.name" = "alsa_card.usb-Logitech_Zone_Vibe_125_2342MH00B9W8-00";
+                }
+              ];
+              actions = {
+                update-props = {
+                  # Bypass hardware mixer, use software volume instead.
+                  # Prevents the headset firmware from resetting volume on reconnect/resume.
+                  "api.alsa.soft-mixer" = true;
+                };
+              };
+            }
+          ];
+        };
+      };
     };
 
     # @Reference: Emit a new DBUS signal, if new sound device added
