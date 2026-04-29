@@ -69,10 +69,11 @@ in
               name = "splinter";
               id = secrets.syncthingIDsplinter;
             };
-            oneplusNord = {
-              name = "oneplusNord";
-              id = secrets.syncthingIDoneplusNord;
-            };
+            # Consider syncthing-fork compromised, not allow connections from the keys it can reach
+            # oneplusNord = {
+            #   name = "oneplusNord";
+            #   id = secrets.syncthingIDoneplusNord;
+            # };
             truenas = {
               name = "truenas";
               id = secrets.syncthingIDtruenas;
@@ -84,7 +85,7 @@ in
               label = "syncfolder";
               devices = [
                 "nixosis"
-                "oneplusNord"
+                # "oneplusNord"
                 "rocksteady"
                 "bebop"
                 "splinter"
