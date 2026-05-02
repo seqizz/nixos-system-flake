@@ -7,11 +7,11 @@
   ...
 }: let
   fucknvidia = config.boot.kernelPackages.nvidiaPackages.mkDriver {
-    version = "590.48.01";
-    sha256_64bit = "sha256-ueL4BpN4FDHMh/TNKRCeEz3Oy1ClDWto1LO/LWlr1ok=";
+    version = "595.71.05";
+    sha256_64bit = "sha256-NiA7iWC35JyKQva6H1hjzeNKBek9KyS3mK8G3YRva4I=";
     sha256_aarch64 = lib.fakeHash;
-    openSha256 = "sha256-hECHfguzwduEfPo5pCDjWE/MjtRDhINVr4b1awFdP44=";
-    settingsSha256 = "sha256-NWsqUciPa4f1ZX6f0By3yScz3pqKJV1ei9GvOF8qIEE=";
+    openSha256 = "sha256-Lfz71QWKM6x/jD2B22SWpUi7/og30HRlXg1kL3EWzEw=";
+    settingsSha256 = "sha256-mXnf3jyvznfB3OfKd657rxv0rYHQb/dX/Riw/+N9EKU=";
     persistencedSha256 = lib.fakeHash;
   };
 in {
@@ -65,7 +65,8 @@ in {
       };
     };
     extraModulePackages = [fucknvidia];
-    kernelPackages = pkgs.linuxPackages_6_18;
+    kernelPackages = pkgs.linuxPackages_7_0;
+    # kernelPackages = pkgs.linuxPackages_6_18;
     # kernelPackages = pkgs.linuxPackages_latest;
     # kernelPackages = pkgs.linuxPackages_latest.extend (self: super: {
     #   kernel = super.kernel.override {
