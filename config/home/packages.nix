@@ -78,6 +78,7 @@ in {
     pkgs.unstable.wezterm
     pkgs.unstable.discord
     claude-code
+    pkgs.unstable.opencode
     thunderbird
 
     # NUR packages @Reference, mostly does not work / maintained
