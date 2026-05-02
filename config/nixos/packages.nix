@@ -78,7 +78,8 @@
     igrep
 
     # Code formatters
-    alejandra # Nix
+    jsbeautifier
+    nixfmt
     nodePackages.fixjson
     pkgs.unstable.ruff
     rubyPackages_3_3.rubocop
@@ -86,7 +87,6 @@
     stylua
     taplo # toml
     typstyle
-    jsbeautifier
 
     # Rest is sorted
     bandwhich
