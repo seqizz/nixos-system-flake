@@ -40,6 +40,21 @@
     };
   };
 
+  systemd.user.services.touchegg-client = {
+    Unit = {
+      Description = "Touchegg client for touchscreen gestures";
+      After = ["graphical-session.target"];
+    };
+    Install = {
+      WantedBy = ["graphical-session.target"];
+    };
+    Service = {
+      ExecStart = "${pkgs.touchegg}/bin/touchegg --client";
+      Restart = "on-failure";
+      RestartSec = 3;
+    };
+  };
+
   gtk = {
     enable = true;
     font = {

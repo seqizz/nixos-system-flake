@@ -114,6 +114,9 @@ in {
     };
   };
 
+  # Touchscreen multitouch gesture daemon
+  services.touchegg.enable = true;
+
   boot = {
     # Powersave
     extraModprobeConfig = lib.mkMerge [
