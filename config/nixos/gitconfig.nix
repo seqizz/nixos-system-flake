@@ -48,6 +48,9 @@
           # stash the whole thing, including untracked files, requires comment
           stashfull = stash --include-untracked -m
 
+          # commit with message without quoting (git cm my space separated summary)
+          cm = "!f() { git commit -m \"$*\"; }; f"
+
       [safe]
           directory = *
 
