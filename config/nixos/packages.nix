@@ -112,6 +112,7 @@
     docker-compose
     dool
     e2fsprogs
+    eza # ls replacement
     ffmpeg
     file
     fx # JSON viewer
