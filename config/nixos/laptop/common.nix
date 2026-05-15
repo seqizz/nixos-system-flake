@@ -3,13 +3,15 @@
   lib,
   pkgs,
   ...
-}: let
+}:
+let
   secrets = import ../secrets.nix;
-in {
+in
+{
   imports = [
     ../common.nix
 
-    # ./dnscrypt.nix
+    ./dnscrypt.nix
     ./fonts.nix
     ./hardware.nix
     ./iphone.nix
@@ -35,7 +37,7 @@ in {
   boot.plymouth = {
     enable = true;
     theme = "lol";
-    themePackages = [pkgs.lol-plymouth];
+    themePackages = [ pkgs.lol-plymouth ];
   };
 
   programs.steam = {

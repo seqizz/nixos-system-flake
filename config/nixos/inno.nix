@@ -3,9 +3,11 @@
   pkgs,
   lib,
   ...
-}: let
+}:
+let
   secrets = import ./secrets.nix;
-in {
+in
+{
   imports = [
     ./laptop/vpnconfig.nix
     ./laptop/wgconfig-inno.nix
@@ -26,7 +28,4 @@ in {
       networkmanager-strongswan
     ];
   };
-
-  # Wireguard pushes DNS, but I wanna use my local except for company domains
-  services.resolved.enable = true;
 }

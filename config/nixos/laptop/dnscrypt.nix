@@ -1,88 +1,92 @@
-{ config, pkgs, ...}:
+# DNS resolution strategy (in order of preference):
+#
+# 1. VPN routing domains (highest priority)
+#    WireGuard connections push per-link DNS with routing domains if available
+#    systemd-resolved routes matching domains' queries to VPN DNS, regardless of other settings.
+#    Configured in: wgconfig-inno.nix (via nm-wg-config.nix dnsSearchAddress)
+#
+# 2. Home wifi (SSID match)
+#    When connected to home SSID, DHCP provides pi-hole as per-link DNS.
+#    Dispatcher does nothing, resolved uses DHCP DNS naturally.
+#
+# 3. Outside networks (no SSID match)
+#    NM dispatcher overrides per-link DNS to 127.0.0.1 (dnscrypt-proxy).
+#    All queries go through encrypted DNS, can't trust them.
+#
+# 4. Fallback (last resort)
+#    If dnscrypt is down and no per-link DNS available, resolved falls back to 9.9.9.9.
+#
+# Key details:
+# - dnscrypt-proxy always runs, but only receives queries when outside home
+# - networking.nameservers forced empty to prevent dnscrypt module from setting global DNS
+# - NM dispatcher uses sleep 2 to avoid race with NM's own DNS push to resolved
+
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 let
-  writeSubbedBin = (import ../helper-modules/writeSubbedBin.nix {
-    pkgs = pkgs;
-  }).writeSubbedBin;
-  bash = pkgs.bash;
-  dnscrypt = pkgs.dnscrypt-proxy2;
-  grep = pkgs.gnugrep;
-  networkmanager = pkgs.networkmanager;
-  dnscrypt-helper = (writeSubbedBin {
-    name = "dnscrypt-helper";
-    src = ../scripts/dnscrypt-helper;
-    inherit bash grep networkmanager dnscrypt;
-  });
+  secrets = import ../secrets.nix;
 in
 {
-  environment.etc."dnscrypt/config.toml".text = ''
-    server_names = ['scaleway-fr', 'quad9-dnscrypt-ip4-nofilter-pri', 'dnscrypt.eu-dk']
-    listen_addresses = ['127.0.0.1:53', '[::1]:53']
-    max_clients = 250
-    ipv4_servers = true
-    ipv6_servers = false
-    dnscrypt_servers = true
-    doh_servers = true
-    require_dnssec = false
-    require_nolog = true
-    require_nofilter = true
-    force_tcp = false
-    timeout = 2500
-    keepalive = 30
-    cert_refresh_delay = 240
-    ignore_system_dns = false
-    netprobe_timeout = 30
-    log_files_max_size = 10
-    log_files_max_age = 7
-    log_files_max_backups = 1
-    block_ipv6 = false
-    cache = true
-    cache_size = 512
-    cache_min_ttl = 60
-    cache_max_ttl = 720
-    cache_neg_min_ttl = 5
-    cache_neg_max_ttl = 60
-    [sources]
-      [sources.'public-resolvers']
-      urls = ['https://raw.githubusercontent.com/DNSCrypt/dnscrypt-resolvers/master/v2/public-resolvers.md', 'https://download.dnscrypt.info/resolvers-list/v2/public-resolvers.md']
-      cache_file = 'public-resolvers.md'
-      minisign_key = 'RWQf6LRCGA9i53mlYecO4IzT51TGPpvWucNSCh1CBM0QTaLn73Y7GFO3'
-      refresh_delay = 72
-  '';
-
-  systemd.services.dnscrypt-proxy = {
+  services.resolved = {
     enable = true;
-    wantedBy = [
-      "multi-user.target"
-      "graphical-session.target"
-    ];
-    description = "dnscrypt service";
-    script = "${dnscrypt-helper}/bin/dnscrypt-helper";
-    serviceConfig = {
-      Restart = "always";
-      RestartSec = 30;
+    fallbackDns = [ "9.9.9.9" ];
+  };
+
+  # Don't let dnscrypt-proxy module set global DNS, we manage per-link DNS via dispatcher
+  networking.nameservers = lib.mkForce [ ];
+
+  # upstreamDefaults = true (default) provides sane source list, keys, and URLs
+  services.dnscrypt-proxy = {
+    enable = true;
+    settings = {
+      listen_addresses = [
+        "127.0.0.1:53"
+        "[::1]:53"
+      ];
+      server_names = [
+        "scaleway-fr"
+        "quad9-dnscrypt-ip4-nofilter-pri"
+        "dnscrypt.eu-dk"
+      ];
+      require_nolog = true;
+      require_nofilter = true;
+      cache = true;
+      cache_size = 512;
+      cache_min_ttl = 60;
+      cache_max_ttl = 720;
     };
   };
 
-  networking.networkmanager = {
-    insertNameservers = ["127.0.0.1"];
-    dispatcherScripts = [ {
-      source = pkgs.writeText "disableDNScryptOnVPN" ''
+  # When not on home wifi, override per-link DNS to use dnscrypt
+  networking.networkmanager.dispatcherScripts = [
+    {
+      source = pkgs.writeText "dnscrypt-override" ''
         #!/usr/bin/env ${pkgs.bash}/bin/bash
 
-        logger "dispatcher debug: Evaluating <$1> <$2>"
+        HOME_SSID="${secrets.homeSSID}"
 
-        if [[ "$2" == "vpn-up" ]] || [[ "$2" == "up" && "$1" == IG-WG-* ]]; then
-          logger "VPN connected, disabling dnscrypt-proxy"
-          ${pkgs.systemd}/bin/systemctl stop --no-block dnscrypt-proxy
-        elif [[ "$2" == "vpn-down" ]] || [[ "$2" == "down" && "$1" == IG-WG-* ]]; then
-          logger "VPN disconnected, enabling dnscrypt-proxy"
-          ${pkgs.systemd}/bin/systemctl start --no-block dnscrypt-proxy
+        # Only act on physical interface up events (skip VPN, bridges, loopback)
+        [[ "$2" != "up" ]] && exit 0
+        [[ "$1" == IG-WG-* ]] && exit 0
+        [[ "$1" == lo ]] && exit 0
+        [[ "$1" != wlp* && "$1" != enp* ]] && exit 0
+
+        CURRENT_SSID="$CONNECTION_ID"
+
+        if [[ "$CURRENT_SSID" != "$HOME_SSID" ]]; then
+          # Brief delay to ensure NM has finished pushing DNS to resolved
+          sleep 2
+          logger "dnscrypt-override: not home, setting DNS to dnscrypt for $1"
+          ${pkgs.systemd}/bin/resolvectl dns "$1" 127.0.0.1
         else
-          logger "dispatcher debug: No action for <$1> <$2>"
+          logger "dnscrypt-override: home network, using DHCP DNS for $1"
         fi
       '';
       type = "basic";
-      }
-    ];
-  };
+    }
+  ];
 }
