@@ -24,7 +24,7 @@ in rec {
     in
       singleGrafts
       # vim-plugins.nix returns a set of plugins — merge directly into pkgs
-      // (import (graftsDir + "/vim-plugins.nix") {inherit inputs helpers;});
+      // (import (graftsDir + "/vim-plugins.nix") {inherit final prev inputs helpers;});
 
   # Makes nixpkgs-unstable available as pkgs.unstable.*
   unstable-packages = final: _prev: {
