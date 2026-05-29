@@ -34,7 +34,6 @@ in
 
       [plugins.ls-colors]
       github = "trapd00r/LS_COLORS"
-      apply = ["defer"]
 
       [plugins.pass]
       remote = 'https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/plugins/pass/_pass'
