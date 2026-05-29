@@ -35,6 +35,7 @@ in {
             coc-nvim # Intellisense engine for Vim8 & Neovim
             coc-pyright # Python language support for CoC
             colorizer # Colorize hex codes
+            comment-nvim # Smart commenting plugin -- stale?
             conform-nvim # Autoformat for various languages
             csvview-nvim # Better CSV viewing/editing
             diffview-nvim # Git diff viewing mode
@@ -63,9 +64,11 @@ in {
             nvim-ts-context-commentstring # Better commenting for embedded languages
             plenary-nvim # Lua functions library used by many plugins
             splitjoin-vim # Better split/join with gS/gJ
+            telescope-file-browser-nvim # File browser extension for telescope
             telescope-nvim # Highly extendable fuzzy finder
             telescope-zoxide # Zoxide integration for telescope
             terminus # terminal integration
+            trailblazer-nvim # Better mark jumps Ctrl-S and Shift-Up/Down
             vim-fugitive # git helper
             vim-gutentags # Automatic tags management
             vim-markdown # Enhanced Markdown syntax and features
@@ -110,16 +113,11 @@ in {
             # These comes from flake + overlay
             # XXX: Move them above if they are available in nixpkgs
             coc-ruff # Ruff (Python linter) support for CoC
-            commentnvim # Smart commenting plugin
             copilot # well, shit works
-            # leap # Better movement with s
             smoothcursor # Smooth cursor movement animation
-            telescope-file-browser # File browser extension for telescope
-            trailblazer # Better mark jumps Ctrl-S and Shift-Up/Down
             undowarn # warn for over-undo
             vim-colorschemes-forked # Additional colorschemes collection
             vim-yadi # Yet Another Detect Indent plugin
-            # yanky # Advanced yank and put functionality
           ]);
       };
     };

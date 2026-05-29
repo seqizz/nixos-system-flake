@@ -85,37 +85,13 @@
       flake = false;
     };
 
-    # xidlehook-src = {
-    # url = "github:realSaltyFish/xidlehook";
-    # };
-
     # Vim plugins
     vim-yadi-src = {
       url = "github:timakro/vim-yadi";
       flake = false;
     };
-    # yanky-src = {
-    # url = "github:gbprod/yanky.nvim";
-    # flake = false;
-    # };
-    # leap-src = {
-    #   url = "git+ssh://codeberg.org/andyg/leap.nvim";
-    #   flake = false;
-    # };
-    trailblazer-src = {
-      url = "github:LeonHeidelbach/trailblazer.nvim";
-      flake = false;
-    };
     coc-ruff-src = {
       url = "github:yaegassy/coc-ruff";
-      flake = false;
-    };
-    commentnvim-src = {
-      url = "github:numToStr/Comment.nvim";
-      flake = false;
-    };
-    telescope-file-browser-src = {
-      url = "github:nvim-telescope/telescope-file-browser.nvim";
       flake = false;
     };
     vim-colorschemes-forked-src = {
