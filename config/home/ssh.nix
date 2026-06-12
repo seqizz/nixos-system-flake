@@ -6,6 +6,6 @@ in
   programs.ssh = {
     enable = true;
     enableDefaultConfig = false;
-    matchBlocks = secrets.sshMatchBlocks;
+    settings = secrets.sshSettings;
   };
 }

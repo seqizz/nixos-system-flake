@@ -51,7 +51,7 @@ in {
                 sha256 = "sha256-Rlh1E12s+BB8FW7eePgGKsNAAzJvjOosfxMI/y4c/ug=";
               };
             }))
-            indent-blankline-nvim-lua # Visible indent lines
+            indent-blankline-nvim # Visible indent lines
             indent-o-matic # Automatic indentation detection
             leap-nvim # Better movement with s
             limelight-vim # Focus helper
@@ -78,7 +78,7 @@ in {
             vim-yaml # YAML syntax and filetype support
             vimwiki # Personal wiki and note-taking plugin
             yanky-nvim # Advanced yank and put functionality
-            # Needed for commentnvim
+            nvim-treesitter
             (nvim-treesitter.withPlugins (p: [
               p.bash
               p.css

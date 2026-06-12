@@ -149,9 +149,6 @@
   };
 
   programs = {
-    # android settings
-    adb.enable = true;
-
     # Sets setuid wrapper for slock
     slock.enable = true;
   };

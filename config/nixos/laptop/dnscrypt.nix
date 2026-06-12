@@ -33,7 +33,7 @@ in
 {
   services.resolved = {
     enable = true;
-    fallbackDns = [ "9.9.9.9" ];
+    settings.Resolve.FallbackDNS = [ "9.9.9.9" ];
   };
 
   # Don't let dnscrypt-proxy module set global DNS, we manage per-link DNS via dispatcher

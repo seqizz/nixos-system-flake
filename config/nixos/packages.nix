@@ -80,7 +80,7 @@
     # Code formatters
     jsbeautifier
     nixfmt
-    nodePackages.fixjson
+    fixjson
     pkgs.unstable.ruff
     rubyPackages_3_3.rubocop
     shellcheck

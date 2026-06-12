@@ -179,7 +179,7 @@ in {
     user.extraConfig = "DefaultTimeoutStopSec=10s";
   };
   services = {
-    xserver.videoDrivers = ["i915" "nvidia"];
+    xserver.videoDrivers = ["nvidia"];
     tlp.settings = {
       "MAX_LOST_WORK_SECS_ON_BAT" = 15;
       "WOL_DISABLE" = "Y";

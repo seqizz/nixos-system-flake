@@ -78,8 +78,7 @@ in
         0mHYok+RLor70aVWMDoLwU3icVwbvfqfTaObtkAPp7Zd9lmvjxHxDBJWOrqlwcEL
         IVimxBw9Xp+rPYNmf7WVPi70wRdFQkcuPOJ6obCLzeOnvzLIRK3NfifSu9/+yncK
         w+6a1Fjbzw6UMDvgjt2Z1o/kAA==
-        -----END CERTIFICATE-----
-      ''
+        -----END CERTIFICATE-----''
     ];
   };
 

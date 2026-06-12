@@ -3,6 +3,7 @@
   # Packages not needed in servers
   environment.systemPackages = with pkgs; [
     acpi
+    android-tools
     geteltorito # for converting iso to img
     iw
     linuxPackages.cpupower
