@@ -37,6 +37,10 @@
 # - NetworkManager connectivity checking must be enabled for this to work.
 # - Replace the connectivity URI with your own endpoint if you dislike
 #   using the GNOME one.
+# - dnscrypt-proxy lifecycle is owned by this dispatcher (not autostarted by
+#   systemd). It is only started when NM reports FULL connectivity on a
+#   non-home network and the override is not disabled. Captive portals would
+#   otherwise poison its internal state by blocking upstream resolvers.
 
 {
   config,
@@ -63,6 +67,10 @@ in
     interval = 60;
     timeout = 5;
   };
+
+  # Dispatcher owns the service lifecycle (start on FULL non-home, stop otherwise).
+  # Prevents the proxy from thrashing/poisoning state during captive portal phase.
+  systemd.services.dnscrypt-proxy.wantedBy = lib.mkForce [ ];
 
   # upstreamDefaults = true (default) provides sane source list, keys, and URLs
   services.dnscrypt-proxy = {
@@ -166,11 +174,41 @@ in
           fi
         }
 
+        stop_dnscrypt_service() {
+          local reason="$1"
+          ${pkgs.systemd}/bin/systemctl is-active --quiet dnscrypt-proxy.service || return 0
+          log "stopping dnscrypt-proxy: $reason"
+          ${pkgs.systemd}/bin/systemctl stop dnscrypt-proxy.service || true
+        }
+
+        dnscrypt_probe() {
+          # Query the proxy directly; bypass resolved cache + interface DNS.
+          ${pkgs.knot-dns}/bin/kdig +short +timeout=2 +retry=0 \
+            @127.0.0.1 example.com >/dev/null 2>&1
+        }
+
+        start_dnscrypt_service() {
+          ${pkgs.systemd}/bin/systemctl start dnscrypt-proxy.service || return 1
+          # Wait for proxy to be ready to answer (up to ~6s).
+          local i
+          for i in 1 2 3 4 5 6; do
+            dnscrypt_probe && return 0
+            ${pkgs.coreutils}/bin/sleep 1
+          done
+          return 1
+        }
+
         set_dnscrypt() {
           local iface="$1"
 
-          log "connectivity=full: setting DNS to dnscrypt for $iface"
-          ${pkgs.systemd}/bin/resolvectl dns "$iface" 127.0.0.1 ::1
+          if start_dnscrypt_service; then
+            log "connectivity=full: dnscrypt healthy, switching $iface to 127.0.0.1"
+            ${pkgs.systemd}/bin/resolvectl dns "$iface" 127.0.0.1 ::1
+          else
+            log "connectivity=full: dnscrypt unhealthy, falling back to DHCP DNS on $iface"
+            stop_dnscrypt_service "probe failed after start"
+            set_dns_from_nm "$iface" "dnscrypt unhealthy"
+          fi
         }
 
         apply_policy_with_state() {
@@ -183,11 +221,13 @@ in
           conn_id="$(connection_id_for_iface "$iface")"
 
           if [[ "$conn_id" == "$HOME_SSID" ]]; then
+            stop_dnscrypt_service "home network"
             set_dns_from_nm "$iface" "home network"
             return 0
           fi
 
           if [[ -e "$DISABLE_FILE" ]]; then
+            stop_dnscrypt_service "manual override disabled"
             set_dns_from_nm "$iface" "manual override disabled"
             return 0
           fi
@@ -196,8 +236,11 @@ in
             full)
               set_dnscrypt "$iface"
               ;;
-            portal|limited|none|unknown|*)
-              # Captive portals usually need DHCP DNS until auth is complete.
+            *)
+              # portal|limited|none|unknown: captive portal etc. need DHCP DNS
+              # until auth is complete. Keep dnscrypt-proxy stopped so it does
+              # not burn retries against blocked upstream resolvers.
+              stop_dnscrypt_service "connectivity=$state"
               set_dns_from_nm "$iface" "connectivity=$state"
               ;;
           esac
