@@ -38,6 +38,7 @@ in
     enable = true;
     theme = "lol";
     themePackages = [ pkgs.lol-plymouth ];
+    font = "${pkgs.nerd-fonts.mononoki}/share/fonts/truetype/NerdFonts/Mononoki/MononokiNerdFontMono-Regular.ttf";
   };
 
   programs.steam = {
