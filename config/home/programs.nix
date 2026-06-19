@@ -82,7 +82,6 @@ in {
         base_url = secrets.passwordVaultBaseUrl;
         email = secrets.passwordVaultEmail;
         pinentry = pkgs.unstable.pinentry-rofi;
-        identity_url = secrets.passwordVaultBaseUrl + "identity";
         lock_timeout = 64800; # 18 hours
       };
     };
