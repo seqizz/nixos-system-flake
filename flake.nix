@@ -25,14 +25,17 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    nocruft = {
+      url = "git+https://git.gurkan.in/gurkan/nocruft";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     # wezterm = {
     # url = "github:wez/wezterm?dir=nix";
     # inputs.nixpkgs.follows = "nixpkgs";
     # };
 
-    sd-switch-src = {
-      url = "sourcehut:~rycee/sd-switch";
-    };
+    # sd-switch-src.url = "sourcehut:~rycee/sd-switch";
 
     lain-src = {
       url = "github:lcpz/lain";

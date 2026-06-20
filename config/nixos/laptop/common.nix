@@ -41,14 +41,17 @@ in
     font = "${pkgs.nerd-fonts.mononoki}/share/fonts/truetype/NerdFonts/Mononoki/MononokiNerdFontMono-Regular.ttf";
   };
 
-  programs.steam = {
-    enable = true;
-    remotePlay.openFirewall = true;
-    localNetworkGameTransfers.openFirewall = true;
-    extraCompatPackages = with pkgs; [
-      proton-ge-bin
-      pkgs.nur.repos.forkprince.proton-cachyos-v3-bin
-    ];
+  programs = {
+    nocruft.enable = true;
+    steam = {
+      enable = true;
+      remotePlay.openFirewall = true;
+      localNetworkGameTransfers.openFirewall = true;
+      extraCompatPackages = with pkgs; [
+        proton-ge-bin
+        pkgs.nur.repos.forkprince.proton-cachyos-v3-bin
+      ];
+    };
   };
 
   security = {
