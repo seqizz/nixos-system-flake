@@ -52,8 +52,8 @@
           cm = "!f() { git commit -m \"$*\"; }; f"
 
           # reword all branch commits, skips the pick/reword todo list step
-          # usage: git reword [base-branch] (defaults to git-default-branch)
-          reword = "!f() { BASE=\"''${1:-$(git-default-branch)}\"; GIT_SEQUENCE_EDITOR=\"sed -i 's/^pick/reword/'\" git rebase -i \"''${BASE}\"; }; f"
+          # usage: git reword [base-branch|N] (default: git-default-branch; integer N -> last N commits)
+          reword = "!f() { if [ -n \"$1\" ] && [ \"$1\" -eq \"$1\" ] 2>/dev/null; then BASE=\"HEAD~$1\"; else BASE=\"''${1:-$(git-default-branch)}\"; fi; GIT_SEQUENCE_EDITOR=\"sed -i 's/^pick/reword/'\" git rebase -i \"''${BASE}\"; }; f"
 
       [safe]
           directory = *
