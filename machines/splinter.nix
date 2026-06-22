@@ -27,8 +27,6 @@ in {
 
   networking.hostName = "splinter";
 
-  programs.jai-jail.enable = true;
-
   system.stateVersion = "24.05";
 
   boot = {
