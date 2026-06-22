@@ -30,6 +30,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    llm-jail = {
+      url = "github:seqizz/llm-jail/g_improve";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     # wezterm = {
     # url = "github:wez/wezterm?dir=nix";
     # inputs.nixpkgs.follows = "nixpkgs";

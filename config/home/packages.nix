@@ -78,6 +78,8 @@ in {
     pkgs.unstable.wezterm
     pkgs.unstable.discord
     claude-code
+    llm-jail.claude
+    llm-jail.shell
     pkgs.unstable.opencode
     thunderbird
 
