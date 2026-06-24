@@ -89,3 +89,6 @@ bind tc composite tabduplicate; tabdetach
 " Sometimes the status bar in the bottom left corner overlaps the Tridactyl
 " command line, so set an option to move the status bar to the right.
 guiset_quiet hoverlink right
+
+" Look, I also don't like atlassian UI, but you gotta live with it
+unbindurl ^https?://jira.* .
