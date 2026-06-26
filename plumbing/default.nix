@@ -40,7 +40,8 @@ in rec {
   drop-in-overlay = final: prev:
     let
       dropInDir = ../grafts/drop-in;
-      entries = builtins.readDir dropInDir;
+      # Dir may not exist (git doesn't track empty dirs). Skip cleanly in that case.
+      entries = if builtins.pathExists dropInDir then builtins.readDir dropInDir else {};
       # Only subdirectories (files are ignored)
       packageDirs = lib.filterAttrs (_: type: type == "directory") entries;
     in
