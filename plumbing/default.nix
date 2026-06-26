@@ -26,13 +26,19 @@ in rec {
       # vim-plugins.nix returns a set of plugins — merge directly into pkgs
       // (import (graftsDir + "/vim-plugins.nix") {inherit final prev inputs helpers;});
 
-  # Makes nixpkgs-unstable available as pkgs.unstable.*
-  unstable-packages = final: _prev: {
-    unstable = import inputs.nixpkgs-unstable {
-      system = final.stdenv.hostPlatform.system;
-      config.allowUnfree = true;
-    };
-  };
+  # Auto-exposes every flake input named `nixpkgs-<suffix>` as pkgs.<suffix>.*
+  # e.g. nixpkgs-unstable → pkgs.unstable, nixpkgs-previous → pkgs.previous
+  nixpkgs-channels = final: _prev:
+    let
+      channels = lib.filterAttrs (n: _: lib.hasPrefix "nixpkgs-" n) inputs;
+    in
+      lib.mapAttrs' (n: input: {
+        name = lib.removePrefix "nixpkgs-" n;
+        value = import input {
+          system = final.stdenv.hostPlatform.system;
+          config.allowUnfree = true;
+        };
+      }) channels;
 
   # Drop-in package replacements from grafts/drop-in/<name>/package.nix.
   # Clone an upstream nixpkgs by-name package directory here to replace pkgs.<name>.
@@ -93,7 +99,7 @@ in rec {
   # If placed after grafts-overlay, prev contains graft packages that lazily reference final,
   # and forcing their type attribute causes infinite recursion through the fixed-point.
   # drop-in-overlay comes last so it takes precedence over both.
-  all = [passthrough-overlay grafts-overlay drop-in-overlay unstable-packages inputs.skyepkgs.overlays.default];
+  all = [passthrough-overlay grafts-overlay drop-in-overlay nixpkgs-channels inputs.skyepkgs.overlays.default];
 
   # Auto-discovered NixOS modules from grafts/nixos/*.nix — applied to all nixosConfigurations
   nixos-modules =

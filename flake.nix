@@ -2,8 +2,9 @@
   description = "mysystemflake 🕺";
 
   inputs = {
-    # nixpkgs.url = "github:nixos/nixpkgs/nixos-26.05";
-    nixpkgs.url = "github:nixos/nixpkgs/4062d36ebeae843c750011eef6b61ec9a9dbc9a9";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-26.05-small";
+    # nixpkgs.url = "github:nixos/nixpkgs/4062d36ebeae843c750011eef6b61ec9a9dbc9a9";
+    nixpkgs-lixpin.url = "github:nixos/nixpkgs/58528b66f0a6d8776c77167abafbccd6d0fa147c";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
     # nixpkgs-previous.url = "github:nixos/nixpkgs/nixos-25.11";
     disko.url = "github:nix-community/disko";
