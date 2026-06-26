@@ -5,7 +5,8 @@
 }: let
   pkgs = inputs.llm-jail.packages.${final.stdenv.hostPlatform.system};
 in {
-  claude = pkgs.claude;
+  # Use system's nixpkgs claude-code instead of llm-jail's claude-code-nix input
+  claude = pkgs.claude.override { claude-code = final.claude-code; };
   codex = pkgs.codex;
   copilot = pkgs.copilot;
   shell = pkgs.shell;

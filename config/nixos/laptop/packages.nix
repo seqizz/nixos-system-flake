@@ -7,6 +7,7 @@
     bpftools
     geteltorito # for converting iso to img
     ghostscript
+    hydra-check
     iw
     linuxPackages.cpupower
     lm_sensors
