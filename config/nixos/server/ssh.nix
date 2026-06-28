@@ -1,22 +1,7 @@
-{ lib, config, ... }:
+{ lib, config, pkgs, ... }:
 let
   secrets = import ../secrets.nix;
-in
-{
-  users.users.root = {
-    openssh.authorizedKeys.keys = [
-      secrets.innoSSHPub
-      secrets.plutoSSHPub
-      secrets.siktirinSSHPub
-      secrets.truenasSSHPub
-    ];
-    # For emergencies
-    hashedPassword = secrets.rocksteadyRootPass;
-  };
-
-  services.openssh = {
-    enable = true;
-    banner = ''
+  sshBanner = pkgs.writeText "ssh-banner" ''
     ,-.,-.,-.,-.
     `7        .'
      |        |
@@ -49,6 +34,22 @@ in
        |___|_|
       /     `=`=====.
       `='-----------'
-'';
+  '';
+in
+{
+  users.users.root = {
+    openssh.authorizedKeys.keys = [
+      secrets.innoSSHPub
+      secrets.plutoSSHPub
+      secrets.siktirinSSHPub
+      secrets.truenasSSHPub
+    ];
+    # For emergencies
+    hashedPassword = secrets.rocksteadyRootPass;
+  };
+
+  services.openssh = {
+    enable = true;
+    settings.Banner = "${sshBanner}";
   };
 }

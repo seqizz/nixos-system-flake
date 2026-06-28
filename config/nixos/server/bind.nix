@@ -7,6 +7,8 @@
   services = {
     bind = {
       enable = true;
+      # Since I am using config files not in nix store, this disables build-time check
+      checkConfig = false;
       # Needed for ACME
       extraConfig = ''
         include "/shared/bind-zones/secrets/dnskeys.conf";

@@ -20,24 +20,22 @@ in {
 
   mailserver = {
     enable = true;
-    stateVersion = 3;
+    stateVersion = 5;
     fqdn = "mail.gurkan.in";
     domains = ["gurkan.in" "siktir.in"];
     mailDirectory = "/shared/mail";
-    certificateDirectory = "/shared/mail/certificates";
-    dkimKeyDirectory = "/shared/.mail_dkim_keys";
-    certificateScheme = "acme-nginx";
-    # @Bug: Ask about this, where to even declare chain.pem?
-    # certificateScheme = 1;
-    # certificateFile = "/var/lib/acme/git.gurkan.in/fullchain.pem";
-    # keyFile = "/var/lib/acme/git.gurkan.in/key.pem";
+    dkim.keyDirectory = "/shared/.mail_dkim_keys";
+    dkim.domains = {
+      "gurkan.in".selectors."rsa-2026-06".keyFile = "/shared/.mail_dkim_keys/gurkan.in.rsa-2026-06.key";
+      "siktir.in".selectors."rsa-2026-06".keyFile = "/shared/.mail_dkim_keys/siktir.in.rsa-2026-06.key";
+    };
+    x509.useACMEHost = "gurkan.in";
     loginAccounts = secrets.mailAccounts;
     enableImap = true;
     enablePop3 = false;
     enableImapSsl = true;
     enablePop3Ssl = false;
     enableManageSieve = true;
-    sieveDirectory = "/shared/mail/sieve_scripts";
     virusScanning = false;
     localDnsResolver = false;
     # Just reject those spoofers of known domains, will increase the list later
@@ -49,23 +47,23 @@ in {
     mailboxes = {
       Trash = {
         auto = "no";
-        specialUse = "Trash";
+        special_use = "\\Trash";
       };
       Junk = {
         auto = "subscribe";
-        specialUse = "Junk";
+        special_use = "\\Junk";
       };
       Drafts = {
         auto = "subscribe";
-        specialUse = "Drafts";
+        special_use = "\\Drafts";
       };
       Sent = {
         auto = "subscribe";
-        specialUse = "Sent";
+        special_use = "\\Sent";
       };
       Seen = {
         auto = "subscribe";
-        specialUse = "Archive";
+        special_use = "\\Archive";
       };
     };
   };
