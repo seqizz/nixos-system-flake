@@ -69,11 +69,10 @@ in
               name = "splinter";
               id = secrets.syncthingIDsplinter;
             };
-            # Consider syncthing-fork compromised, not allow connections from the keys it can reach
-            # oneplusNord = {
-            #   name = "oneplusNord";
-            #   id = secrets.syncthingIDoneplusNord;
-            # };
+            oneplusNord = {
+              name = "oneplusNord";
+              id = secrets.syncthingIDoneplusNord;
+            };
             truenas = {
               name = "truenas";
               id = secrets.syncthingIDtruenas;
