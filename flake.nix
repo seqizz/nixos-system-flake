@@ -33,7 +33,7 @@
     };
 
     llm-jail = {
-      url = "github:seqizz/llm-jail/g_improve2";
+      url = "github:seqizz/llm-jail/g_improve3";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
