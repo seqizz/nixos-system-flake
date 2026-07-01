@@ -52,11 +52,13 @@ in {
         root = {
           preLVM = true;
           device = "/dev/nvme0n1p2";
+          allowDiscards = true;
         };
       };
     };
     kernelModules = ["kvm-intel" "i915"];
-    kernelPackages = pkgs.linuxPackages_6_18;
+    # kernelPackages = pkgs.linuxPackages_6_18;
+    kernelPackages = pkgs.linuxPackages_latest;
     kernelParams = [
       # prevent the kernel from blanking plymouth out of the fb
       "fbcon=nodefer"
@@ -68,9 +70,7 @@ in {
       "rd.systemd.show_status=auto"
       # lower the udev log level to show only errors or worse
       "rd.udev.log_level=3"
-      "i915.modeset=1"
       "intel_pstate=passive"
-      "video=eDP-1:1920x1200@60"
     ];
   };
 
@@ -105,7 +105,8 @@ in {
       options = [
         "noatime"
         "nodiratime"
-        "discard"
+        "discard=async"
+        "space_cache=v2"
       ];
     };
 
