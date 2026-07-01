@@ -71,7 +71,7 @@ in
           "https://nix-community.cachix.org"
         ];
       };
-      package = pkgs.lixpin.lix;
+      package = pkgs.lix;
       extraOptions = ''
         keep-outputs = true
         keep-derivations = true
