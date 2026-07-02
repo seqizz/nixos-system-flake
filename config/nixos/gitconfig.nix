@@ -55,6 +55,9 @@
           # usage: git reword [base-branch|N] (default: git-default-branch; integer N -> last N commits)
           reword = "!f() { if [ -n \"$1\" ] && [ \"$1\" -eq \"$1\" ] 2>/dev/null; then BASE=\"HEAD~$1\"; else BASE=\"''${1:-$(git-default-branch)}\"; fi; GIT_SEQUENCE_EDITOR=\"sed -i 's/^pick/reword/'\" git rebase -i \"''${BASE}\"; }; f"
 
+          # Show latest changed branches
+          recents = for-each-ref --sort=committerdate --format='%(committerdate:iso8601)  %(align:40,left)%(refname:short)%(end)  %(subject)' refs/heads refs/remotes
+
       [safe]
           directory = *
 
