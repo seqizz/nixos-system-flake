@@ -45,10 +45,11 @@
   opacity: 0.5;
 }
 
-/* Make selected tab visible */
-tab-item.active tab-item-substance {
+/* Make selected tab visible*/
+tab-item-substance.active tab-item-substance {
   height: 45px !important;
 }
+
 
 /* No favicon also */
 tab-item:not(.faviconized):not(.loading):is(.active) tab-favicon {
@@ -86,9 +87,13 @@ tab-item.active tab-item-substance .background {
 tab-item:is(.faviconized) {
   min-height: 40px;
   min-width: 40px;
-  padding: calc((var(--tab-current-size) - var(--favicon-size)) / 2);
-  transform: scale(120%);
 }
+
+tab-item:is(.faviconized) tab-item-substance,
+tab-item:is(.faviconized) .background {
+  background: transparent !important;
+}
+
 
 /* theme overrides */
 :root,
