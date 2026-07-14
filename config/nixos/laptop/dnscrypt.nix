@@ -54,7 +54,13 @@ in
 {
   services.resolved = {
     enable = true;
-    settings.Resolve.FallbackDNS = [ "9.9.9.9" ];
+    settings.Resolve = {
+      FallbackDNS = [ "9.9.9.9" ];
+      # avahi owns mDNS (nssmdns + printer/samba discovery). Two mDNS stacks
+      # joining the same multicast group makes discovery unreliable, so keep
+      # resolved out of it. LLMNR left on (avahi doesn't handle it).
+      MulticastDNS = false;
+    };
   };
 
   # Don't let dnscrypt-proxy module set global DNS, we manage per-link DNS.

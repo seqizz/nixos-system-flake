@@ -118,17 +118,18 @@ in {
     #     };
     #   }
     # ];
+    # Aaaand the real shitshow begins
     kernelParams = [
       # prevent the kernel from blanking plymouth out of the fb
       "fbcon=nodefer"
       "quiet"
-      # "nomodeset"
+      "pm_debug_messages"
+      "acpi_mask_gpe=0x6E"
       # disable systemd status messages
       "rd.systemd.show_status=auto"
       # lower the udev log level to show only errors or worse
       "rd.udev.log_level=3"
       "intel_pstate=passive"
-      # "pcie_aspm=force"
       "i915.enable_fbc=1"
       "i915.enable_psr=0" # WTF is even this?
       # "video=eDP-1:1920x1200@60"
