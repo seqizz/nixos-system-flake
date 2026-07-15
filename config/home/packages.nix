@@ -79,6 +79,7 @@ in {
     pkgs.unstable.discord
     claude-code
     llm-jail.claude
+    llm-jail.opencode
     llm-jail.shell
     pkgs.unstable.opencode
     thunderbird

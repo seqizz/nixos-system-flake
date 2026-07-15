@@ -9,5 +9,6 @@ in {
   claude = pkgs.claude.override { claude-code = final.claude-code; };
   codex = pkgs.codex;
   copilot = pkgs.copilot;
+  opencode = pkgs.opencode;
   shell = pkgs.shell;
 }
