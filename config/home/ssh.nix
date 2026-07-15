@@ -1,6 +1,14 @@
-{config, pkgs, ...}:
+{
+  config,
+  osConfig,
+  pkgs,
+  ...
+}:
 let
-  secrets = import ./secrets.nix {pkgs=pkgs;};
+  secrets = import ./secrets.nix {
+    pkgs = pkgs;
+    hostName = osConfig.networking.hostName;
+  };
 in
 {
   programs.ssh = {
