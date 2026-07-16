@@ -7,16 +7,24 @@ final.python3Packages.callPackage ({
     lib,
     fetchFromGitHub,
     buildPythonPackage,
+    hatchling,
     netaddr,
     paramiko,
   }:
     buildPythonPackage rec {
       pname = "adminapi";
-      version = "unstable-2026-04-04";
-      format = "setuptools";
+      version = "4.26.0";
+      pyproject = true;
 
       src = inputs.serveradmin-src;
+      # Repo migrated to uv workspace; adminapi now lives in packages/adminapi
+      setSourceRoot = "sourceRoot=$(echo */packages/adminapi)";
+
+      build-system = [hatchling];
       propagatedBuildInputs = [netaddr paramiko];
+
+      # nixpkgs ships paramiko 4.x; upstream still pins <4
+      pythonRelaxDeps = ["paramiko"];
 
       doInstallCheck = false;
       doCheck = false;
