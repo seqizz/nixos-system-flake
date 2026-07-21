@@ -2,7 +2,8 @@
   config,
   pkgs,
   ...
-}: {
+}:
+{
   environment.etc = {
     "gitignore".text = ''
       .envrc
@@ -93,6 +94,9 @@
       git fetch --all && for branch in $(git branch -l | grep -v `git-default-branch`); do git branch -d $branch ; done && git remote prune origin
     '')
     # Push The Branch with optional GitLab push options (see script for usage)
-    (pkgs.writers.writePython3Bin "git-ptb" {} (builtins.readFile ./scripts/git-ptb.py))
+    (pkgs.writers.writePython3Bin "git-ptb" { } (builtins.readFile ./scripts/git-ptb.py))
+
+    # Rebase all branches on top of the given base branch (default: git-default-branch), uses --force-with-lease
+    (pkgs.writeScriptBin "git-bulkrebase" { } (builtins.readFile ./scripts/git-bulkrebase.sh))
   ];
 }
