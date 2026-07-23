@@ -1,0 +1,8 @@
+skill_paths:
+  - ~/.claude/skills
+
+repos:
+  - url: git@gitlab.innogames.de:gurkan.gur/llm-skills.git
+    writable: true
+  - url: ssh://gitea@git.gurkan.in/gurkan/llm-skills.git
+    writable: true

@@ -97,6 +97,6 @@
     (pkgs.writers.writePython3Bin "git-ptb" { } (builtins.readFile ./scripts/git-ptb.py))
 
     # Rebase all branches on top of the given base branch (default: git-default-branch), uses --force-with-lease
-    (pkgs.writeScriptBin "git-bulkrebase" { } (builtins.readFile ./scripts/git-bulkrebase.sh))
+    (pkgs.writeScriptBin "git-bulkrebase" (builtins.readFile ./scripts/git-bulkrebase.sh))
   ];
 }

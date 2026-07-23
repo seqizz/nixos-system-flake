@@ -160,6 +160,7 @@ in {
     rofi-pulse-select
     rofi-rbw-x11
     simplescreenrecorder
+    skillissue # LLM agent skill manager
     slock
     spotify
     steam-run # helper tool for running shitty binaries

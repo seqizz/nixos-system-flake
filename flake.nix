@@ -78,6 +78,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    skillissue-src = {
+      url = "git+https://git.gurkan.in/gurkan/skillissue.git";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     yidlehook-src = {
       url = "git+https://git.gurkan.in/gurkan/yidlehook.git";
       flake = false;

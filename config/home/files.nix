@@ -40,6 +40,8 @@ in {
 
       "loose/config.yaml".source = ./config_files/loose;
 
+      "skillissue/config.yaml".source = ./config_files/skillissue.yaml;
+
       "picom.conf".source = ./config_files/picom.conf;
 
       "libinput-gestures.conf".source = ./config_files/libinput-gestures.conf;
