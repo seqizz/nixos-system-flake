@@ -92,12 +92,6 @@ in {
     ".thunderbird/gurkan.default/user.js".source = ./config_files/thunderbird/user.js;
     ".thunderbird/gurkan.default/chrome/userChrome.css".source = ./config_files/thunderbird/userChrome.css;
 
-    ".mozilla/firefox/installs.ini".source = ./config_files/firefox/installs.ini;
-    ".mozilla/firefox/profiles.ini".source = ./config_files/firefox/profiles.ini;
-    ".mozilla/firefox/gurkan.default/user.js".source = ./config_files/firefox/user.js;
-    ".mozilla/firefox/gurkan.default/chrome/userChrome.css".source = ./config_files/firefox/userChrome.css;
-    ".mozilla/native-messaging-hosts/tridactyl.json".source = "${pkgs.tridactyl-native}/lib/mozilla/native-messaging-hosts/tridactyl.json";
-
     ".trc".text = secrets.rubyTwitterSecret;
 
     ".proxychains/proxychains.conf".source = ./config_files/proxychains.conf;

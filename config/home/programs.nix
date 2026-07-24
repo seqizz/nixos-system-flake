@@ -59,22 +59,32 @@ in {
     #   skills = secrets.claudeSkills;
     # };
 
-    # Bug: https://github.com/nix-community/home-manager/issues/1586
-    # firefox = {
-    #   enable = true;
-    #   package = pkgs.wrapFirefox pkgs.firefox-unwrapped.override {
-    #     nativeMessagingHosts = with pkgs; [
-    #       browserpass
-    #       nur.repos.wolfangaukang.vdhcoapp
-    #       tridactyl-native
-    #     ];
-    #   };
-    #   profiles.declaredProfile = {
-    #     name = "gurkan-home-manager";
-    #     extraConfig = builtins.readFile ./config_files/firefox/user.js;
-    #     userChrome = builtins.readFile ./config_files/firefox/userChrome.css;
-    #   };
-    # };
+    firefox = {
+      enable = true;
+      # Pin the legacy profile location. Default flips to the XDG path at
+      # stateVersion 26.05; keep the existing ~/.mozilla/firefox to avoid
+      # moving the profile dir.
+      configPath = ".mozilla/firefox";
+      # Bridges for browserpass / vdhcoapp / tridactyl. These are native
+      # messaging hosts, not the browser extensions themselves.
+      nativeMessagingHosts = with pkgs; [
+        browserpass
+        # nur.repos.wolfangaukang.vdhcoapp # stale git rev upstream, breaks eval
+        tridactyl-native
+      ];
+      profiles.gurkan = {
+        # Reuse the existing profile dir so history/logins/extensions survive.
+        path = "gurkan.default";
+        isDefault = true;
+        # Keep the curated user.js verbatim (comments preserved) instead of
+        # converting every pref into a settings attr.
+        extraConfig = builtins.readFile ./config_files/firefox/user.js;
+        userChrome = builtins.readFile ./config_files/firefox/userChrome.css;
+        # Extensions left unmanaged on purpose: keep manual install/upgrade/
+        # remove via the Firefox UI. TST's own style (treestyletab.css) is not
+        # declarable anyway.
+      };
+    };
 
     rbw = {
       enable = true;

@@ -3,7 +3,11 @@
 " This wipes all existing settings. This means that if a setting in this file
 " is removed, then it will return to default. In other words, this file serves
 " as an enforced single point of truth for Tridactyl's configuration.
-sanitize tridactyllocal tridactylsync
+" XXX: Does not work anymore (probably the config file now loads
+" asynchronously), instead I set the storageloc
+
+" sanitize tridactyllocal tridactylsync
+set storageloc local
 
 " Just use a blank page for new tab. It would be nicer to use the standard
 " Firefox homepage, but Tridactyl doesn't support this yet.
