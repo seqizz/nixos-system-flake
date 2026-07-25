@@ -10,5 +10,7 @@ in {
   codex = pkgs.codex;
   copilot = pkgs.copilot;
   opencode = pkgs.opencode;
+  autolith = pkgs.autolith;
+  crush = pkgs.crush.override { crush = final.unstable.crush; };
   shell = pkgs.shell;
 }
