@@ -2,11 +2,31 @@
   pkgs,
   inputs,
   config,
+  lib,
+  osConfig,
   ...
 }: let
   sync = "/home/gurkan/syncfolder";
   secrets = import ./secrets.nix {pkgs = pkgs;};
   fileAssociations = import ./file-associations.nix;
+
+  # skillissue repos: the innogames work repo is only reachable on splinter,
+  # so gate it on the hostname and keep the personal gitea repo everywhere.
+  yamlFormat = pkgs.formats.yaml {};
+  skillissueConfig = yamlFormat.generate "skillissue-config.yaml" {
+    skill_paths = ["~/.claude/skills"];
+    repos =
+      lib.optional (osConfig.networking.hostName == "splinter") {
+        url = "git@gitlab.innogames.de:gurkan.gur/llm-skills.git";
+        writable = true;
+      }
+      ++ [
+        {
+          url = "ssh://gitea@git.gurkan.in/gurkan/llm-skills.git";
+          writable = true;
+        }
+      ];
+  };
 in {
   xdg = {
     portal = {
@@ -40,7 +60,7 @@ in {
 
       "loose/config.yaml".source = ./config_files/loose;
 
-      "skillissue/config.yaml".source = ./config_files/skillissue.yaml;
+      "skillissue/config.yaml".source = skillissueConfig;
 
       "picom.conf".source = ./config_files/picom.conf;
 
