@@ -80,6 +80,7 @@ in {
     llm-jail.claude
     llm-jail.opencode
     llm-jail.shell
+    llm-jail.pi
     pkgs.unstable.opencode
     thunderbird
 

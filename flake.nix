@@ -31,7 +31,7 @@
     };
 
     llm-jail = {
-      url = "github:seqizz/llm-jail";
+      url = "github:seqizz/llm-jail?ref=g_pidev";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
