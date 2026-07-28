@@ -1,8 +1,10 @@
 # Overlay machinery and module auto-discovery.
 # Normally you don't edit this file — drop files in grafts/ instead.
-{inputs, ...}: let
+{ inputs, ... }:
+let
   lib = inputs.nixpkgs.lib;
-in rec {
+in
+rec {
   # Single overlay that auto-discovers all grafts/*.nix.
   # Each file receives { final, prev, inputs, helpers } and returns a derivation or path,
   # becoming pkgs.<filename-without-.nix>.
@@ -11,56 +13,75 @@ in rec {
   # Uses lib.mapAttrs' (lazy) instead of builtins.foldl' (strict).
   # foldl' would force all graft thunks simultaneously while final is still being
   # computed, causing infinite recursion through final.python3Packages etc.
-  grafts-overlay = final: prev:
+  grafts-overlay =
+    final: prev:
     let
-      helpers = import ./helpers.nix {inherit inputs; pkgs = final;};
+      helpers = import ./helpers.nix {
+        inherit inputs;
+        pkgs = final;
+      };
       graftsDir = ../grafts;
       graftFiles = builtins.readDir graftsDir;
       # Lazy attrset: each value is only evaluated when accessed
       singleGrafts = lib.mapAttrs' (name: _: {
         name = lib.removeSuffix ".nix" name;
-        value = import (graftsDir + "/${name}") {inherit final prev inputs helpers;};
+        value = import (graftsDir + "/${name}") {
+          inherit
+            final
+            prev
+            inputs
+            helpers
+            ;
+        };
       }) (lib.filterAttrs (n: _: lib.hasSuffix ".nix" n && n != "vim-plugins.nix") graftFiles);
     in
-      singleGrafts
-      # vim-plugins.nix returns a set of plugins — merge directly into pkgs
-      // (import (graftsDir + "/vim-plugins.nix") {inherit final prev inputs helpers;});
+    singleGrafts
+    # vim-plugins.nix returns a set of plugins — merge directly into pkgs
+    // (import (graftsDir + "/vim-plugins.nix") {
+      inherit
+        final
+        prev
+        inputs
+        helpers
+        ;
+    });
 
   # Auto-exposes every flake input named `nixpkgs-<suffix>` as pkgs.<suffix>.*
   # e.g. nixpkgs-unstable → pkgs.unstable, nixpkgs-previous → pkgs.previous
-  nixpkgs-channels = final: _prev:
+  nixpkgs-channels =
+    final: _prev:
     let
       channels = lib.filterAttrs (n: _: lib.hasPrefix "nixpkgs-" n) inputs;
     in
-      lib.mapAttrs' (n: input: {
-        name = lib.removePrefix "nixpkgs-" n;
-        value = import input {
-          system = final.stdenv.hostPlatform.system;
-          config.allowUnfree = true;
-        };
-      }) channels;
+    lib.mapAttrs' (n: input: {
+      name = lib.removePrefix "nixpkgs-" n;
+      value = import input {
+        system = final.stdenv.hostPlatform.system;
+        config.allowUnfree = true;
+      };
+    }) channels;
 
   # Drop-in package replacements from grafts/drop-in/<name>/package.nix.
   # Clone an upstream nixpkgs by-name package directory here to replace pkgs.<name>.
   # Each subdirectory must contain package.nix (standard nixpkgs by-name convention).
-  drop-in-overlay = final: prev:
+  drop-in-overlay =
+    final: prev:
     let
       dropInDir = ../grafts/drop-in;
       # Dir may not exist (git doesn't track empty dirs). Skip cleanly in that case.
-      entries = if builtins.pathExists dropInDir then builtins.readDir dropInDir else {};
+      entries = if builtins.pathExists dropInDir then builtins.readDir dropInDir else { };
       # Only subdirectories (files are ignored)
       packageDirs = lib.filterAttrs (_: type: type == "directory") entries;
     in
-      lib.mapAttrs (name: _:
-        prev.callPackage (dropInDir + "/${name}/package.nix") {}
-      ) packageDirs;
+    lib.mapAttrs (name: _: prev.callPackage (dropInDir + "/${name}/package.nix") { }) packageDirs;
 
   # Auto-exposes any input ending in -src (with the suffix stripped) as
   # pkgs.passthrough.<name> — no extra config needed when adding a new flake input.
   # Inputs declared with flake = false fail lazily with a helpful message when accessed.
   # Names not already present in nixpkgs are also injected at the top level so that
   # pkgs.loose works the same as pkgs.passthrough.loose without any explicit graft files.
-  passthrough-overlay = final: prev:
+  passthrough-overlay =
+    final: prev:
     let
       system = final.stdenv.hostPlatform.system;
       srcInputs = lib.filterAttrs (n: _: lib.hasSuffix "-src" n) inputs;
@@ -69,47 +90,70 @@ in rec {
       #   proper flake + in nixpkgs     → expose packages.default, pkgs.passthrough.X only
       #   flake=false  + in nixpkgs     → pin source of the nixpkgs pkg, promote (replaces it)
       #   flake=false  + not in nixpkgs → throw lazily; use a graft file to build it
-      resolved = lib.mapAttrs' (n: input:
+      resolved = lib.mapAttrs' (
+        n: input:
         let
-          name     = lib.removeSuffix "-src" n;
-          isFlake  = input ? packages;
+          name = lib.removeSuffix "-src" n;
+          isFlake = input ? packages;
           # Only check attribute existence — forcing prev.${name} (e.g. lib.isDerivation)
           # triggers nixpkgs' by-name fixed-point through self, causing infinite recursion.
           inNixpkgs = prev ? ${name};
-        in {
+        in
+        {
           inherit name;
           value = {
             pkg =
-              if !isFlake && inNixpkgs
-              then prev.${name}.overrideAttrs (_: { src = input; })
-              else if isFlake
-              then input.packages.${system}.default
-              else throw "${name} is declared with flake = false and has no nixpkgs counterpart — use a graft file to build it";
+              if !isFlake && inNixpkgs then
+                prev.${name}.overrideAttrs (_: {
+                  src = input;
+                })
+              else if isFlake then
+                input.packages.${system}.default
+              else
+                throw "${name} is declared with flake = false and has no nixpkgs counterpart — use a graft file to build it";
             promote = (!isFlake && inNixpkgs) || (isFlake && !inNixpkgs);
           };
         }
       ) srcInputs;
       passthroughs = lib.mapAttrs (_: r: r.pkg) resolved;
-      newTopLevel  = lib.mapAttrs (_: r: r.pkg) (lib.filterAttrs (_: r: r.promote) resolved);
+      newTopLevel = lib.mapAttrs (_: r: r.pkg) (lib.filterAttrs (_: r: r.promote) resolved);
     in
-      newTopLevel // { passthrough = passthroughs; };
+    newTopLevel // { passthrough = passthroughs; };
 
   # Combined overlay list — single source of truth for NixOS and home-manager configs
   # passthrough-overlay must come FIRST so its prev = pure nixpkgs (safe for lib.isDerivation).
   # If placed after grafts-overlay, prev contains graft packages that lazily reference final,
   # and forcing their type attribute causes infinite recursion through the fixed-point.
   # drop-in-overlay comes last so it takes precedence over both.
-  all = [passthrough-overlay grafts-overlay drop-in-overlay nixpkgs-channels inputs.skyepkgs.overlays.default];
+  all = [
+    passthrough-overlay
+    grafts-overlay
+    drop-in-overlay
+    nixpkgs-channels
+    inputs.skyepkgs.overlays.default
+  ];
 
   # Auto-discovered NixOS modules from grafts/nixos/*.nix — applied to all nixosConfigurations
+  # pathExists guard: an empty grafts dir is untracked by git, so it is absent
+  # from the flake source snapshot and readDir would throw.
   nixos-modules =
-    let dir = ../grafts/nixos;
-    in map (n: dir + "/${n}")
-      (builtins.filter (lib.hasSuffix ".nix") (builtins.attrNames (builtins.readDir dir)));
+    let
+      dir = ../grafts/nixos;
+    in
+    lib.optionals (builtins.pathExists dir) (
+      map (n: dir + "/${n}") (
+        builtins.filter (lib.hasSuffix ".nix") (builtins.attrNames (builtins.readDir dir))
+      )
+    );
 
   # Auto-discovered home-manager modules from grafts/home/*.nix — applied to all homeConfigurations
   hm-modules =
-    let dir = ../grafts/home;
-    in map (n: dir + "/${n}")
-      (builtins.filter (lib.hasSuffix ".nix") (builtins.attrNames (builtins.readDir dir)));
+    let
+      dir = ../grafts/home;
+    in
+    lib.optionals (builtins.pathExists dir) (
+      map (n: dir + "/${n}") (
+        builtins.filter (lib.hasSuffix ".nix") (builtins.attrNames (builtins.readDir dir))
+      )
+    );
 }

@@ -3,23 +3,23 @@
   pkgs,
   inputs,
   ...
-}: let
-  my_scripts = import ./scripts.nix {pkgs = pkgs;};
-in {
+}:
+let
+  my_scripts = import ./scripts.nix { pkgs = pkgs; };
+in
+{
   nixpkgs = {
     config = {
       enable = true;
       allowUnfree = true;
       # Quick-overrides
       packageOverrides = pkgs: {
-        nur-lunwill42 = import (
-          pkgs.fetchFromGitHub {
-            owner = "lunkwill42";
-            repo = "nur-packages";
-            rev = "master";
-            sha256 = "sha256-IewS/HSyPvyBiE2oWgQeVgvwcgbai1qfjiacYizg3RA=";
-          }
-        ) {inherit pkgs;};
+        nur-lunwill42 = import (pkgs.fetchFromGitHub {
+          owner = "lunkwill42";
+          repo = "nur-packages";
+          rev = "master";
+          sha256 = "sha256-IewS/HSyPvyBiE2oWgQeVgvwcgbai1qfjiacYizg3RA=";
+        }) { inherit pkgs; };
       };
       # packageOverrides = pkgs: rec {
       # browserpass = oldversion.browserpass;  # Reference override: https://github.com/NixOS/nixpkgs/issues/236074
@@ -45,10 +45,10 @@ in {
   };
 
   home.packages = with pkgs; [
-    (gimp-with-plugins.override {plugins = with gimpPlugins; [gmic];})
-    (pass.withExtensions (ps: with ps; [pass-genphrase]))
-    (python3.withPackages (ps:
-      with ps; [
+    (gimp-with-plugins.override { plugins = with gimpPlugins; [ gmic ]; })
+    (pass.withExtensions (ps: with ps; [ pass-genphrase ]))
+    (python3.withPackages (
+      ps: with ps; [
         adminapi
         coverage
         flake8
@@ -70,7 +70,8 @@ in {
         virtualenv
         vulture # find unused code
         xlib
-      ]))
+      ]
+    ))
 
     # non-stable stuff, subject to change
     pkgs.unstable.telegram-desktop
@@ -189,4 +190,3 @@ in {
   ];
 }
 #  vim: set ts=2 sw=2 tw=0 et :
-

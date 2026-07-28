@@ -2,9 +2,11 @@
   final,
   inputs,
   ...
-}: let
+}:
+let
   pkgs = inputs.llm-jail.packages.${final.stdenv.hostPlatform.system};
-in {
+in
+{
   # Use system's nixpkgs claude-code instead of llm-jail's claude-code-nix input
   claude = pkgs.claude.override { claude-code = final.claude-code; };
   pi = pkgs.pi;

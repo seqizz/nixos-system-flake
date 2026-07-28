@@ -4,9 +4,11 @@
   modulesPath,
   lib,
   ...
-}: let
-  secrets = import ./secrets.nix {pkgs = pkgs;};
-in {
+}:
+let
+  secrets = import ./secrets.nix { pkgs = pkgs; };
+in
+{
   xdg = {
     configFile = {
       "pip/pip.conf".text = secrets.pipConfigInno;
@@ -14,7 +16,7 @@ in {
       "pypoetry/auth.toml".text = secrets.poetryAuthInno;
     };
   };
-  home ={
+  home = {
     file = {
       ".netrc".text = secrets.netrcInno;
     };
@@ -22,4 +24,12 @@ in {
       pkgs.unstable.slack
     ];
   };
+
+  # Work skills repo, append, collection is in skillissue.nix
+  local.skillissue.repos = lib.mkBefore [
+    {
+      url = "git@gitlab.innogames.de:gurkan.gur/llm-skills.git";
+      writable = true;
+    }
+  ];
 }
