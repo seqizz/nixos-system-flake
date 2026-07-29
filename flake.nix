@@ -36,6 +36,10 @@
     };
 
     # Pi-related packages, always pin
+    pi-nix = {
+      url = "github:lukasl-dev/pi.nix/5e7bbe666704df45b6f391bfa4320cb52b8c26a9";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     rpiv-mono-src = {
       url = "github:juicesharp/rpiv-mono/22eb3aa3eefb612e63e8253e90c9355a477ba606";
       flake = false;

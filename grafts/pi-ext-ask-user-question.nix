@@ -16,9 +16,9 @@
 }:
 let
   src = inputs.rpiv-mono-src;
-  # Same pi build llm-jail uses (its locked pi.nix rev), reached via the
-  # transitive input so host and jail stay byte-identical without a second pin.
-  pi = inputs.llm-jail.inputs.pi-nix.packages.${final.stdenv.hostPlatform.system}.default;
+  # Same pi.nix bun build the host and jail use (pinned pi-nix input), so the
+  # vendored typebox matches the pi runtime and host/jail stay byte-identical.
+  pi = inputs.pi-nix.packages.${final.stdenv.hostPlatform.system}.coding-agent-bun;
 in
 final.runCommandLocal "pi-ext-rpiv-ask-user-question-2.1.0" { } ''
   mkdir -p $out/node_modules/@juicesharp
