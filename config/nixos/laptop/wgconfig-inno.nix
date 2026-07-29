@@ -39,6 +39,13 @@ in
             # Route unmarked packets through table 42 (wg)
             ${pkgs.iproute2}/bin/ip -4 ru add prio 42 not fwmark 0x42 lookup 42
             ${pkgs.iproute2}/bin/ip -6 ru add prio 42 not fwmark 0x42 lookup 42
+
+            # Validate DNSSEC only on the inno VPN links
+            case "$1" in
+                ${primary_wg.name}|${secondary_wg.name})
+                    ${pkgs.systemd}/bin/resolvectl dnssec "$1" allow-downgrade
+                    ;;
+            esac
         fi
 
 
