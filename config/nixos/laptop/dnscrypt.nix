@@ -93,6 +93,12 @@ in
       ];
       require_nolog = true;
       require_nofilter = true;
+      # Use TCP to upstream resolvers. resolved fires A+AAAA in parallel; over
+      # UDP the internet path occasionally drops one query, and dnscrypt then
+      # sits on its (default 5000ms) timeout with no fast per-query retry, so a
+      # single lost packet costs a full 5s cold lookup. TCP retransmits lost
+      # segments itself, removing those stalls.
+      force_tcp = true;
       cache = true;
       cache_size = 512;
       cache_min_ttl = 60;
