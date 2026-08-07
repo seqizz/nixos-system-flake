@@ -30,18 +30,17 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    # llm-related packages, always pin
     llm-jail = {
-      url = "github:seqizz/llm-jail?ref=g_pidev";
+      url = "github:seqizz/llm-jail/304db2362ebbd1b2c5e792a8e5ec001a6cc7a0a3";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
-    # Pi-related packages, always pin
     pi-nix = {
-      url = "github:lukasl-dev/pi.nix/5e7bbe666704df45b6f391bfa4320cb52b8c26a9";
+      url = "github:lukasl-dev/pi.nix/65a0682322ca1c49a43c156534e4c1af4959cae1";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     rpiv-mono-src = {
-      url = "github:juicesharp/rpiv-mono/22eb3aa3eefb612e63e8253e90c9355a477ba606";
+      url = "github:juicesharp/rpiv-mono/226ec6e18f94dbed334a76ff907e1759d768b4bb";
       flake = false;
     };
 
