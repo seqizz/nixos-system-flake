@@ -94,7 +94,7 @@ on_screen_count:
         post:
           - 'echo "Xft.dpi: 112" | xrdb -merge'
           - pkill -HUP awesome
-      comment: One right of the other (random #1)
+      comment: One right of the other (random 1)
     - _1:
         left-of: _2
       _2:
@@ -107,7 +107,7 @@ on_screen_count:
         post:
           - 'echo "Xft.dpi: 112" | xrdb -merge'
           - pkill -HUP awesome
-      comment: One right of the other (random #2)
+      comment: One right of the other (random 2)
 
 global_failback:
   eDP-1:
