@@ -49,7 +49,8 @@ in
       localNetworkGameTransfers.openFirewall = true;
       extraCompatPackages = with pkgs; [
         proton-ge-bin
-        pkgs.nur.repos.forkprince.proton-cachyos-v3-bin
+        # Not available anymore
+        # pkgs.nur.repos.forkprince.proton-cachyos-v3-bin
       ];
     };
   };
