@@ -5,7 +5,8 @@
   modulesPath,
   lib,
   ...
-}: let
+}:
+let
   fucknvidia = config.boot.kernelPackages.nvidiaPackages.mkDriver {
     version = "595.71.05";
     sha256_64bit = "sha256-NiA7iWC35JyKQva6H1hjzeNKBek9KyS3mK8G3YRva4I=";
@@ -14,7 +15,8 @@
     settingsSha256 = "sha256-mXnf3jyvznfB3OfKd657rxv0rYHQb/dX/Riw/+N9EKU=";
     persistencedSha256 = lib.fakeHash;
   };
-in {
+in
+{
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
     ../config/nixos/laptop/common.nix
@@ -52,7 +54,17 @@ in {
         "vmd"
         "xhci_pci"
       ];
-      # kernelModules = ["iwlmvm" "iwlwifi"];
+      kernelModules = [
+        # Normally no modules need to be specified, only putting the sound-related modules here
+        # in a specific order to ensure they are loaded in the correct sequence. Noone gives a shit
+        # about user experience, they just push their commits in..
+        "spi-cs42l43"
+        "pinctrl-cs42l43"
+        "snd-soc-cs42l43"
+        "snd-soc-cs42l43-sdw"
+        "cs42l43-sdw"
+        "snd-soc-sof-sdw"
+      ];
       luks.devices = {
         crypted = {
           preLVM = true;
@@ -62,7 +74,7 @@ in {
         };
       };
     };
-    extraModulePackages = [fucknvidia];
+    extraModulePackages = [ fucknvidia ];
     kernelPackages = pkgs.linuxPackages_latest;
     # kernelPackages = pkgs.linuxPackages_6_18;
     # kernelPackages = pkgs.linuxPackages_latest.extend (self: super: {
@@ -177,7 +189,7 @@ in {
     user.extraConfig = "DefaultTimeoutStopSec=10s";
   };
   services = {
-    xserver.videoDrivers = ["nvidia"];
+    xserver.videoDrivers = [ "nvidia" ];
     tlp.settings = {
       "MAX_LOST_WORK_SECS_ON_BAT" = 15;
       "WOL_DISABLE" = "Y";
