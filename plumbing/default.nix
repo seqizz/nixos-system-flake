@@ -5,10 +5,39 @@ let
   lib = inputs.nixpkgs.lib;
 in
 rec {
+  # Parses a graft filename into { name, frozenRef }.
+  #   foo.nix       → { name = "foo"; frozenRef = null; }   (normal graft)
+  #   foo@REF.nix   → { name = "foo"; frozenRef = "REF"; }  (graftiverse / frozen graft)
+  # REF is anything without "/" or "@" — a date (2026-08-08), release or commit.
+  parseGraftName =
+    fileName:
+    let
+      base = lib.removeSuffix ".nix" fileName;
+      parts = lib.splitString "@" base;
+      name = builtins.elemAt parts 0;
+      frozenRef = builtins.elemAt parts 1;
+    in
+    if builtins.length parts == 1 then
+      {
+        inherit name;
+        frozenRef = null;
+      }
+    else if builtins.length parts > 2 then
+      throw "graft '${fileName}': ambiguous filename, only one '@' allowed (<name>@<frozenRef>.nix)"
+    else if name == "" || frozenRef == "" then
+      throw "graft '${fileName}': both sides of '@' must be non-empty (<name>@<frozenRef>.nix)"
+    else
+      { inherit name frozenRef; };
+
   # Single overlay that auto-discovers all grafts/*.nix.
   # Each file receives { final, prev, inputs, helpers } and returns a derivation or path,
   # becoming pkgs.<filename-without-.nix>.
   # Exception: vim-plugins.nix returns a set of plugins and is merged directly.
+  #
+  # Graftiverse: a file named <name>@<frozenRef>.nix becomes pkgs.<name>, but its
+  # final/prev come from a historical nixpkgs resolved by nixpkgs-multiverse at
+  # <frozenRef>. The graft body is identical either way, so freezing/unfreezing is
+  # just a file rename.
   #
   # Uses lib.mapAttrs' (lazy) instead of builtins.foldl' (strict).
   # foldl' would force all graft thunks simultaneously while final is still being
@@ -22,18 +51,50 @@ rec {
       };
       graftsDir = ../grafts;
       graftFiles = builtins.readDir graftsDir;
+      graftNames = builtins.attrNames (
+        lib.filterAttrs (n: _: lib.hasSuffix ".nix" n && n != "vim-plugins.nix") graftFiles
+      );
+      parsed = map (file: parseGraftName file // { inherit file; }) graftNames;
+
+      # Frozen grafts get plain historical nixpkgs + our config, no local overlays:
+      # feeding this overlay back into a revision it produces would be recursive.
+      multiverse = inputs.nixpkgs-multiverse.lib.mkMultiverse {
+        system = final.stdenv.hostPlatform.system;
+        config = prev.config;
+        overlays = [ ];
+      };
+      # genAttrs values are lazy, so a frozen revision is only fetched/evaluated
+      # when the graft using it is actually accessed (and shared between grafts
+      # pinned to the same ref).
+      frozenUniverses = lib.genAttrs (
+        lib.unique (map (g: g.frozenRef) (builtins.filter (g: g.frozenRef != null) parsed))
+      ) (ref: multiverse.at ref);
+
+      # Deterministic conflict: refuse mpv.nix and mpv@2026-08-08.nix side by side.
+      duplicates = builtins.filter (g: builtins.length g > 1) (
+        builtins.attrValues (lib.groupBy (g: g.name) parsed)
+      );
+      checked =
+        if duplicates == [ ] then
+          parsed
+        else
+          throw "duplicate graft target(s): ${
+            lib.concatMapStringsSep ", " (
+              g: "${(builtins.head g).name} (${lib.concatMapStringsSep " + " (x: x.file) g})"
+            ) duplicates
+          }";
+
       # Lazy attrset: each value is only evaluated when accessed
-      singleGrafts = lib.mapAttrs' (name: _: {
-        name = lib.removeSuffix ".nix" name;
-        value = import (graftsDir + "/${name}") {
-          inherit
-            final
-            prev
-            inputs
-            helpers
-            ;
-        };
-      }) (lib.filterAttrs (n: _: lib.hasSuffix ".nix" n && n != "vim-plugins.nix") graftFiles);
+      singleGrafts = builtins.listToAttrs (
+        map (g: {
+          inherit (g) name;
+          value = import (graftsDir + "/${g.file}") {
+            final = if g.frozenRef == null then final else frozenUniverses.${g.frozenRef};
+            prev = if g.frozenRef == null then prev else frozenUniverses.${g.frozenRef};
+            inherit inputs helpers;
+          };
+        }) checked
+      );
     in
     singleGrafts
     # vim-plugins.nix returns a set of plugins — merge directly into pkgs
@@ -48,10 +109,14 @@ rec {
 
   # Auto-exposes every flake input named `nixpkgs-<suffix>` as pkgs.<suffix>.*
   # e.g. nixpkgs-unstable → pkgs.unstable, nixpkgs-previous → pkgs.previous
+  # nixpkgs-multiverse is excluded: it is a library flake, not a nixpkgs tree,
+  # so `import` on it would fail. It is consumed by grafts-overlay instead.
   nixpkgs-channels =
     final: _prev:
     let
-      channels = lib.filterAttrs (n: _: lib.hasPrefix "nixpkgs-" n) inputs;
+      channels = lib.filterAttrs (
+        n: _: lib.hasPrefix "nixpkgs-" n && n != "nixpkgs-multiverse"
+      ) inputs;
     in
     lib.mapAttrs' (n: input: {
       name = lib.removePrefix "nixpkgs-" n;

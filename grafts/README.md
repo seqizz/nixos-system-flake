@@ -37,6 +37,32 @@ final.python3Packages.callPackage ({ buildPythonPackage, ... }: buildPythonPacka
 helpers.overrideSrc prev.greenclip inputs.greenclip-src
 ```
 
+### Frozen grafts (graftiverse)
+
+Rename `foo.nix` → `foo@<ref>.nix` to evaluate the same file against historical nixpkgs
+(via nixpkgs-multiverse). Contents stay identical; the package is still `pkgs.foo`.
+
+```nix
+# grafts/mpv@2026-08-08.nix  → pkgs.mpv built against nixpkgs as of 2026-08-08
+{prev, ...}:
+prev.mpv-unwrapped.override {
+  ffmpeg = prev.ffmpeg_6-full;
+}
+```
+
+`<ref>`, no `/`, only one `@`:
+
+- `2026-08-12` — a **date always resolves against nixos-unstable** (newest rev on or before it).
+  Only unstable revisions are indexed, so this switches the package's branch, not just its age.
+- `26.05` — tip of that release branch; changes only when the `nixpkgs-multiverse` input is bumped.
+- `2fcb964de67f` — commit, but it must already be in multiverse's index.
+
+There is no way to say "release-26.05 as of a past date" — that history is not indexed. Pin such a
+rev as a normal `nixpkgs-<label>` flake input instead.
+
+Having both `foo.nix` and `foo@<ref>.nix` is a hard error. Frozen closures get no security updates
+until the ref is bumped.
+
 ### Passthrough: flake packages and source pins (no graft file needed)
 
 Name the input `<pkgname>-src` in `flake.nix`. The `passthrough-overlay` in `plumbing/default.nix` handles it automatically:

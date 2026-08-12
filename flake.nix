@@ -4,6 +4,9 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-26.05";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
+    # Historical nixpkgs revisions for frozen grafts (grafts/<name>@<ref>.nix).
+    # Declares no inputs of its own (revisions are fetched lazily), so nothing to follow.
+    nixpkgs-multiverse.url = "github:fzakaria/nixpkgs-multiverse";
     # nixpkgs-previous.url = "github:nixos/nixpkgs/nixos-25.11";
     disko.url = "github:nix-community/disko";
     disko.inputs.nixpkgs.follows = "nixpkgs";
@@ -176,8 +179,10 @@
             config.allowUnfree = true;
           };
           graftsDir = ./grafts;
+          # Frozen grafts (<name>@<ref>.nix) are exposed under <name>, like normal ones.
+          targetName = n: builtins.head (lib.splitString "@" (lib.removeSuffix ".nix" n));
           # Additions: graft files that don't take 'prev' (i.e. not overrides of existing pkgs)
-          additionNames = map (lib.removeSuffix ".nix") (
+          additionNames = map targetName (
             builtins.filter (
               n:
               lib.hasSuffix ".nix" n
