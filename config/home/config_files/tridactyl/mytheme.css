@@ -22,8 +22,16 @@
 span.TridactylHint {
     font-family: monospace !important;
     background: transparent !important;
-    color: black !important;
-    text-shadow: cyan -1px -1px 0px, cyan -1px 0px 0px, cyan -1px 1px 0px, cyan 1px -1px 0px, cyan 1px 0px 0px, cyan 1px 1px 0px, cyan 0px 1px 0px, cyan 0px -1px 0px !important;
+
+    /* High-visibility yellow text with soft dark outline */
+    color: #ffd400 !important;
+    text-shadow: none !important;
+    filter:
+        drop-shadow(-1px  0px 0 rgba(0, 0, 0, 0.75))
+        drop-shadow( 1px  0px 0 rgba(0, 0, 0, 0.75))
+        drop-shadow( 0px -1px 0 rgba(0, 0, 0, 0.75))
+        drop-shadow( 0px  1px 0 rgba(0, 0, 0, 0.75)) !important;
+
     font-size: 0.8em;
 }
 
