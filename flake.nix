@@ -102,7 +102,7 @@
 
     lol-plymouth-src = {
       url = "git+https://git.gurkan.in/gurkan/lol-plymouth.git";
-      flake = false;
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     vimwiki-markdown-src = {

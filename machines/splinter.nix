@@ -144,6 +144,7 @@ in
       "intel_pstate=passive"
       "i915.enable_fbc=1"
       "i915.enable_psr=0" # WTF is even this?
+      # "plymouth.debug=file:/run/plymouth-debug.log" # @Reference
       # "video=eDP-1:1920x1200@60"
       # "nvidia-drm.fbdev=1"
     ];
