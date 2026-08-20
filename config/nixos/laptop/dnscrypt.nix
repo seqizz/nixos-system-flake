@@ -164,22 +164,30 @@ in
         set_dns_from_nm() {
           local iface="$1"
           local reason="$2"
+          local raw
           local dns
-          local dns_servers=()
           local filtered=()
 
           # Ask NM for DHCP/static DNS known for this active device.
-          mapfile -t dns_servers < <(
-            ${pkgs.networkmanager}/bin/nmcli -g IP4.DNS,IP6.DNS device show "$iface" 2>/dev/null
-          )
+          #
+          # nmcli -g packs a MULTI-VALUE field into a single line joined by " | ",
+          # and escapes ":" as "\:" in IPv6 addresses unless -e no is passed.
+          # "resolvectl dns" rejects both forms ("Failed to parse DNS server
+          # address"), so normalise to a plain whitespace-separated address list.
+          raw="$(${pkgs.networkmanager}/bin/nmcli -e no -g IP4.DNS,IP6.DNS device show "$iface" 2>/dev/null)"
+          raw="''${raw//|/ }"
 
-          for dns in "''${dns_servers[@]}"; do
+          # Deliberate word splitting: $raw is a whitespace-separated address list.
+          for dns in $raw; do
             [[ -n "$dns" ]] && filtered+=("$dns")
           done
 
           if (( ''${#filtered[@]} > 0 )); then
             log "$reason: using NM/DHCP DNS on $iface: ''${filtered[*]}"
-            ${pkgs.systemd}/bin/resolvectl dns "$iface" "''${filtered[@]}"
+            # Log failures: a silent no-op here leaves the link on a stale
+            # 127.0.0.1 override after dnscrypt-proxy has been stopped.
+            ${pkgs.systemd}/bin/resolvectl dns "$iface" "''${filtered[@]}" \
+              || log "$reason: FAILED to set DNS on $iface: ''${filtered[*]}"
           else
             # No point clearing DNS here; if NM has no DNS, captive portal DNS cannot be restored.
             log "$reason: no NM/DHCP DNS known for $iface; leaving current DNS unchanged"
