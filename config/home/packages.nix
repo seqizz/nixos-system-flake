@@ -166,6 +166,7 @@ in
     spotify
     steam-run # helper tool for running shitty binaries
     tarsnap
+    trayplay
     update-nix-fetchgit
     vial # QMK keyboard configurator
     wally-cli

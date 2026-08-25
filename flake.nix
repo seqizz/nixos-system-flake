@@ -33,6 +33,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    trayplay-src = {
+      url = "git+https://git.gurkan.in/gurkan/trayplay";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     # llm-related packages, always pin
     llm-jail = {
       url = "github:seqizz/llm-jail/304db2362ebbd1b2c5e792a8e5ec001a6cc7a0a3";
