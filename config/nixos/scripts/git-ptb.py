@@ -7,6 +7,7 @@ Modifiers (order doesn't matter):
   m - create merge request
   r - remove source branch after merge
   d - mark as draft
+  a - amend staged changes into last commit (--amend --no-edit)
   f - force push (uses --force-with-lease)
   F - force push (without lease, fuk it)
 
@@ -16,6 +17,7 @@ Examples:
   git ptb ms       # MR + skip CI (same as 'sm')
   git ptb mfs      # MR + force-with-lease + skip CI
   git ptb mrd joe  # MR + remove branch + draft + assign to joe
+  git ptb as       # amend staged files, then push (force-with-lease) + skip CI
 """
 
 import subprocess
@@ -39,12 +41,26 @@ def get_default_branch():
     return subprocess.check_output(['git-default-branch'], text=True).strip()
 
 
+def has_staged_changes():
+    # Exit code 1 means the index differs from HEAD, i.e. something is staged
+    return subprocess.call(['git', 'diff', '--cached', '--quiet']) != 0
+
+
+def amend_staged():
+    # No -a/-u: only what is already in the index gets folded into HEAD
+    cmd = ['git', 'commit', '--amend', '--no-edit']
+    print(f'+ {" ".join(cmd)}')
+    rc = subprocess.call(cmd)
+    if rc != 0:
+        sys.exit(rc)
+
+
 def main():
     modifiers = set(sys.argv[1]) if len(sys.argv) > 1 else set()
     assignee = sys.argv[2] if len(sys.argv) > 2 else None
 
     # Validate modifiers
-    unknown = modifiers - set(MODIFIERS.keys()) - {'f', 'F'}
+    unknown = modifiers - set(MODIFIERS.keys()) - {'a', 'f', 'F'}
     if unknown:
         print(f'Unknown modifier(s): {", ".join(unknown)}', file=sys.stderr)
         print(__doc__, file=sys.stderr)
@@ -57,6 +73,15 @@ def main():
             file=sys.stderr,
         )
         sys.exit(1)
+
+    if 'a' in modifiers:
+        if not has_staged_changes():
+            print(
+                'Error: nothing staged, refusing to amend',
+                file=sys.stderr,
+            )
+            sys.exit(1)
+        amend_staged()
 
     branch = get_branch()
     default_branch = get_default_branch()
@@ -71,11 +96,11 @@ def main():
     if assignee:
         opts.extend(['-o', f'merge_request.assign={assignee}'])
 
-    # Add force flag if requested
-    if 'f' in modifiers:
-        opts.append('--force-with-lease')
-    elif 'F' in modifiers:
+    # Add force flag if requested; amend rewrites HEAD, so it needs one too
+    if 'F' in modifiers:
         opts.append('--force')
+    elif 'f' in modifiers or 'a' in modifiers:
+        opts.append('--force-with-lease')
 
     cmd = ['git', 'push'] + opts + ['origin', branch]
     print(f'+ {" ".join(cmd)}')
