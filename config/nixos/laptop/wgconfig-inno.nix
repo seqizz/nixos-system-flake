@@ -2,60 +2,48 @@
   config,
   pkgs,
   ...
-}: let
-  primary_wg = import ../helper-modules/nm-wg-config.nix ({
+}:
+let
+  primary_wg = import ../helper-modules/nm-wg-config.nix (
+    {
       inherit pkgs;
     }
-    // (import ../secrets.nix).generatedWG-Primary-opts);
-  secondary_wg = import ../helper-modules/nm-wg-config.nix ({
+    // (import ../secrets.nix).generatedWG-Primary-opts
+  );
+  secondary_wg = import ../helper-modules/nm-wg-config.nix (
+    {
       inherit pkgs;
     }
-    // (import ../secrets.nix).generatedWG-Secondary-opts);
+    // (import ../secrets.nix).generatedWG-Secondary-opts
+  );
 in
-  # This is pain in the ass. Someone needs to write a proper NetworkManager generator 😿
-  {
-    environment.etc = {
-      "NetworkManager/system-connections/${primary_wg.name}.nmconnection" = {
-        mode = "0600";
-        text = primary_wg.wgConfig;
-      };
-      "NetworkManager/system-connections/${secondary_wg.name}.nmconnection" = {
-        mode = "0600";
-        text = secondary_wg.wgConfig;
-      };
+# This is pain in the ass. Someone needs to write a proper NetworkManager generator 😿
+{
+  imports = [ ../helper-modules/wg-routing.nix ];
+
+  environment.etc = {
+    "NetworkManager/system-connections/${primary_wg.name}.nmconnection" = {
+      mode = "0600";
+      text = primary_wg.wgConfig;
     };
-    networking.networkmanager.dispatcherScripts = [ {
-      source = pkgs.writeText "wireguardRouteHelper" ''
-        #!/usr/bin/env ${pkgs.bash}/bin/bash
-        case "$CONNECTION_ID" in
-            *Wireguard*)
-                ;;
-            *)
-                exit
-                ;;
-        esac
+    "NetworkManager/system-connections/${secondary_wg.name}.nmconnection" = {
+      mode = "0600";
+      text = secondary_wg.wgConfig;
+    };
+  };
 
-        if [ "$NM_DISPATCHER_ACTION" = "up" ]; then
-            # Route unmarked packets through table 42 (wg)
-            ${pkgs.iproute2}/bin/ip -4 ru add prio 42 not fwmark 0x42 lookup 42
-            ${pkgs.iproute2}/bin/ip -6 ru add prio 42 not fwmark 0x42 lookup 42
-
-            # Validate DNSSEC only on the inno VPN links
-            case "$1" in
-                ${primary_wg.name}|${secondary_wg.name})
-                    ${pkgs.systemd}/bin/resolvectl dnssec "$1" allow-downgrade
-                    ;;
-            esac
-        fi
-
-
-        if [ "$NM_DISPATCHER_ACTION" = "down" ]; then
-            # Remove routing rule for table 42
-            ${pkgs.iproute2}/bin/ip -4 ru del prio 42
-            ${pkgs.iproute2}/bin/ip -6 ru del prio 42
-        fi
-      '';
-      type = "basic";
-    } ];
-  }
+  local.wireguardRouting.connections =
+    map
+      (wg: {
+        inherit (wg) name endpoint;
+        table = if wg.usePolicyRouting then wg.routeTableId else 0;
+        mark = if wg.usePolicyRouting then wg.fwmarkId else 0;
+        # ig.local is a DNSSEC island of trust, validated per-link only
+        dnssec = true;
+      })
+      [
+        primary_wg
+        secondary_wg
+      ];
+}
 #  vim: set ts=2 sw=2 tw=0 et :
