@@ -13,6 +13,7 @@
 let
   # Load only index.ts and not the package's *.test.ts files
   askUserQuestion = "${pkgs.pi-ext-ask-user-question}/index.ts";
+  bashConfirm = "${pkgs.pi-ext-bash-confirm}/bash-confirm.ts";
   piPackage = inputs.pi-nix.packages.${pkgs.stdenv.hostPlatform.system}.coding-agent-bun;
 in
 {
@@ -24,10 +25,36 @@ in
   programs.pi.coding-agent = {
     enable = true;
     package = piPackage;
-    extensions = [ askUserQuestion ];
+    extensions = [ askUserQuestion bashConfirm ];
     settings = {
       # merged, not replaced: pi keeps managing the rest of settings.json
       defaultProjectTrust = "ask";
+      bashConfirm = {
+        enabled = true;
+        safeCommands = [
+          "^ls"
+          "^cat"
+          "^pwd"
+          "^echo"
+          "^head"
+          "^tail"
+          "^grep"
+          "^rg"
+          "^git (status|log|diff|branch|show)$"
+          "^git (status|log|diff|branch|show) "
+        ];
+        blockedCommands = [
+          "rm -rf"
+          "sudo .* rm"
+          ":>.*"
+          "^dd "
+          ": wq!"
+          "mkfs"
+        ];
+        autoAccept = {
+          enabled = false;
+        };
+      };
     };
   };
 
@@ -38,5 +65,8 @@ in
   # Manifest read by the pijail() zsh wrapper to reflect the exact same
   # extension store paths into llm-jail-pi. Absolute /nix/store paths resolve
   # unchanged inside the guest (store shared read-only).
-  home.file.".config/llm-jail/pi-extensions".text = askUserQuestion + "\n";
+  home.file.".config/llm-jail/pi-extensions".text = ''
+    ${askUserQuestion}
+    ${bashConfirm}
+  '';
 }

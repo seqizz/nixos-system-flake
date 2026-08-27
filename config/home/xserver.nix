@@ -1,8 +1,34 @@
 {
   config,
   pkgs,
+  lib,
   ...
-}: {
+}:
+let
+  # Kvantum is an SVG-driven Qt style engine; unlike Fusion it gives rounded
+  # widgets and soft contrast without needing a KDE session.
+  kvantumTheme = "KvGnomeDark";
+
+  # "-dark" suffix selects the dark variant of the configured Kvantum theme.
+  # Home Manager exports this as QT_STYLE_OVERRIDE, so it must match the value
+  # written into the qt5ct/qt6ct configs or the env var wins over them.
+  kvantumStyle = "kvantum-dark";
+
+  qtctSettings = {
+    Appearance = {
+      style = kvantumStyle;
+      icon_theme = "Papirus-Dark";
+
+      # Palette comes from the Kvantum theme SVG, a custom_palette would win over it
+      custom_palette = false;
+    };
+    Fonts = {
+      general = ''"Noto Sans,10,-1,5,50,0,0,0,0,0"'';
+      fixed = ''"Noto Sans Mono,10,-1,5,50,0,0,0,0,0"'';
+    };
+  };
+in
+{
   home.keyboard.layout = "tr";
 
   systemd.user.services.loose = {
@@ -43,10 +69,10 @@
   systemd.user.services.touchegg-client = {
     Unit = {
       Description = "Touchegg client for touchscreen gestures";
-      After = ["graphical-session.target"];
+      After = [ "graphical-session.target" ];
     };
     Install = {
-      WantedBy = ["graphical-session.target"];
+      WantedBy = [ "graphical-session.target" ];
     };
     Service = {
       ExecStart = "${pkgs.touchegg}/bin/touchegg --client";
@@ -62,9 +88,9 @@
       size = 10;
     };
     gtk3.extraConfig = {
-      gtk-application-prefer-dark-theme = 0;
+      gtk-application-prefer-dark-theme = 1;
       gtk-button-images = 1;
-      gtk-icon-theme-name = "Papirus";
+      gtk-icon-theme-name = "Papirus-Dark";
       gtk-menu-images = 1;
       gtk-enable-event-sounds = 0;
       gtk-enable-input-feedback-sounds = 0;
@@ -77,8 +103,18 @@
 
   qt = {
     enable = true;
-    style.name = "Fusion";
+    # Sets QT_QPA_PLATFORMTHEME=qt5ct, which serves Qt6 too: the qt6ct plugin
+    # registers both the "qt5ct" and "qt6ct" platform theme keys
+    platformTheme.name = "qtct";
+    style.name = kvantumStyle;
+    qt5ctSettings = qtctSettings;
+    qt6ctSettings = qtctSettings;
   };
+
+  xdg.configFile."Kvantum/kvantum.kvconfig".text = ''
+    [General]
+    theme=${kvantumTheme}
+  '';
 
   xsession = {
     enable = true;
@@ -108,12 +144,19 @@
     size = 32;
   };
 
-  home.packages = [
+  home.packages = with pkgs; [
     (pkgs.writeScriptBin "get-ddc-current-brightness" ''
       sudo ddcutil --brief getvcp 10 | awk '{print $4}'
     '')
     (pkgs.writeScriptBin "get-ddc-max-brightness" ''
       sudo ddcutil --brief getvcp 10 | awk '{print $5}'
     '')
+    papirus-icon-theme
+    libsForQt5.qt5ct
+    qt6Packages.qt6ct
+    # Style plugin needed once per Qt major version, otherwise apps of that
+    # version silently fall back to Fusion
+    libsForQt5.qtstyleplugin-kvantum
+    kdePackages.qtstyleplugin-kvantum # also provides the kvantummanager GUI
   ];
 }

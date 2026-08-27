@@ -1,4 +1,9 @@
-{ pkgs, config, lib, ... }:
+{
+  pkgs,
+  config,
+  lib,
+  ...
+}:
 {
   # Packages not needed in servers
   environment.systemPackages = with pkgs; [
@@ -13,6 +18,7 @@
     lm_sensors
     mosh
     powertop
+    remmina
     rustup
     samba
     wirelesstools

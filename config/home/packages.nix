@@ -145,7 +145,6 @@ in
     onboard # on-screen keyboard
     openvox-lint
     pamixer # pulseaudio mixer
-    papirus-icon-theme
     pasystray
     pavucontrol
     pcmanfm-qt # A file-manager which fucking works
@@ -186,7 +185,6 @@ in
     # optional ones below, just as reminder
     # kde-cli-tools # required to open kde-gtk-config
     # kde-gtk-config # best GTK theme selector
-    # qt5ct # QT5 theme selector
     # sieve-editor-gui # Mail filter editor
   ];
 }

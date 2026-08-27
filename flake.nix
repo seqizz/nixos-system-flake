@@ -147,6 +147,12 @@
       flake = false;
     };
 
+    # Pi extensions
+    pi-bash-confirm-src = {
+      url = "github:mcollina/pi-bash-confirm";
+      flake = false;
+    };
+
   };
 
   outputs =
