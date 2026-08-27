@@ -109,11 +109,10 @@ in
         };
       };
 
-      # An addition to make my xidlehook wrapper work
+      # Some additions for convenience, e.g. if I stopped don't want restart on new generation switch
       xidlehook = lib.mkIf config.services.xidlehook.enable {
-        # sd-switch restarts changed units unconditionally, which starts the
-        # unit again after a deliberate manual stop. keep-old leaves untouched
         Unit."X-SwitchMethod" = "keep-old";
+        Unit.ConditionPathExists = "!%h/.local/state/xidlehook.disabled";
         Service.PrivateTmp = false;
       };
 
