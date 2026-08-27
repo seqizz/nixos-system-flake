@@ -4,11 +4,14 @@
   pkgs,
   osConfig,
   ...
-}: let
-  baseconfig = {allowUnfree = true;};
-  lock-helper = (import ./scripts.nix {pkgs = pkgs;}).lock-helper;
-  auto-rotate = (import ./scripts.nix {pkgs = pkgs;}).auto-rotate;
-  secrets = import ./secrets.nix {pkgs = pkgs;};
+}:
+let
+  baseconfig = {
+    allowUnfree = true;
+  };
+  lock-helper = (import ./scripts.nix { pkgs = pkgs; }).lock-helper;
+  auto-rotate = (import ./scripts.nix { pkgs = pkgs; }).auto-rotate;
+  secrets = import ./secrets.nix { pkgs = pkgs; };
   pinentryRofi = pkgs.writeShellApplication {
     name = "pinentry-rofi-with-env";
     text = ''
@@ -16,7 +19,8 @@
       "${pkgs.pinentry-rofi}/bin/pinentry-rofi" "$@"
     '';
   };
-in {
+in
+{
   services = {
     kdeconnect.enable = true;
     playerctld.enable = true;
@@ -33,7 +37,7 @@ in {
       enable = true;
       threshold = 15;
       timeout = 2;
-      extraOptions = ["ignore-scrolling"];
+      extraOptions = [ "ignore-scrolling" ];
     };
 
     # https://github.com/nix-community/home-manager/issues/3095
@@ -107,6 +111,9 @@ in {
 
       # An addition to make my xidlehook wrapper work
       xidlehook = lib.mkIf config.services.xidlehook.enable {
+        # sd-switch restarts changed units unconditionally, which starts the
+        # unit again after a deliberate manual stop. keep-old leaves untouched
+        Unit."X-SwitchMethod" = "keep-old";
         Service.PrivateTmp = false;
       };
 
@@ -130,4 +137,3 @@ in {
   };
 }
 #  vim: set ts=2 sw=2 tw=0 et :
-
