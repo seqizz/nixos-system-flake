@@ -33,6 +33,10 @@ colourscheme mytheme
 " Use vim in tmux for editor.
 set editorcmd wezterm start --class triedit nvim
 
+" Default C-i for editor clashes with italic shortcut. Move to C-S-i.
+unbind --mode=insert <C-i>
+bind --mode=insert <C-S-i> editor
+
 " Ctrl-F should use the browser's native 'find' functionality.
 unbind <C-f>
 
