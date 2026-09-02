@@ -213,6 +213,49 @@ in
     };
   };
 
+  # The ACPI wake alarm clock (AWAC, platform:ACPI000E:00) is armed as an S4
+  # wakeup source by firmware and randomly resumes the machine from suspend.
+  # acpi_mask_gpe=0x6E in kernelParams only muzzles the GPE storm, the wakeup
+  # source itself still has to be disabled via sysfs, and it comes back armed
+  # after a resume cycle, hence the sleep-target dependencies as well.
+  systemd.services.disable-awac-wakeup =
+    let
+      wakeupAttr = "/sys/devices/pci0000:00/ACPI000E:00/power/wakeup";
+      # These targets are ordered *after* systemd-suspend.service, so a unit
+      # that is both wantedBy and after them effectively runs on resume.
+      sleepTargets = [
+        "suspend.target"
+        "hibernate.target"
+        "hybrid-sleep.target"
+        "suspend-then-hibernate.target"
+      ];
+    in
+    {
+      description = "Disable AWAC ACPI wakeup source";
+      wantedBy = [ "multi-user.target" ] ++ sleepTargets;
+      after = sleepTargets;
+      # Firmware/kernel may not expose the device at all on other revisions,
+      # do not fail the boot over it.
+      unitConfig.ConditionPathIsWritable = wakeupAttr;
+      serviceConfig = {
+        Type = "oneshot";
+        RemainAfterExit = false;
+        ExecStart = "${pkgs.coreutils}/bin/tee ${wakeupAttr}";
+        StandardInput = "data";
+        StandardInputText = "disabled";
+        StandardOutput = "null";
+      };
+    };
+
+  # @Reference: other wakeup sources this box arms by default, in case AWAC is
+  # not the only culprit. Check /proc/acpi/wakeup for the current state.
+  #   XHCI (pci:0000:00:14.0) - USB controller, S0. Disabling it also kills
+  #   wake from USB keyboard/mouse, so only worth it for a docked setup.
+  #   TXHC (pci:0000:00:0d.0), TDM0/TDM1, TRP0-TRP3 - Thunderbolt controller
+  #   and its ports, all S4. Dock hotplug events can spuriously resume.
+  # Same recipe, just point the attr at the matching sysfs node, e.g.
+  #   /sys/devices/pci0000:00/0000:00:14.0/power/wakeup
+
   # Hack time!
   # boot.blacklistedKernelModules = ["iwlwifi" "iwlmvm"];
   #
