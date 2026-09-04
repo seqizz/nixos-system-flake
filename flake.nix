@@ -38,17 +38,17 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # llm-related packages, always pin
+    # llm-related packages
     llm-jail = {
-      url = "github:seqizz/llm-jail/304db2362ebbd1b2c5e792a8e5ec001a6cc7a0a3";
+      url = "github:seqizz/llm-jail";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     pi-nix = {
-      url = "github:lukasl-dev/pi.nix/65a0682322ca1c49a43c156534e4c1af4959cae1";
+      url = "github:lukasl-dev/pi.nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     rpiv-mono-src = {
-      url = "github:juicesharp/rpiv-mono/226ec6e18f94dbed334a76ff907e1759d768b4bb";
+      url = "github:juicesharp/rpiv-mono";
       flake = false;
     };
 
@@ -150,6 +150,10 @@
     # Pi extensions
     pi-bash-confirm-src = {
       url = "github:mcollina/pi-bash-confirm";
+      flake = false;
+    };
+    pi-web-access-src = {
+      url = "github:nicobailon/pi-web-access";
       flake = false;
     };
 

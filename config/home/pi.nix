@@ -14,6 +14,8 @@ let
   # Load only index.ts and not the package's *.test.ts files
   askUserQuestion = "${pkgs.pi-ext-ask-user-question}/index.ts";
   bashConfirm = "${pkgs.pi-ext-bash-confirm}/bash-confirm.ts";
+  webAccess = "${pkgs.pi-ext-web-access}/index.ts";
+  todo = "${pkgs.pi-ext-todo}/index.ts";
   piPackage = inputs.pi-nix.packages.${pkgs.stdenv.hostPlatform.system}.coding-agent-bun;
 in
 {
@@ -25,7 +27,7 @@ in
   programs.pi.coding-agent = {
     enable = true;
     package = piPackage;
-    extensions = [ askUserQuestion bashConfirm ];
+    extensions = [ askUserQuestion bashConfirm webAccess todo ];
     settings = {
       # merged, not replaced: pi keeps managing the rest of settings.json
       defaultProjectTrust = "ask";
@@ -68,5 +70,7 @@ in
   home.file.".config/llm-jail/pi-extensions".text = ''
     ${askUserQuestion}
     ${bashConfirm}
+    ${webAccess}
+    ${todo}
   '';
 }
