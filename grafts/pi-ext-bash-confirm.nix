@@ -1,8 +1,8 @@
 # Pi coding-agent extension: pi-bash-confirm - confirm bash commands before
 # execution with Telegram notification support. Vendored as a self-contained
-# store path so it runs both on the host AND inside llm-jail-pi without any
-# npm/network at runtime. The QEMU guest shares /nix/store read-only, so this
-# exact path resolves unchanged inside the VM.
+# store path so it runs both on the host AND inside llm-custody-pi without any
+# npm/network at runtime. The sandbox shares /nix/store read-only, so this
+# exact path resolves unchanged inside the jail.
 #
 # Extension has no runtime dependencies (only devDependencies and peerDependencies
 # satisfied by pi itself), so we only need the extension source files.

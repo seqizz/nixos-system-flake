@@ -1,7 +1,7 @@
 # Pi coding-agent extension: rpiv-ask-user-question, vendored as a
-# self-contained store path so it runs both on the host AND inside llm-jail-pi
-# without any npm/network at runtime. The QEMU guest shares /nix/store
-# read-only, so this exact path resolves unchanged inside the VM.
+# self-contained store path so it runs both on the host AND inside
+# llm-custody-pi without any npm/network at runtime. The sandbox shares
+# /nix/store read-only, so this exact path resolves unchanged inside the jail.
 #
 # Layout mirrors node_modules resolution walk-up:
 #   $out/index.ts                              extension entrypoint

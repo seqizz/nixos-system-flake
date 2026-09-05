@@ -2,8 +2,9 @@
 # module. We use pi.nix's bun build (coding-agent-bun) rather than its npm
 # build (the module default): the npm build gates on npmDepsHash, which goes
 # stale whenever upstream pi bumps a transitive dep, while the bun2nix path
-# has no such gate. grafts/llm-jail.nix overrides llm-jail's pi with the same
-# package, so `pi` on the host and `llm-jail-pi` in the VM are byte-identical.
+# has no such gate. grafts/llm-custody.nix overrides llm-custody's pi with the
+# same package, so `pi` on the host and `llm-custody-pi` in the jail are
+# byte-identical.
 {
   pkgs,
   inputs,
@@ -64,10 +65,10 @@ in
   home.file.".pi/agent/AGENTS.md".source =
     config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/syncfolder/dotfiles/CLAUDE.md";
 
-  # Manifest read by the pijail() zsh wrapper to reflect the exact same
-  # extension store paths into llm-jail-pi. Absolute /nix/store paths resolve
-  # unchanged inside the guest (store shared read-only).
-  home.file.".config/llm-jail/pi-extensions".text = ''
+  # Manifest read by launchers/pi.nix (llm-custody) to reflect the exact same
+  # extension store paths into llm-custody-pi. Absolute /nix/store paths
+  # resolve unchanged inside the sandbox (store bound read-only).
+  home.file.".config/llm-custody/pi-extensions".text = ''
     ${askUserQuestion}
     ${bashConfirm}
     ${webAccess}

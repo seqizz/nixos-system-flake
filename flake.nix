@@ -39,8 +39,8 @@
     };
 
     # llm-related packages
-    llm-jail = {
-      url = "github:seqizz/llm-jail";
+    llm-custody = {
+      url = "git+https://git.gurkan.in/gurkan/llm-custody.git";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     pi-nix = {

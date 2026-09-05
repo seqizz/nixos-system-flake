@@ -78,10 +78,7 @@ in
     pkgs.unstable.wezterm
     pkgs.unstable.discord
     claude-code
-    llm-jail.claude
-    llm-jail.opencode
-    llm-jail.shell
-    llm-jail.pi
+    llm-custody.pi
     pkgs.unstable.opencode
     thunderbird
 
