@@ -75,7 +75,7 @@ in
       openscPath = "${pkgs.opensc.outPath}";
     };
 
-    ".config/awesome/lain".source = inputs.lain-src;
+    ".local/awesome-lain".source = inputs.lain-src;
 
     ".gist".text = secrets.gistSecret;
 
