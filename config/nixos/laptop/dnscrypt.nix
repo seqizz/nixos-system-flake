@@ -114,8 +114,16 @@ in
         HOME_SSID="${secrets.homeSSID}"
         DISABLE_FILE="/run/dnscrypt-override.disabled"
 
+        # Commands with paths (for NM dispatcher context)
+        nmcli="${pkgs.networkmanager}/bin/nmcli"
+        resolvectl="${pkgs.systemd}/bin/resolvectl"
+        systemctl="${pkgs.systemd}/bin/systemctl"
+        logger="${pkgs.util-linux}/bin/logger"
+        kdig="${pkgs.knot-dns}/bin/kdig"
+        sleep="${pkgs.coreutils}/bin/sleep"
+
         log() {
-          ${pkgs.util-linux}/bin/logger -t dnscrypt-override "$*"
+          $logger -t dnscrypt-override "$*"
         }
 
         connection_id_for_iface() {
@@ -126,8 +134,8 @@ in
             return 0
           fi
 
-          ${pkgs.networkmanager}/bin/nmcli -g GENERAL.CONNECTION device show "$iface" 2>/dev/null \
-            | ${pkgs.coreutils}/bin/head -n1
+          $nmcli -g GENERAL.CONNECTION device show "$iface" 2>/dev/null \
+            | head -n1
         }
 
         is_physical_iface() {
@@ -136,14 +144,14 @@ in
 
           [[ -n "$iface" ]] || return 1
 
-          type="$(${pkgs.networkmanager}/bin/nmcli -g GENERAL.TYPE device show "$iface" 2>/dev/null \
-            | ${pkgs.coreutils}/bin/head -n1)"
+          type="$($nmcli -g GENERAL.TYPE device show "$iface" 2>/dev/null \
+            | head -n1)"
 
           [[ "$type" == "wifi" || "$type" == "ethernet" ]]
         }
 
         connected_physical_ifaces() {
-          ${pkgs.networkmanager}/bin/nmcli -t -f DEVICE,TYPE,STATE device status 2>/dev/null \
+          $nmcli -t -f DEVICE,TYPE,STATE device status 2>/dev/null \
             | while IFS=: read -r dev type state rest; do
                 [[ "$type" == "wifi" || "$type" == "ethernet" ]] || continue
                 [[ "$state" == connected* ]] || continue
@@ -154,7 +162,7 @@ in
         nm_connectivity_check() {
           local state
 
-          state="$(${pkgs.networkmanager}/bin/nmcli -t networking connectivity check 2>/dev/null)" \
+          state="$nmcli -t networking connectivity check 2>/dev/null)" \
             || state="unknown"
 
           [[ -n "$state" ]] || state="unknown"
@@ -174,7 +182,7 @@ in
           # and escapes ":" as "\:" in IPv6 addresses unless -e no is passed.
           # "resolvectl dns" rejects both forms ("Failed to parse DNS server
           # address"), so normalise to a plain whitespace-separated address list.
-          raw="$(${pkgs.networkmanager}/bin/nmcli -e no -g IP4.DNS,IP6.DNS device show "$iface" 2>/dev/null)"
+          raw="$($nmcli -e no -g IP4.DNS,IP6.DNS device show "$iface" 2>/dev/null)"
           raw="''${raw//|/ }"
 
           # Deliberate word splitting: $raw is a whitespace-separated address list.
@@ -186,7 +194,7 @@ in
             log "$reason: using NM/DHCP DNS on $iface: ''${filtered[*]}"
             # Log failures: a silent no-op here leaves the link on a stale
             # 127.0.0.1 override after dnscrypt-proxy has been stopped.
-            ${pkgs.systemd}/bin/resolvectl dns "$iface" "''${filtered[@]}" \
+            $resolvectl dns "$iface" "''${filtered[@]}" \
               || log "$reason: FAILED to set DNS on $iface: ''${filtered[*]}"
           else
             # No point clearing DNS here; if NM has no DNS, captive portal DNS cannot be restored.
@@ -196,24 +204,22 @@ in
 
         stop_dnscrypt_service() {
           local reason="$1"
-          ${pkgs.systemd}/bin/systemctl is-active --quiet dnscrypt-proxy.service || return 0
+          $systemctl is-active --quiet dnscrypt-proxy.service || return 0
           log "stopping dnscrypt-proxy: $reason"
-          ${pkgs.systemd}/bin/systemctl stop dnscrypt-proxy.service || true
+          $systemctl stop dnscrypt-proxy.service || true
         }
 
         dnscrypt_probe() {
-          # Query the proxy directly; bypass resolved cache + interface DNS.
-          ${pkgs.knot-dns}/bin/kdig +short +timeout=2 +retry=0 \
-            @127.0.0.1 example.com >/dev/null 2>&1
+          $kdig +short +timeout=2 +retry=0 @127.0.0.1 example.com >/dev/null 2>&1
         }
 
         start_dnscrypt_service() {
-          ${pkgs.systemd}/bin/systemctl start dnscrypt-proxy.service || return 1
+          $systemctl start dnscrypt-proxy.service || return 1
           # Wait for proxy to be ready to answer (up to ~6s).
           local i
           for i in 1 2 3 4 5 6; do
             dnscrypt_probe && return 0
-            ${pkgs.coreutils}/bin/sleep 1
+            $sleep 1
           done
           return 1
         }
@@ -223,7 +229,7 @@ in
 
           if start_dnscrypt_service; then
             log "connectivity=full: dnscrypt healthy, switching $iface to 127.0.0.1"
-            ${pkgs.systemd}/bin/resolvectl dns "$iface" 127.0.0.1 ::1
+            $resolvectl dns "$iface" 127.0.0.1 ::1
           else
             log "connectivity=full: dnscrypt unhealthy, falling back to DHCP DNS on $iface"
             stop_dnscrypt_service "probe failed after start"
@@ -273,7 +279,7 @@ in
           is_physical_iface "$iface" || return 0
 
           # Give NM time to push DHCP DNS to resolved/NM state first.
-          ${pkgs.coreutils}/bin/sleep 2
+          $sleep 2
 
           # For non-home networks, restore DHCP DNS before the connectivity check.
           # Otherwise a stale localhost override can break portal detection.

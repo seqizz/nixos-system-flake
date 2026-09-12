@@ -1,8 +1,9 @@
-{pkgs, ... }:
+{ pkgs, ... }:
 let
-  writeSubbedBin = (import ../nixos/helper-modules/writeSubbedBin.nix {
-    pkgs = pkgs;
-  }).writeSubbedBin;
+  writeSubbedBin =
+    (import ../nixos/helper-modules/writeSubbedBin.nix {
+      pkgs = pkgs;
+    }).writeSubbedBin;
 
   awk = pkgs.gawk;
   awesome = pkgs.awesome;
@@ -20,61 +21,141 @@ let
   xrandr = pkgs.xorg.xrandr;
   xclip = pkgs.xclip;
   xset = pkgs.xorg.xset;
+  networkmanager = pkgs.networkmanager;
+  systemd = pkgs.systemd;
+  util-linux = pkgs.util-linux;
+  knot-dns = pkgs.knot-dns;
 in
 {
-  auto-rotate = (writeSubbedBin {
-    name = "auto-rotate";
-    src = ./scripts/auto-rotate;
-    inherit bash grep sed xinput xrandr coreutils iiosensorproxy inotifytools awk;
-  });
-  workman-toggle = (writeSubbedBin {
-    name = "workman-toggle";
-    src = ./scripts/workman-toggle;
-    inherit bash;
-  });
-  bulb-toggle = (writeSubbedBin {
-    name = "bulb-toggle";
-    src = ./scripts/bulb-toggle;
-  });
-  update-song = (writeSubbedBin {
-    name = "update-song";
-    src = ./scripts/update-song;
-  });
-  vpn-toggle = (writeSubbedBin {
-    name = "vpn-toggle";
-    src = ./scripts/vpn-toggle;
-  });
-  psitool-script = (writeSubbedBin {
-    name = "psitool-script";
-    src = ./scripts/psitool-script;
-  });
-  git-browse-origin = (writeSubbedBin {
-    name = "git-browse-origin";
-    src = ./scripts/git-browse-origin;
-    inherit bash;
-  });
-  tarsnap-dotfiles = (writeSubbedBin {
-    name = "tarsnap-dotfiles";
-    src = ./scripts/tarsnap-dotfiles;
-  });
-  xinput-toggle = (writeSubbedBin {
-    name = "xinput-toggle";
-    src = ./scripts/xinput-toggle;
-    inherit bash;
-  });
-  lock-helper = (writeSubbedBin {
-    name = "lock-helper";
-    src = ./scripts/lock-helper;
-    inherit bash brightnessctl slock coreutils procps libnotify awesome xset;
-  });
-  rofi-subsuper = (writeSubbedBin {
-    name = "rofi-subsuper";
-    src = ./scripts/rofi-subsuper;
-    inherit bash sed xclip;
-  });
-  firefox-tempprofile = (writeSubbedBin {
-    name = "firefox-tempprofile";
-    src = ./scripts/firefox-tempprofile;
-    inherit bash coreutils;
-  });
+  auto-rotate = (
+    writeSubbedBin {
+      name = "auto-rotate";
+      src = ./scripts/auto-rotate;
+      inherit
+        bash
+        grep
+        sed
+        xinput
+        xrandr
+        coreutils
+        iiosensorproxy
+        inotifytools
+        awk
+        ;
+    }
+  );
+  workman-toggle = (
+    writeSubbedBin {
+      name = "workman-toggle";
+      src = ./scripts/workman-toggle;
+      inherit bash;
+    }
+  );
+  bulb-toggle = (
+    writeSubbedBin {
+      name = "bulb-toggle";
+      src = ./scripts/bulb-toggle;
+    }
+  );
+  update-song = (
+    writeSubbedBin {
+      name = "update-song";
+      src = ./scripts/update-song;
+    }
+  );
+  vpn-toggle = (
+    writeSubbedBin {
+      name = "vpn-toggle";
+      src = ./scripts/vpn-toggle;
+    }
+  );
+  psitool-script = (
+    writeSubbedBin {
+      name = "psitool-script";
+      src = ./scripts/psitool-script;
+    }
+  );
+  git-browse-origin = (
+    writeSubbedBin {
+      name = "git-browse-origin";
+      src = ./scripts/git-browse-origin;
+      inherit bash;
+    }
+  );
+  tarsnap-dotfiles = (
+    writeSubbedBin {
+      name = "tarsnap-dotfiles";
+      src = ./scripts/tarsnap-dotfiles;
+    }
+  );
+  xinput-toggle = (
+    writeSubbedBin {
+      name = "xinput-toggle";
+      src = ./scripts/xinput-toggle;
+      inherit bash;
+    }
+  );
+  lock-helper = (
+    writeSubbedBin {
+      name = "lock-helper";
+      src = ./scripts/lock-helper;
+      inherit
+        bash
+        brightnessctl
+        slock
+        coreutils
+        procps
+        libnotify
+        awesome
+        xset
+        ;
+    }
+  );
+  rofi-subsuper = (
+    writeSubbedBin {
+      name = "rofi-subsuper";
+      src = ./scripts/rofi-subsuper;
+      inherit bash sed xclip;
+    }
+  );
+  firefox-tempprofile = (
+    writeSubbedBin {
+      name = "firefox-tempprofile";
+      src = ./scripts/firefox-tempprofile;
+      inherit bash coreutils;
+    }
+  );
+  dnsmagic-pause = (
+    writeSubbedBin {
+      name = "dnsmagic-pause";
+      src = ./config_files/dnsmagic-pause;
+      inherit
+        bash
+        networkmanager
+        systemd
+        util-linux
+        knot-dns
+        ;
+    }
+  );
+  dnsmagic-resume = (
+    writeSubbedBin {
+      name = "dnsmagic-resume";
+      src = ./config_files/dnsmagic-resume;
+      inherit
+        bash
+        networkmanager
+        systemd
+        util-linux
+        knot-dns
+        ;
+    }
+  );
+  dnsmagic-check = (
+    writeSubbedBin {
+      name = "dnsmagic-check";
+      src = ./config_files/dnsmagic-check;
+      inherit bash networkmanager;
+    }
+  );
 }

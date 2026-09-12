@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+# dnsmagic-resume: re-enable dnscrypt-proxy and apply normal DNS policy
+# Usage: sudo dnsmagic-resume
+
+set -euo pipefail
+
+# Commands with paths (for systemd-resolved systemctl, etc.)
+nmcli="@networkmanager@/bin/nmcli"
+resolvectl="@systemd@/bin/resolvectl"
+systemctl="@systemd@/bin/systemctl"
+logger="@util-linux@/bin/logger"
+kdig="@knot-dns@/bin/kdig"
+
+DISABLE_FILE="/run/dnscrypt-override.disabled"
+
+# Remove the override file
+rm -f "$DISABLE_FILE"
+$logger -t dnsmagic-resume "removed $DISABLE_FILE"
+
+# Source the library and apply resume mode (with fresh connectivity check)
+source /etc/dnsmagic/dnsmagic-lib.sh
+apply_policy_all resume

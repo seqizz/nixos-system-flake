@@ -1,0 +1,33 @@
+#!/usr/bin/env bash
+# dnsmagic-check: run NM connectivity check and display result
+# Usage: dnsmagic-check
+
+set -euo pipefail
+
+nmcli="@networkmanager@/bin/nmcli"
+
+state="$($nmcli -t networking connectivity check 2>/dev/null)" || state="unknown"
+state="${state,,}"
+[[ -n "$state" ]] || state="unknown"
+
+echo "Connectivity: $state"
+
+case "$state" in
+  full)
+    echo "✓ Full connectivity - internet accessible"
+    ;;
+  portal)
+    echo "⚠ Captive portal detected - login required"
+    ;;
+  limited)
+    echo "⚠ Limited connectivity - partial internet access"
+    ;;
+  none)
+    echo "✗ No connectivity - network not reachable"
+    ;;
+  unknown)
+    echo "? Unknown connectivity state"
+    ;;
+esac
+
+exit 0

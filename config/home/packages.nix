@@ -137,6 +137,9 @@ in
     my_scripts.update-song
     my_scripts.vpn-toggle
     my_scripts.xinput-toggle
+    my_scripts.dnsmagic-pause
+    my_scripts.dnsmagic-resume
+    my_scripts.dnsmagic-check
     nfpm
     nomacs
     onboard # on-screen keyboard
