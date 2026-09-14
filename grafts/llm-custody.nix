@@ -15,4 +15,14 @@ in
   pi = pkgs.pi.override {
     pi-coding-agent = inputs.pi-nix.packages.${final.stdenv.hostPlatform.system}.coding-agent-bun;
   };
+
+  # Same reasoning for claude: llm-custody defaults it to llm-agents.nix's
+  # own claude-code build, which is a second copy of a tool this flake
+  # already installs from nixpkgs (config/home/packages.nix). Pointing the
+  # jail at that same package keeps host `claude` and jailed
+  # `llm-custody-claude` on one store path, so a version bump can't drift
+  # between the two and nothing extra gets built or fetched.
+  claude = pkgs.claude.override {
+    claude-code = final.claude-code;
+  };
 }

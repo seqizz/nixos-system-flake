@@ -17,6 +17,7 @@ let
   bashConfirm = "${pkgs.pi-ext-bash-confirm}/bash-confirm.ts";
   webAccess = "${pkgs.pi-ext-web-access}/index.ts";
   todo = "${pkgs.pi-ext-todo}/index.ts";
+  toolRepair = "${pkgs.pi-ext-tool-repair}/tool-repair.ts";
   piPackage = inputs.pi-nix.packages.${pkgs.stdenv.hostPlatform.system}.coding-agent-bun;
 in
 {
@@ -28,7 +29,13 @@ in
   programs.pi.coding-agent = {
     enable = true;
     package = piPackage;
-    extensions = [ askUserQuestion bashConfirm webAccess todo ];
+    extensions = [
+      askUserQuestion
+      bashConfirm
+      webAccess
+      todo
+      toolRepair
+    ];
     settings = {
       # merged, not replaced: pi keeps managing the rest of settings.json
       defaultProjectTrust = "ask";
@@ -73,5 +80,6 @@ in
     ${bashConfirm}
     ${webAccess}
     ${todo}
+    ${toolRepair}
   '';
 }

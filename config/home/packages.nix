@@ -79,6 +79,7 @@ in
     pkgs.unstable.discord
     claude-code
     llm-custody.pi
+    llm-custody.claude
     pkgs.unstable.opencode
     thunderbird
 

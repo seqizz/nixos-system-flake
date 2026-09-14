@@ -156,6 +156,10 @@
       url = "github:nicobailon/pi-web-access";
       flake = false;
     };
+    pi-tool-repair-src = {
+      url = "github:monotykamary/pi-tool-repair";
+      flake = false;
+    };
 
   };
 
