@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # dnsmagic-resume: re-enable dnscrypt-proxy and apply normal DNS policy
-# Usage: sudo dnsmagic-resume
+# Usage: dnsmagic-resume
 
 set -euo pipefail
 
@@ -10,6 +10,14 @@ resolvectl="@systemd@/bin/resolvectl"
 systemctl="@systemd@/bin/systemctl"
 logger="@util-linux@/bin/logger"
 kdig="@knot-dns@/bin/kdig"
+sudo="@sudo@/bin/sudo"
+
+# Removing /run override file needs root; re-exec via sudo when not already root.
+# EUID is a bash builtin, so this needs no external binaries.
+# sudo var must be bound above: running under `set -u` (set -euo pipefail).
+if (( EUID != 0 )); then
+  exec "$sudo" "$0" "$@"
+fi
 
 DISABLE_FILE="/run/dnscrypt-override.disabled"
 

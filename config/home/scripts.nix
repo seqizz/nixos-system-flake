@@ -25,6 +25,7 @@ let
   systemd = pkgs.systemd;
   util-linux = pkgs.util-linux;
   knot-dns = pkgs.knot-dns;
+  sudo = pkgs.sudo;
 in
 {
   auto-rotate = (
@@ -135,6 +136,7 @@ in
         systemd
         util-linux
         knot-dns
+        sudo
         ;
     }
   );
@@ -148,6 +150,7 @@ in
         systemd
         util-linux
         knot-dns
+        sudo
         ;
     }
   );

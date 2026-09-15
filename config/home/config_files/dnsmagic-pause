@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # dnsmagic-pause: disable dnscrypt-proxy and force DHCP DNS on all physical interfaces
-# Usage: sudo dnsmagic-pause
+# Usage: dnsmagic-pause
 
 set -euo pipefail
 
@@ -10,6 +10,14 @@ resolvectl="@systemd@/bin/resolvectl"
 systemctl="@systemd@/bin/systemctl"
 logger="@util-linux@/bin/logger"
 kdig="@knot-dns@/bin/kdig"
+sudo="@sudo@/bin/sudo"
+
+# Touching /run needs root; re-exec via sudo when not already root.
+# EUID is a bash builtin, so this needs no external binaries.
+# sudo var must be bound above: running under `set -u` (set -euo pipefail).
+if (( EUID != 0 )); then
+  exec "$sudo" "$0" "$@"
+fi
 
 DISABLE_FILE="/run/dnscrypt-override.disabled"
 
