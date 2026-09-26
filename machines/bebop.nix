@@ -71,6 +71,7 @@ in {
       # lower the udev log level to show only errors or worse
       "rd.udev.log_level=3"
       "intel_pstate=passive"
+      "i915.enable_psr=0"
     ];
   };
 

@@ -14,7 +14,6 @@
 let
   # Load only index.ts and not the package's *.test.ts files
   askUserQuestion = "${pkgs.pi-ext-ask-user-question}/index.ts";
-  bashConfirm = "${pkgs.pi-ext-bash-confirm}/bash-confirm.ts";
   webAccess = "${pkgs.pi-ext-web-access}/index.ts";
   todo = "${pkgs.pi-ext-todo}/index.ts";
   toolRepair = "${pkgs.pi-ext-tool-repair}/tool-repair.ts";
@@ -31,7 +30,6 @@ in
     package = piPackage;
     extensions = [
       askUserQuestion
-      bashConfirm
       webAccess
       todo
       toolRepair
@@ -39,32 +37,6 @@ in
     settings = {
       # merged, not replaced: pi keeps managing the rest of settings.json
       defaultProjectTrust = "ask";
-      bashConfirm = {
-        enabled = true;
-        safeCommands = [
-          "^ls"
-          "^cat"
-          "^pwd"
-          "^echo"
-          "^head"
-          "^tail"
-          "^grep"
-          "^rg"
-          "^git (status|log|diff|branch|show)$"
-          "^git (status|log|diff|branch|show) "
-        ];
-        blockedCommands = [
-          "rm -rf"
-          "sudo .* rm"
-          ":>.*"
-          "^dd "
-          ": wq!"
-          "mkfs"
-        ];
-        autoAccept = {
-          enabled = false;
-        };
-      };
     };
   };
 
@@ -77,7 +49,6 @@ in
   # resolve unchanged inside the sandbox (store bound read-only).
   home.file.".config/llm-custody/pi-extensions".text = ''
     ${askUserQuestion}
-    ${bashConfirm}
     ${webAccess}
     ${todo}
     ${toolRepair}

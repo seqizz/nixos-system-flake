@@ -148,10 +148,6 @@
     };
 
     # Pi extensions
-    pi-bash-confirm-src = {
-      url = "github:mcollina/pi-bash-confirm";
-      flake = false;
-    };
     pi-web-access-src = {
       url = "github:nicobailon/pi-web-access";
       flake = false;

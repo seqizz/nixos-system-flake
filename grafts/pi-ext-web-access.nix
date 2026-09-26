@@ -4,14 +4,20 @@
 # linkedom, unpdf, ...), so this one goes through buildNpmPackage instead of
 # a plain file copy.
 #
-# Upstream's package-lock.json includes a full resolved tree for the
-# @earendil-works/pi-* peerDependencies (marked "peer": true, pulled in only
-# for upstream's own local typecheck/test runs) whose nested entries are
-# missing "integrity", which crashes prefetch-npm-deps/fetchNpmDeps. Those
-# peers are satisfied by pi itself at runtime (same reasoning as the omitted
-# rpiv-i18n peer in pi-ext-ask-user-question.nix), so
-# pi-ext-web-access/package-lock.json is a copy of upstream's lockfile with
-# every "peer": true entry stripped before hashing/fetching.
+# Upstream's package-lock.json cannot be fed to prefetch-npm-deps as-is: the
+# @earendil-works/pi-* packages (devDependencies for upstream's own
+# typecheck/test runs, also declared as peerDependencies that pi itself
+# satisfies at runtime) carry nested lockfile entries without
+# "integrity", which crashes prefetch-npm-deps. So pi-ext-web-access/package.json
+# and pi-ext-web-access/package-lock.json are vendored pruned copies generated
+# by pi-ext-web-access/prune-lockfile.py (drops the @earendil-works/* names and
+# every entry only they need). Regenerate both whenever the pinned upstream
+# version changes, then update `version` and `npmDepsHash`:
+#
+#   python3 grafts/pi-ext-web-access/prune-lockfile.py <upstream-src> grafts/pi-ext-web-access
+#
+# fetchNpmDeps runs the same postPatch, so the npm cache is prefetched from the
+# pruned lockfile and stays consistent with what npmConfigHook validates.
 {
   final,
   inputs,
@@ -19,25 +25,37 @@
 }:
 let
   src = inputs.pi-web-access-src;
+  version = "0.31.0";
+  # Version drift between this pin and the vendored pair above is the failure
+  # mode this graft is most likely to hit again (e.g. after nix flake update):
+  # npm ci silently re-resolves the difference and dies with a confusing
+  # ENOTCACHED instead of naming the real problem. Warn loudly at eval instead.
+  lockVersion = (builtins.fromJSON (builtins.readFile ./pi-ext-web-access/package-lock.json)).packages."".version;
 in
-final.buildNpmPackage {
+final.lib.warnIf (lockVersion != version) ''
+  pi-ext-web-access: vendored package-lock.json is for ${lockVersion} but the graft pins ${version}.
+  Regenerate grafts/pi-ext-web-access/package.json and package-lock.json with prune-lockfile.py and update npmDepsHash.
+'' (final.buildNpmPackage {
   pname = "pi-ext-web-access";
-  version = "0.27.0";
+  inherit version;
   inherit src;
 
+  # The vendored package.json is required too, not just the lockfile: npm ci
+  # does not fail on manifest deps missing from the lockfile, it re-resolves
+  # them live (packument fetch, impossible against the fetch-once offline
+  # cache - ENOTCACHED). Both files must therefore agree on the dependency set.
   postPatch = ''
+    cp ${./pi-ext-web-access/package.json} package.json
     cp ${./pi-ext-web-access/package-lock.json} package-lock.json
   '';
-  npmDepsHash = "sha256-oaOKm4RZoxXdwMTAAqmJoQzf6JiVeaNnar4ZlJ3+WNU=";
 
-  # The pruned lockfile has no entries for the @earendil-works/pi-* peerDeps
-  # (satisfied by pi itself, see top comment). Without this, npm ci still
-  # tries to resolve+fetch them live to compute the peer set, which fails
-  # offline (npmConfigHook's cache is fetch-once, only-if-cached).
-  npmFlags = [
-    "--legacy-peer-deps"
-    "--omit=dev"
-  ];
+  # Rebuild once after regenerating the vendored files and paste the
+  # "got: sha256-..." value from the hash-mismatch error here.
+  npmDepsHash = "sha256-gXNPtxxjs+9g3S7e+0uJOtNNoiseT9C7kX8DuCg+7+E=";
+
+  # The pruned lockfile keeps upstream's devDependencies entries (typescript,
+  # esbuild) for manifest sync validation, but they must not land in $out.
+  npmFlags = [ "--omit=dev" ];
 
   dontNpmBuild = true;
 
@@ -47,4 +65,4 @@ final.buildNpmPackage {
     cp -R . $out/
     runHook postInstall
   '';
-}
+})
