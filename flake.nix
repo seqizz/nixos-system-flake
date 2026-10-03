@@ -193,25 +193,13 @@
             overlays = flakeModules.all;
             config.allowUnfree = true;
           };
-          graftsDir = ./grafts;
-          # Frozen grafts (<name>@<ref>.nix) are exposed under <name>, like normal ones.
-          targetName = n: builtins.head (lib.splitString "@" (lib.removeSuffix ".nix" n));
-          # Additions: graft files that don't take 'prev' (i.e. not overrides of existing pkgs)
-          additionNames = map targetName (
-            builtins.filter (
-              n:
-              lib.hasSuffix ".nix" n
-              && n != "vim-plugins.nix"
-              && !(builtins.functionArgs (import (graftsDir + "/${n}")) ? prev)
-            ) (builtins.attrNames (builtins.readDir graftsDir))
-          );
         in
         lib.filterAttrs (_: lib.isDerivation) (
           lib.listToAttrs (
-            map (n: {
-              name = n;
-              value = pkgs.${n} or null;
-            }) additionNames
+            map (g: {
+              name = g.name;
+              value = pkgs.${g.name} or null;
+            }) (builtins.filter (g: !g.isOverride) flakeModules.graftAdditions)
           )
         )
       );

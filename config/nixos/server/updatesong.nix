@@ -2,13 +2,14 @@
   config,
   pkgs,
   ...
-}: let
+}:
+let
   blog-song-updater = pkgs.buildGoModule {
     pname = "blog-song-updater";
     version = "0.1.0";
     vendorHash = null;
     dontUnpack = true;
-    src = pkgs.runCommand "blog-song-updater-src" {} ''
+    src = pkgs.runCommand "blog-song-updater-src" { } ''
       mkdir -p $out
       cat > $out/go.mod <<EOF
         module blog-song-updater
@@ -32,13 +33,17 @@
       CGO_ENABLED = "0";
     };
     # Remove version reference
-    ldflags = [];
+    ldflags = [ ];
   };
-in {
+in
+{
   systemd.services.blog-song-updater = {
     description = "Blog Current Song Updater";
-    after = ["network.target" "nginx.service"];
-    wantedBy = ["multi-user.target"];
+    after = [
+      "network.target"
+      "nginx.service"
+    ];
+    wantedBy = [ "multi-user.target" ];
 
     environment = {
       # Add some debug environment
@@ -51,10 +56,9 @@ in {
       Restart = "always";
       RestartSec = "10";
       User = "nginx";
-      ReadWritePaths = ["/shared/vhosts/gurkan.in/public"];
+      ReadWritePaths = [ "/shared/vhosts/gurkan.in/public" ];
       StandardOutput = "journal";
       StandardError = "journal";
     };
   };
 }
-

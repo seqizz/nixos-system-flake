@@ -15,7 +15,10 @@ rec {
       base = lib.removeSuffix ".nix" fileName;
       parts = lib.splitString "@" base;
       name = builtins.elemAt parts 0;
-      frozenRef = builtins.elemAt parts 1;
+      # Only index parts[1] when an '@' is present — elemAt would throw on a
+      # single-element list ("list index 1 out of range") even though the
+      # length-1 branch below never forces this binding.
+      frozenRef = if builtins.length parts > 1 then builtins.elemAt parts 1 else null;
     in
     if builtins.length parts == 1 then
       {
@@ -28,6 +31,21 @@ rec {
       throw "graft '${fileName}': both sides of '@' must be non-empty (<name>@<frozenRef>.nix)"
     else
       { inherit name frozenRef; };
+
+  # All grafts/*.nix files (except vim-plugins.nix) with resolved target name and
+  # an isOverride flag (graft function takes 'prev'). Shared by flake.nix's packages
+  # block, so the @-splitting and addition/override classification live in ONE place.
+  graftAdditions =
+    let
+      dir = ../grafts;
+      files = builtins.attrNames (builtins.readDir dir);
+      isGraft = n: lib.hasSuffix ".nix" n && n != "vim-plugins.nix";
+    in
+    map (f: {
+      name = (parseGraftName f).name;
+      file = f;
+      isOverride = builtins.functionArgs (import (dir + "/${f}")) ? prev;
+    }) (builtins.filter isGraft files);
 
   # Single overlay that auto-discovers all grafts/*.nix.
   # Each file receives { final, prev, inputs, helpers } and returns a derivation or path,
@@ -66,9 +84,9 @@ rec {
       # genAttrs values are lazy, so a frozen revision is only fetched/evaluated
       # when the graft using it is actually accessed (and shared between grafts
       # pinned to the same ref).
-      frozenUniverses = lib.genAttrs (
-        lib.unique (map (g: g.frozenRef) (builtins.filter (g: g.frozenRef != null) parsed))
-      ) (ref: multiverse.at ref);
+      frozenUniverses = lib.genAttrs (lib.unique (
+        map (g: g.frozenRef) (builtins.filter (g: g.frozenRef != null) parsed)
+      )) (ref: multiverse.at ref);
 
       # Deterministic conflict: refuse mpv.nix and mpv@2026-08-08.nix side by side.
       duplicates = builtins.filter (g: builtins.length g > 1) (
@@ -114,9 +132,7 @@ rec {
   nixpkgs-channels =
     final: _prev:
     let
-      channels = lib.filterAttrs (
-        n: _: lib.hasPrefix "nixpkgs-" n && n != "nixpkgs-multiverse"
-      ) inputs;
+      channels = lib.filterAttrs (n: _: lib.hasPrefix "nixpkgs-" n && n != "nixpkgs-multiverse") inputs;
     in
     lib.mapAttrs' (n: input: {
       name = lib.removePrefix "nixpkgs-" n;
