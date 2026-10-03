@@ -91,3 +91,6 @@ user_pref("signon.rememberSignons", false);      // "Ask to save logins and pass
 user_pref("signon.autofillForms", false);        // "Autofill logins and passwords"
 user_pref("signon.generation.enabled", false);   // Password generator
 user_pref("signon.management.page.breach-alerts.enabled", false); // Breach alerts
+
+// Some middle managers needed promotions,  so we have to disable this crap too
+user_pref("browser.nova.enabled", false);

@@ -45,11 +45,10 @@
   opacity: 0.5;
 }
 
-/* Make selected tab visible*/
+/* Make selected tab visible, might look wrong, but works */
 tab-item-substance.active tab-item-substance {
   height: 45px !important;
 }
-
 
 /* No favicon also */
 tab-item:not(.faviconized):not(.loading):is(.active) tab-favicon {
@@ -74,7 +73,7 @@ tab-item:not(.active):not(.faviconized) {
 */
 
 /* Pinned tabs aligned to left so hovering doesn't make them move */
-.tabs.pinned {
+#pinned-tabs-container .tabs {
   display: flex !important;
   justify-content: flex-end !important;
 }
@@ -84,14 +83,47 @@ tab-item.active tab-item-substance .background {
   background: #282828 !important;
 }
 
+/* Pinned/faviconized tabs sizing */
 tab-item:is(.faviconized) {
   min-height: 40px;
   min-width: 40px;
 }
 
-tab-item:is(.faviconized) tab-item-substance,
-tab-item:is(.faviconized) .background {
+/* Slightly rounded TST tabs */
+:root {
+  --my-tab-radius: 4px;
+}
+
+tab-item,
+tab-item-substance,
+tab-item-substance .background,
+tab-item .background {
+  border-radius: var(--my-tab-radius) !important;
+}
+tab-item:is(.faviconized),
+#pinned-tabs-container tab-item {
+  border-radius: var(--my-tab-radius) !important;
+  overflow: hidden !important;
+}
+
+/* Keep pinned/faviconized tabs transparent by default */
+tab-item:is(.faviconized):not(:hover):not(.active) tab-item-substance,
+tab-item:is(.faviconized):not(:hover):not(.active) .background,
+#pinned-tabs-container tab-item:not(:hover):not(.active) tab-item-substance,
+#pinned-tabs-container tab-item:not(:hover):not(.active) .background {
   background: transparent !important;
+}
+
+/* Restore hover effect for pinned/faviconized tabs */
+tab-item:is(.faviconized):hover tab-item-substance .background,
+#pinned-tabs-container tab-item:hover tab-item-substance .background {
+  background: #3c3836 !important;
+}
+
+/* Active pinned/faviconized tab */
+tab-item:is(.faviconized).active tab-item-substance .background,
+#pinned-tabs-container tab-item.active tab-item-substance .background {
+  background: #282828 !important;
 }
 
 
@@ -100,4 +132,11 @@ tab-item:is(.faviconized) .background {
 body,
 #background {
   background-color: #1d2021;
+}
+
+#pinned-tabs-container-resizer {
+  background: #282828 !important;
+  border-top: 1px solid #3c3836 !important;
+  border-bottom: 1px solid #00000055 !important;
+  box-shadow: none !important;
 }
