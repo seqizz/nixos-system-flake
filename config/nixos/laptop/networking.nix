@@ -11,6 +11,11 @@
           from = 1714;
           to = 1764;
         }
+        # Steam-link
+        {
+          from = 27031;
+          to = 27037;
+        }
       ];
 
       allowedUDPPortRanges = [
@@ -23,6 +28,11 @@
         {
           from = 24727;
           to = 24727;
+        }
+        # Steam-link
+        {
+          from = 27031;
+          to = 27037;
         }
       ];
       # Wireguard needs this:

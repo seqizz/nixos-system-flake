@@ -15,6 +15,8 @@
     logitech.wireless.enable = true;
     keyboard.qmk.enable = true;
     i2c.enable = true;
+    xone.enable = true;
+    xpadneo.enable = true;
     enableRedistributableFirmware = true;
 
     graphics = {
