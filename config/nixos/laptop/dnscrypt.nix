@@ -34,6 +34,13 @@
 #     -> normal policy resumes on later events
 #
 # Notes:
+# - The policy itself lives in config/home/config_files/dnsmagic-lib.sh, installed
+#   to /etc/dnsmagic by grafts/nixos/dnsmagic.nix. The dispatcher below and the
+#   dnsmagic-pause/-resume/-check wrappers are thin front-ends over it.
+# - Every resolver switch flushes resolved's cache. That cache is global rather
+#   than per-link, so without the flush a name only the home pi-hole knows stays
+#   NXDOMAIN for the full negative TTL after arriving home, and names blocked by
+#   gravity stay unblocked after leaving.
 # - NetworkManager connectivity checking must be enabled for this to work.
 # - Replace the connectivity URI with your own endpoint if you dislike
 #   using the GNOME one.
@@ -106,13 +113,20 @@ in
     };
   };
 
+  # The dispatcher is a thin wrapper: all policy lives in the shared library at
+  # /etc/dnsmagic (grafts/nixos/dnsmagic.nix), so the dnsmagic-pause/-resume
+  # wrappers and this script cannot drift apart.
+  environment.etc."dnsmagic/home-ssid" = {
+    text = secrets.homeSSID + "\n";
+    mode = "0400";
+  };
+
   networking.networkmanager.dispatcherScripts = [
     {
       source = pkgs.writeText "dnscrypt-override" ''
         #!/usr/bin/env ${pkgs.bash}/bin/bash
 
-        HOME_SSID="${secrets.homeSSID}"
-        DISABLE_FILE="/run/dnscrypt-override.disabled"
+        set -uo pipefail
 
         # Commands with paths (for NM dispatcher context)
         nmcli="${pkgs.networkmanager}/bin/nmcli"
@@ -122,172 +136,7 @@ in
         kdig="${pkgs.knot-dns}/bin/kdig"
         sleep="${pkgs.coreutils}/bin/sleep"
 
-        log() {
-          $logger -t dnscrypt-override "$*"
-        }
-
-        connection_id_for_iface() {
-          local iface="$1"
-
-          if [[ -n "''${CONNECTION_ID:-}" && "$iface" == "''${DEVICE_IP_IFACE:-$iface}" ]]; then
-            printf '%s\n' "''${CONNECTION_ID}"
-            return 0
-          fi
-
-          $nmcli -g GENERAL.CONNECTION device show "$iface" 2>/dev/null \
-            | head -n1
-        }
-
-        is_physical_iface() {
-          local iface="$1"
-          local type
-
-          [[ -n "$iface" ]] || return 1
-
-          type="$($nmcli -g GENERAL.TYPE device show "$iface" 2>/dev/null \
-            | head -n1)"
-
-          [[ "$type" == "wifi" || "$type" == "ethernet" ]]
-        }
-
-        connected_physical_ifaces() {
-          $nmcli -t -f DEVICE,TYPE,STATE device status 2>/dev/null \
-            | while IFS=: read -r dev type state rest; do
-                [[ "$type" == "wifi" || "$type" == "ethernet" ]] || continue
-                [[ "$state" == connected* ]] || continue
-                printf '%s\n' "$dev"
-              done
-        }
-
-        nm_connectivity_check() {
-          local state
-
-          state="$nmcli -t networking connectivity check 2>/dev/null)" \
-            || state="unknown"
-
-          [[ -n "$state" ]] || state="unknown"
-          printf '%s\n' "''${state,,}"
-        }
-
-        set_dns_from_nm() {
-          local iface="$1"
-          local reason="$2"
-          local raw
-          local dns
-          local filtered=()
-
-          # Ask NM for DHCP/static DNS known for this active device.
-          #
-          # nmcli -g packs a MULTI-VALUE field into a single line joined by " | ",
-          # and escapes ":" as "\:" in IPv6 addresses unless -e no is passed.
-          # "resolvectl dns" rejects both forms ("Failed to parse DNS server
-          # address"), so normalise to a plain whitespace-separated address list.
-          raw="$($nmcli -e no -g IP4.DNS,IP6.DNS device show "$iface" 2>/dev/null)"
-          raw="''${raw//|/ }"
-
-          # Deliberate word splitting: $raw is a whitespace-separated address list.
-          for dns in $raw; do
-            [[ -n "$dns" ]] && filtered+=("$dns")
-          done
-
-          if (( ''${#filtered[@]} > 0 )); then
-            log "$reason: using NM/DHCP DNS on $iface: ''${filtered[*]}"
-            # Log failures: a silent no-op here leaves the link on a stale
-            # 127.0.0.1 override after dnscrypt-proxy has been stopped.
-            $resolvectl dns "$iface" "''${filtered[@]}" \
-              || log "$reason: FAILED to set DNS on $iface: ''${filtered[*]}"
-          else
-            # No point clearing DNS here; if NM has no DNS, captive portal DNS cannot be restored.
-            log "$reason: no NM/DHCP DNS known for $iface; leaving current DNS unchanged"
-          fi
-        }
-
-        stop_dnscrypt_service() {
-          local reason="$1"
-          $systemctl is-active --quiet dnscrypt-proxy.service || return 0
-          log "stopping dnscrypt-proxy: $reason"
-          $systemctl stop dnscrypt-proxy.service || true
-        }
-
-        dnscrypt_probe() {
-          $kdig +short +timeout=2 +retry=0 @127.0.0.1 example.com >/dev/null 2>&1
-        }
-
-        start_dnscrypt_service() {
-          $systemctl start dnscrypt-proxy.service || return 1
-          # Wait for proxy to be ready to answer (up to ~6s).
-          local i
-          for i in 1 2 3 4 5 6; do
-            dnscrypt_probe && return 0
-            $sleep 1
-          done
-          return 1
-        }
-
-        set_dnscrypt() {
-          local iface="$1"
-
-          if start_dnscrypt_service; then
-            log "connectivity=full: dnscrypt healthy, switching $iface to 127.0.0.1"
-            $resolvectl dns "$iface" 127.0.0.1 ::1
-          else
-            log "connectivity=full: dnscrypt unhealthy, falling back to DHCP DNS on $iface"
-            stop_dnscrypt_service "probe failed after start"
-            set_dns_from_nm "$iface" "dnscrypt unhealthy"
-          fi
-        }
-
-        apply_policy_with_state() {
-          local iface="$1"
-          local state="$2"
-          local conn_id
-
-          is_physical_iface "$iface" || return 0
-
-          conn_id="$(connection_id_for_iface "$iface")"
-
-          if [[ "$conn_id" == "$HOME_SSID" ]]; then
-            stop_dnscrypt_service "home network"
-            set_dns_from_nm "$iface" "home network"
-            return 0
-          fi
-
-          if [[ -e "$DISABLE_FILE" ]]; then
-            stop_dnscrypt_service "manual override disabled"
-            set_dns_from_nm "$iface" "manual override disabled"
-            return 0
-          fi
-
-          case "$state" in
-            full)
-              set_dnscrypt "$iface"
-              ;;
-            *)
-              # portal|limited|none|unknown: captive portal etc. need DHCP DNS
-              # until auth is complete. Keep dnscrypt-proxy stopped so it does
-              # not burn retries against blocked upstream resolvers.
-              stop_dnscrypt_service "connectivity=$state"
-              set_dns_from_nm "$iface" "connectivity=$state"
-              ;;
-          esac
-        }
-
-        apply_policy_after_device_event() {
-          local iface="$1"
-          local state
-
-          is_physical_iface "$iface" || return 0
-
-          # Give NM time to push DHCP DNS to resolved/NM state first.
-          $sleep 2
-
-          # For non-home networks, restore DHCP DNS before the connectivity check.
-          # Otherwise a stale localhost override can break portal detection.
-          set_dns_from_nm "$iface" "pre-connectivity-check"
-
-          state="$(nm_connectivity_check)"
-          apply_policy_with_state "$iface" "$state"
-        }
+        source /etc/dnsmagic/dnsmagic-lib.sh
 
         case "$2" in
           up|dhcp4-change|dhcp6-change|reapply)
@@ -301,7 +150,7 @@ in
             state="''${state,,}"
 
             while IFS= read -r iface; do
-              apply_policy_with_state "$iface" "$state"
+              apply_policy "$iface" auto "$state"
             done < <(connected_physical_ifaces)
             ;;
 

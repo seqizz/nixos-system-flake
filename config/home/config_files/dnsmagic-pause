@@ -10,7 +10,10 @@ resolvectl="@systemd@/bin/resolvectl"
 systemctl="@systemd@/bin/systemctl"
 logger="@util-linux@/bin/logger"
 kdig="@knot-dns@/bin/kdig"
-sudo="@sudo@/bin/sudo"
+sleep="@coreutils@/bin/sleep"
+# Must be the NixOS security wrapper, not the plain store path: only the
+# wrapper is owned by root with the setuid bit, the store binary refuses to run.
+sudo="/run/wrappers/bin/sudo"
 
 # Touching /run needs root; re-exec via sudo when not already root.
 # EUID is a bash builtin, so this needs no external binaries.

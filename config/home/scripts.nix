@@ -25,7 +25,6 @@ let
   systemd = pkgs.systemd;
   util-linux = pkgs.util-linux;
   knot-dns = pkgs.knot-dns;
-  sudo = pkgs.sudo;
 in
 {
   auto-rotate = (
@@ -132,11 +131,11 @@ in
       src = ./config_files/dnsmagic-pause;
       inherit
         bash
+        coreutils
         networkmanager
         systemd
         util-linux
         knot-dns
-        sudo
         ;
     }
   );
@@ -146,11 +145,11 @@ in
       src = ./config_files/dnsmagic-resume;
       inherit
         bash
+        coreutils
         networkmanager
         systemd
         util-linux
         knot-dns
-        sudo
         ;
     }
   );
