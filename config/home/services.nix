@@ -116,7 +116,9 @@ in
         Service.PrivateTmp = false;
       };
 
-      auto-rotate = lib.mkIf (osConfig.networking.hostName == "bebop") {
+      # Gated on the actual prerequisite: monitor-sensor exits immediately on a
+      # box without an IIO accelerometer, and this unit restarts forever.
+      auto-rotate = lib.mkIf osConfig.hardware.sensor.iio.enable {
         Unit = {
           Description = "Automatic screen rotation helper";
           After = [

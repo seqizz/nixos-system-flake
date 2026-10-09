@@ -20,7 +20,6 @@ in
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
     ../config/nixos/laptop/common.nix
-    ../config/nixos/inno.nix
     ./splinter-disko.nix
   ];
 
@@ -28,6 +27,9 @@ in
   nixpkgs.hostPlatform = "x86_64-linux";
 
   networking.hostName = "splinter";
+
+  # Permanent work machine, so no specialisation here.
+  local.profiles.work.enable = true;
 
   system.stateVersion = "24.05";
 

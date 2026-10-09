@@ -12,12 +12,16 @@ in
     # update-flake-inputs = "nix flake update path://${myConfigPath}";
     # Instead, I am using lix which does it differently:
     update-flake-inputs = "nix flake update --flake ${myConfigPath}";
-    homeup-noupdate = "home-manager switch --flake path://${myConfigPath}#gurkan@${config.networking.hostName} --option eval-cache false";
-    home-news = "home-manager news --flake path:///${myConfigPath}#gurkan@${config.networking.hostName} --option eval-cache false";
+    # Home Manager is a NixOS module now (config/nixos/home-manager.nix), so
+    # userland is switched by nixos-rebuild together with the system. There is
+    # no `home-manager switch` target to call anymore.
     sysup-noupdate = "sudo nixos-rebuild switch --flake path://${myConfigPath}#${config.networking.hostName} --verbose --option eval-cache false";
-    sysup = "update-flake-inputs && sysup-noupdate && if [[ $(whoami) == 'gurkan' ]]; then echo; echo \"Switching home-manager after waiting 15 sec...\"; sleep 15; homeup-noupdate; fi";
-    homeup = "update-flake-inputs && homeup-noupdate";
-    sysclean = "if [[ $(whoami) == 'gurkan' ]]; then echo \"Clearing home-manager...\"; home-manager expire-generations \"-20 days\"; fi; sudo nix-env -p /nix/var/nix/profiles/system --delete-generations +3 && if [[ -L ~/.local/state/nix/profiles/profile ]]; then nix-env -p ~/.local/state/nix/profiles/profile --delete-generations 20d; fi && sudo nix-collect-garbage; sudo nix-store --optimize";
+    sysup = "update-flake-inputs && sysup-noupdate";
+    # The user profile is in nix3 format, so nix-env refuses to touch it ("profile
+    # is incompatible with 'nix-env'") and aborts the rest of the chain. The
+    # system profile is still written by nixos-rebuild via nix-env, so that half
+    # stays as it is.
+    sysclean = "if [[ $(whoami) == 'gurkan' ]]; then echo \"Clearing home-manager...\"; home-manager expire-generations \"-20 days\"; fi; sudo nix-env -p /nix/var/nix/profiles/system --delete-generations +3 && if [[ -L ~/.local/state/nix/profiles/profile ]]; then nix profile wipe-history --profile ~/.local/state/nix/profiles/profile --older-than 20d; fi && sudo nix-collect-garbage; sudo nix-store --optimize";
     syslist = "echo 'System:' ; sudo nix-env -p /nix/var/nix/profiles/system --list-generations; if [[ $(whoami) == 'gurkan' ]]; then echo; echo 'Home-manager:'; home-manager generations; fi";
   };
 }

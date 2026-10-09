@@ -771,11 +771,11 @@
         "nixpkgs": "nixpkgs_3"
       },
       "locked": {
-        "lastModified": 1791485647,
-        "narHash": "sha256-ibPdbm/9mxQHm4m2GwNumUBQvPDP9RAI6kHFZRWgeTI=",
+        "lastModified": 1791530278,
+        "narHash": "sha256-0nbkeA6BvmBDznlRoe4HgO/ZrI2Wa23yJGszoVIS0lE=",
         "owner": "nix-community",
         "repo": "NUR",
-        "rev": "b23f8419afaffd42f65d41dbadb215efdb05f369",
+        "rev": "08d338f2b7b49aed647d2648c7386e6272808966",
         "type": "github"
       },
       "original": {
@@ -963,11 +963,11 @@
     "serveradmin-src": {
       "flake": false,
       "locked": {
-        "lastModified": 1791450547,
-        "narHash": "sha256-sXapaMZWM1Zek8hZsd/B+70WQpJIX5ePwIuHMHkqrc0=",
+        "lastModified": 1791529427,
+        "narHash": "sha256-2hY+SSOL+bu7CfPbrVN7a5HjpYHwkUpHBaz1zaEhniE=",
         "owner": "innogames",
         "repo": "serveradmin",
-        "rev": "c51c8170fd4a00e3aa0ec99bcaebfda0c0bf4392",
+        "rev": "fa3026a7f3dd9322daaa854154568f63c1ac9edc",
         "type": "github"
       },
       "original": {

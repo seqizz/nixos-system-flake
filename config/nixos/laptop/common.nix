@@ -10,6 +10,11 @@ in
 {
   imports = [
     ../common.nix
+    ../home-manager.nix
+    # Imported on every laptop; the actual work bits are behind
+    # local.profiles.work.enable so a machine can flip them via a specialisation.
+    ../inno.nix
+    ../work-profile.nix
 
     ./dnscrypt.nix
     ./fonts.nix
@@ -122,6 +127,9 @@ in
 
   # Touchscreen multitouch gesture daemon
   services.touchegg.enable = true;
+
+  # Interactive machines get the LLM tooling; the server has no use for it.
+  local.profiles.llm.enable = true;
 
   boot = {
     # Powersave

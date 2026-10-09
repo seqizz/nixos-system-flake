@@ -22,7 +22,7 @@
 │   ├── ionicons.nix        # addition: example — final.callPackage { ... } {}
 │   ├── vim-plugins.nix     # set: merges vim plugins into pkgs
 │   ├── nixos/              # NixOS modules (auto-applied to all nixosConfigurations)
-│   ├── home/               # HM modules (auto-applied to all homeConfigurations)
+│   ├── home/               # HM modules (auto-applied via home-manager.sharedModules)
 │   ├── _dormant/           # Inactive packages — move to grafts/ to activate
 │   └── README.md
 ├── machines/               # Machine-specific settings
@@ -94,9 +94,15 @@ config/nixos/base.nix (all machines — overlays + nix settings)
 nixos-rebuild build --flake .#splinter
 nixos-rebuild switch --flake .#splinter
 
-# Build/switch home-manager
-home-manager build --flake .#gurkan@splinter
-home-manager switch --flake .#gurkan@splinter
+# home-manager is a NixOS module on the laptops, so the commands above switch
+# userland too. There are no homeConfigurations outputs.
+
+# A machine with local.profiles.work.asSpecialisation = true
+# keeps the work environment in a specialisation, check config/nixos/work-profile.nix.
+# Boot entry "<host> - work", or switch at runtime, no rebuild involved:
+work-check  # which profile is live right now
+work-on     # activate work, reload NM, restart resolved, reapply link DNS etc.
+work-off    # back to private, same cleanup
 
 # Build a graft package
 nix build .#ionicons

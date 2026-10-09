@@ -15,6 +15,7 @@ in
     ./gitconfig.nix
     ./neovim.nix
     ./packages.nix
+    ./profiles.nix
     ./scripts.nix
     ./sheldon.nix
     ./syncthing.nix

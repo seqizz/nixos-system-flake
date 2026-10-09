@@ -1,5 +1,6 @@
 {
   config,
+  lib,
   pkgs,
   ...
 }:
@@ -21,29 +22,31 @@ in
 {
   imports = [ ../helper-modules/wg-routing.nix ];
 
-  environment.etc = {
-    "NetworkManager/system-connections/${primary_wg.name}.nmconnection" = {
-      mode = "0600";
-      text = primary_wg.wgConfig;
+  config = lib.mkIf config.local.profiles.work.enable {
+    environment.etc = {
+      "NetworkManager/system-connections/${primary_wg.name}.nmconnection" = {
+        mode = "0600";
+        text = primary_wg.wgConfig;
+      };
+      "NetworkManager/system-connections/${secondary_wg.name}.nmconnection" = {
+        mode = "0600";
+        text = secondary_wg.wgConfig;
+      };
     };
-    "NetworkManager/system-connections/${secondary_wg.name}.nmconnection" = {
-      mode = "0600";
-      text = secondary_wg.wgConfig;
-    };
-  };
 
-  local.wireguardRouting.connections =
-    map
-      (wg: {
-        inherit (wg) name endpoint;
-        table = if wg.usePolicyRouting then wg.routeTableId else 0;
-        mark = if wg.usePolicyRouting then wg.fwmarkId else 0;
-        # ig.local is a DNSSEC island of trust, validated per-link only
-        dnssec = true;
-      })
-      [
-        primary_wg
-        secondary_wg
-      ];
+    local.wireguardRouting.connections =
+      map
+        (wg: {
+          inherit (wg) name endpoint;
+          table = if wg.usePolicyRouting then wg.routeTableId else 0;
+          mark = if wg.usePolicyRouting then wg.fwmarkId else 0;
+          # ig.local is a DNSSEC island of trust, validated per-link only
+          dnssec = true;
+        })
+        [
+          primary_wg
+          secondary_wg
+        ];
+  };
 }
 #  vim: set ts=2 sw=2 tw=0 et :

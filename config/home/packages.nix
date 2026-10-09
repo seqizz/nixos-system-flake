@@ -8,41 +8,35 @@ let
   my_scripts = import ./scripts.nix { pkgs = pkgs; };
 in
 {
-  nixpkgs = {
-    config = {
-      enable = true;
-      allowUnfree = true;
-      # Quick-overrides
-      packageOverrides = pkgs: {
-        nur-lunwill42 = import (pkgs.fetchFromGitHub {
-          owner = "lunkwill42";
-          repo = "nur-packages";
-          rev = "master";
-          sha256 = "sha256-IewS/HSyPvyBiE2oWgQeVgvwcgbai1qfjiacYizg3RA=";
-        }) { inherit pkgs; };
-      };
-      # packageOverrides = pkgs: rec {
-      # browserpass = oldversion.browserpass;  # Reference override: https://github.com/NixOS/nixpkgs/issues/236074
-      # @Reference patching apps
-      # krunner-pass = pkgs.krunner-pass.overrideAttrs (attrs: {
-      # patches = attrs.patches ++ [ ~/syncfolder/dotfiles/nixos/home/gurkan/.config/nixpkgs/modules/packages/pass-dbus.patch ];
-      # });
-      # weechat = (pkgs.weechat.override {
-      # configure = { availablePlugins, ... }: {
-      # plugins = with availablePlugins; [
-      # (python.withPackages (ps: with ps; [
-      # websocket_client
-      # dbus-python
-      # notify
-      # ]))
-      # ];
-      # };
-      # });
-      # };
-      # @Reference sometimes needed
-      # allowBroken = true;
-    };
-  };
+  # Home Manager runs with useGlobalPkgs, so it takes no nixpkgs options of its
+  # own — pkgs (overlays, allowUnfree) comes from the NixOS config. The block
+  # below used to live here; it is kept as reference because the mechanism is
+  # still valid, it just has to be written on the NixOS side (config/nixos/base.nix)
+  # or, preferably for a single package, as a file in grafts/.
+  #
+  # nixpkgs.config = {
+  #   # Quick-overrides
+  #   packageOverrides = pkgs: rec {
+  #   # browserpass = oldversion.browserpass;  # Reference override: https://github.com/NixOS/nixpkgs/issues/236074
+  #   # @Reference patching apps
+  #   # krunner-pass = pkgs.krunner-pass.overrideAttrs (attrs: {
+  #   # patches = attrs.patches ++ [ ~/syncfolder/dotfiles/nixos/home/gurkan/.config/nixpkgs/modules/packages/pass-dbus.patch ];
+  #   # });
+  #   # weechat = (pkgs.weechat.override {
+  #   # configure = { availablePlugins, ... }: {
+  #   # plugins = with availablePlugins; [
+  #   # (python.withPackages (ps: with ps; [
+  #   # websocket_client
+  #   # dbus-python
+  #   # notify
+  #   # ]))
+  #   # ];
+  #   # };
+  #   # });
+  #   # };
+  #   # @Reference sometimes needed
+  #   # allowBroken = true;
+  # };
 
   home.packages = with pkgs; [
     (gimp-with-plugins.override { plugins = with gimpPlugins; [ gmic ]; })
@@ -83,10 +77,15 @@ in
     pkgs.unstable.opencode
     thunderbird
 
-    # NUR packages @Reference, mostly does not work / maintained
-    # config.nur.repos.wolfangaukang.vdhcoapp
-    # config.nur.repos.mic92.reveal-md
-    # nur-lunwill42.puppet-lint
+    # NUR packages @Reference, mostly unmaintained / do not work. The overlay
+    # comes from nur.modules.nixos.default in flake.nix, and useGlobalPkgs means
+    # this pkgs is that same instance, so pkgs.nur.repos.<owner>.<pkg> resolves
+    # here. NUR owners also vanish from the index without warning; lunkwill42,
+    # which used to carry puppet-lint, is gone. No loss: puppet-lint comes from
+    # openvox-lint below, and adding nixpkgs' puppet-lint alongside it breaks
+    # the profile with a bin/puppet-lint buildEnv conflict.
+    # pkgs.nur.repos.wolfangaukang.vdhcoapp
+    # pkgs.nur.repos.mic92.reveal-md
 
     # Rest is sorted
     # Commented ones are either not needed or reminder for single-use
@@ -144,7 +143,7 @@ in
     nfpm
     nomacs
     onboard # on-screen keyboard
-    openvox-lint
+    openvox-lint # OpenVox fork of puppet-lint, still ships bin/puppet-lint
     pamixer # pulseaudio mixer
     pasystray
     pavucontrol

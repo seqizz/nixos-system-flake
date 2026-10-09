@@ -243,33 +243,10 @@
         };
       };
 
-      homeConfigurations = {
-        "gurkan@bebop" = home-manager.lib.homeManagerConfiguration {
-          pkgs = nixpkgs.legacyPackages.x86_64-linux; # Home-manager requires 'pkgs' instance
-          extraSpecialArgs = {
-            inherit inputs outputs;
-            # Home-manager is not passing this for some reason?
-            osConfig = self.nixosConfigurations.bebop.config;
-          };
-          modules = [
-            nur.modules.homeManager.default
-            ./config/home/home.nix
-          ]
-          ++ flakeModules.hm-modules; # grafts/home/ modules auto-applied
-        };
-        "gurkan@splinter" = home-manager.lib.homeManagerConfiguration {
-          pkgs = nixpkgs.legacyPackages.x86_64-linux; # Home-manager requires 'pkgs' instance
-          extraSpecialArgs = {
-            inherit inputs outputs;
-            # Home-manager is not passing this for some reason?
-            osConfig = self.nixosConfigurations.splinter.config;
-          };
-          modules = [
-            nur.modules.homeManager.default
-            ./config/home/home.nix
-          ]
-          ++ flakeModules.hm-modules;
-        };
-      };
+      # No homeConfigurations: Home Manager is wired in as a NixOS module from
+      # config/nixos/home-manager.nix (laptops only). A standalone profile pins
+      # osConfig to the parent nixosConfiguration, which makes options set in a
+      # specialisation invisible to userland. Build/switch userland with
+      # nixos-rebuild.
     };
 }

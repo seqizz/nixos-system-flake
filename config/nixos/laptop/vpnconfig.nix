@@ -1,8 +1,10 @@
 {
   config,
+  lib,
   pkgs,
   ...
-}: let
+}:
+let
   # payment-af-vpn = import ../helper-modules/nm-vpn-config.nix ({
   #     inherit pkgs;
   #   }
@@ -19,21 +21,30 @@
   #     inherit pkgs;
   #   }
   #   // (import ../secrets.nix).generatedVPN-AF-opts);
-  hardware-aw-vpn = import ../helper-modules/nm-vpn-config.nix ({
+  hardware-aw-vpn = import ../helper-modules/nm-vpn-config.nix (
+    {
       inherit pkgs;
     }
-    // (import ../secrets.nix).generatedVPN-AW-HW-opts);
-  hardware-af-vpn = import ../helper-modules/nm-vpn-config.nix ({
+    // (import ../secrets.nix).generatedVPN-AW-HW-opts
+  );
+  hardware-af-vpn = import ../helper-modules/nm-vpn-config.nix (
+    {
       inherit pkgs;
     }
-    // (import ../secrets.nix).generatedVPN-AF-HW-opts);
-  hardware-al-vpn = import ../helper-modules/nm-vpn-config.nix ({
+    // (import ../secrets.nix).generatedVPN-AF-HW-opts
+  );
+  hardware-al-vpn = import ../helper-modules/nm-vpn-config.nix (
+    {
       inherit pkgs;
     }
-    // (import ../secrets.nix).generatedVPN-AL-HW-opts);
+    // (import ../secrets.nix).generatedVPN-AL-HW-opts
+  );
 in
-  # This is pain in the ass. Someone needs to write a proper NetworkManager generator 😿
-  {
+# This is pain in the ass. Someone needs to write a proper NetworkManager generator 😿
+# The let bindings above stay lazy, so with the work profile off none of these
+# connection files (nor the secrets behind them) reach the store.
+{
+  config = lib.mkIf config.local.profiles.work.enable {
     environment.etc = {
       # "NetworkManager/system-connections/${payment-af-vpn.name}.nmconnection" = {
       #   mode = "0600";
@@ -64,6 +75,6 @@ in
         text = hardware-al-vpn.vpnConfig;
       };
     };
-  }
+  };
+}
 #  vim: set ts=2 sw=2 tw=0 et :
-

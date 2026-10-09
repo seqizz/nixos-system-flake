@@ -5,9 +5,11 @@
   modulesPath,
   lib,
   ...
-}: let
+}:
+let
   secrets = import ../config/nixos/secrets.nix;
-in {
+in
+{
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
     ../config/nixos/laptop/common.nix
@@ -26,6 +28,11 @@ in {
   };
 
   system.stateVersion = "20.09";
+
+  # Only temporarily a work laptop, so the work environment lives in a
+  # specialisation instead of the base system. See config/nixos/work-profile.nix
+  # for the switching commands.
+  local.profiles.work.asSpecialisation = true;
 
   boot = {
     loader = {
@@ -56,7 +63,10 @@ in {
         };
       };
     };
-    kernelModules = ["kvm-intel" "i915"];
+    kernelModules = [
+      "kvm-intel"
+      "i915"
+    ];
     # kernelPackages = pkgs.linuxPackages_6_18;
     kernelPackages = pkgs.linuxPackages_latest;
     kernelParams = [

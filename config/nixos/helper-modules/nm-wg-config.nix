@@ -17,9 +17,8 @@
   routeTable ? null,
   routeMetric ? null,
   # Whether this tunnel gets its own routing table + fwmark + ip rule.
-  # On by default: a peer often advertises the very prefix its own endpoint
-  # lives in (InnoGames announces its public ranges in allowed-ips), and with
-  # those routes in the main table the handshake packets would be routed into
+  # On by default: a peer often advertises the very prefix its own endpoint lives in,
+  # and with those routes in the main table the handshake packets would be routed into
   # the tunnel they are supposed to establish. Keeping them in a private table
   # plus marking the encapsulated packets breaks that loop.
   policyRouting ? true,
