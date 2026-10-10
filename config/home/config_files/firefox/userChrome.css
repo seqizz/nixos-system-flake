@@ -26,6 +26,7 @@
   min-width: var(--sidebar-normal-width) !important;
   max-width: var(--sidebar-normal-width) !important;
   -webkit-transition: all .2s ease-out .2s !important;
+  padding-inline-start: 0 !important;
 }
 
 #sidebar-box:hover {
