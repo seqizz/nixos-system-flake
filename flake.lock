@@ -550,11 +550,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1789419238,
-        "narHash": "sha256-1VTeE8SSpYM+jbgWFstEzoQT0ABxB1RUInn30bmeeQY=",
+        "lastModified": 1791570155,
+        "narHash": "sha256-m7XskpRP3WNujzPXol1GywksJZLiVtti76ZTt2oqI9I=",
         "ref": "refs/heads/master",
-        "rev": "894bc16cfb7ff654ba60f1f4b943733094a486f1",
-        "revCount": 12,
+        "rev": "90f900afa4ce1c0cbb8a6ada85d71e8461742e74",
+        "revCount": 13,
         "type": "git",
         "url": "https://git.gurkan.in/gurkan/llm-custody.git"
       },
@@ -771,11 +771,11 @@
         "nixpkgs": "nixpkgs_3"
       },
       "locked": {
-        "lastModified": 1791530278,
-        "narHash": "sha256-0nbkeA6BvmBDznlRoe4HgO/ZrI2Wa23yJGszoVIS0lE=",
+        "lastModified": 1791626148,
+        "narHash": "sha256-8g1quo3ZD0gwFTTDAtbR93v6wCclvxKYQqr+vIPAHPY=",
         "owner": "nix-community",
         "repo": "NUR",
-        "rev": "08d338f2b7b49aed647d2648c7386e6272808966",
+        "rev": "1627adfb195fae014c06754e683bd59fdce11369",
         "type": "github"
       },
       "original": {
@@ -796,11 +796,11 @@
         "nixpkgs-x86_64-darwin": "nixpkgs-x86_64-darwin"
       },
       "locked": {
-        "lastModified": 1791458664,
-        "narHash": "sha256-+G5kYoy/xb2pdX9rBOetC2eKp42cvfbppYdFZP9Lesg=",
+        "lastModified": 1791544903,
+        "narHash": "sha256-zcRVsd5b/nJ+jrntl3GNAeuNBYX+148PecZ+C1/vte8=",
         "owner": "lukasl-dev",
         "repo": "pi.nix",
-        "rev": "d37155f96c30d4727ed37f9563359a9a50d530db",
+        "rev": "c284ed1207c9c1cbe77753932de8ed03787591df",
         "type": "github"
       },
       "original": {
@@ -828,11 +828,11 @@
     "pi-web-access-src": {
       "flake": false,
       "locked": {
-        "lastModified": 1791469899,
-        "narHash": "sha256-tiFkqoZeaUdaEPeww/i9Ryc8kkOT3fQ5VmFhdGKmG0A=",
+        "lastModified": 1791570153,
+        "narHash": "sha256-FLRsw9G1lmr0fkAvJ/lM+gxNbjSF2C3WBaKJx0S65sE=",
         "owner": "nicobailon",
         "repo": "pi-web-access",
-        "rev": "1b6aec4be59eb96fe6f4c8ad1691f863633594fc",
+        "rev": "7e6e2386dc9a31d5e2a448172060dd1339c604f7",
         "type": "github"
       },
       "original": {
@@ -963,11 +963,11 @@
     "serveradmin-src": {
       "flake": false,
       "locked": {
-        "lastModified": 1791529427,
-        "narHash": "sha256-2hY+SSOL+bu7CfPbrVN7a5HjpYHwkUpHBaz1zaEhniE=",
+        "lastModified": 1791548062,
+        "narHash": "sha256-2gQ+12tGU3jhQeHzN6CU3Iekh5fhGUp4zEwLX3KfvjY=",
         "owner": "innogames",
         "repo": "serveradmin",
-        "rev": "fa3026a7f3dd9322daaa854154568f63c1ac9edc",
+        "rev": "d0f93089f85dd322e7ea78b79ad76dfd8bb6da4f",
         "type": "github"
       },
       "original": {
@@ -1030,11 +1030,11 @@
         "treefmt-nix": "treefmt-nix_4"
       },
       "locked": {
-        "lastModified": 1791231152,
-        "narHash": "sha256-mmSCg0mjalWfcuv4V5fpFH+/KEeefZjh9uzJ18luW+4=",
+        "lastModified": 1791574550,
+        "narHash": "sha256-MjKDY8oHQIZIMC+jN51v47KIZANdFE7dpaV4XzW3W+0=",
         "owner": "skyethepinkcat",
         "repo": "skyepkgs",
-        "rev": "e1633ceab904a83a690c17f46965be94e4970f0f",
+        "rev": "6f524c355781605a9f2ebd1987e3973de6b31b48",
         "type": "github"
       },
       "original": {

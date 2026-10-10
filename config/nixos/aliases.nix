@@ -17,11 +17,20 @@ in
     # no `home-manager switch` target to call anymore.
     sysup-noupdate = "sudo nixos-rebuild switch --flake path://${myConfigPath}#${config.networking.hostName} --verbose --option eval-cache false";
     sysup = "update-flake-inputs && sysup-noupdate";
-    # The user profile is in nix3 format, so nix-env refuses to touch it ("profile
-    # is incompatible with 'nix-env'") and aborts the rest of the chain. The
-    # system profile is still written by nixos-rebuild via nix-env, so that half
-    # stays as it is.
-    sysclean = "if [[ $(whoami) == 'gurkan' ]]; then echo \"Clearing home-manager...\"; home-manager expire-generations \"-20 days\"; fi; sudo nix-env -p /nix/var/nix/profiles/system --delete-generations +3 && if [[ -L ~/.local/state/nix/profiles/profile ]]; then nix profile wipe-history --profile ~/.local/state/nix/profiles/profile --older-than 20d; fi && sudo nix-collect-garbage; sudo nix-store --optimize";
-    syslist = "echo 'System:' ; sudo nix-env -p /nix/var/nix/profiles/system --list-generations; if [[ $(whoami) == 'gurkan' ]]; then echo; echo 'Home-manager:'; home-manager generations; fi";
+    # No `home-manager expire-generations` step: with HM as a NixOS module its
+    # packages live in /etc/profiles/per-user and belong to the system closure,
+    # so they are freed by the system generation deletion below.
+    #
+    # The ad-hoc user profile is in nix3 format, so nix-env refuses to touch it
+    # ("profile is incompatible with 'nix-env'") and aborts the rest of the
+    # chain; it needs `nix profile wipe-history` instead. The system profile is
+    # still written by nixos-rebuild via nix-env, so that half stays as it is.
+    sysclean = "sudo nix-env -p /nix/var/nix/profiles/system --delete-generations +3 && if [[ -L ~/.local/state/nix/profiles/profile ]]; then nix profile wipe-history --profile ~/.local/state/nix/profiles/profile --older-than 20d; fi && sudo nix-collect-garbage; sudo nix-store --optimize";
+    # Userland has no generation list of its own anymore: a HM generation is
+    # built into the system generation that activated it. What is still worth
+    # printing next to the system list is which specialisation is live (the
+    # other thing that changes userland, see work-profile.nix) and whatever was
+    # installed imperatively, since that shadows the declarative profile in PATH.
+    syslist = "echo 'System:'; sudo nix-env -p /nix/var/nix/profiles/system --list-generations; if [[ -e /etc/nixos-profile ]]; then echo; echo \"Profile: $(cat /etc/nixos-profile)\"; fi; if [[ -L ~/.local/state/nix/profiles/profile ]]; then echo; echo 'Ad-hoc (nix profile):'; nix profile list; fi";
   };
 }
