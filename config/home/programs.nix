@@ -2,13 +2,16 @@
   config,
   pkgs,
   ...
-}: let
-  secrets = import ./secrets.nix {pkgs = pkgs;};
+}:
+let
+  secrets = import ./secrets.nix { pkgs = pkgs; };
   gitConfigInnoPath = (pkgs.writeText "git-config-inno" secrets.gitConfigInno).outPath;
-in {
+in
+{
   programs = {
     git = {
-      # XXX: Duplicated settings, also defined in nixos/lib/packages.nix, fix later
+      # enable/lfs.enable/package also set in nixos/packages.nix programs.git — needed
+      # there too since rocksteady runs no Home Manager and still needs git installed
       enable = true;
       lfs.enable = true;
       package = pkgs.unstable.git;
@@ -47,7 +50,7 @@ in {
 
     browserpass = {
       enable = true;
-      browsers = ["firefox"];
+      browsers = [ "firefox" ];
     };
 
     # WhatsApp PWA
@@ -130,4 +133,3 @@ in {
   };
 }
 #  vim: set ts=2 sw=2 tw=0 et :
-
