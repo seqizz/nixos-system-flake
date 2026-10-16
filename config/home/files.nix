@@ -31,10 +31,7 @@ in
 
       "mimeapps.list".force = true;
 
-      "Yubico/u2f_keys" = {
-        text = secrets.yubicoU2FKeys;
-        mode = "0400";
-      };
+      "Yubico/u2f_keys".text = secrets.yubicoU2FKeys;
       "Yubico/YKPersonalization.conf".source = ./config_files/YKPersonalization.conf;
 
       "greenclip.toml".source = ./config_files/greenclip.toml;
@@ -64,10 +61,7 @@ in
       "direnv/direnvrc".source = ./config_files/direnvrc;
 
       "ghorg/conf.yaml".source = ./config_files/ghorg;
-      "ghorg/reclone.yaml" = {
-        text = secrets.ghorgReclone;
-        mode = "0400";
-      };
+      "ghorg/reclone.yaml".text = secrets.ghorgReclone;
     };
 
     # Placeholder for vim's undodir
@@ -83,22 +77,14 @@ in
 
     ".local/awesome-lain".source = inputs.lain-src;
 
-    ".gist" = {
-      text = secrets.gistSecret;
-      mode = "0400";
-    };
+    ".gist".text = secrets.gistSecret;
 
-    ".tarsnap.key" = {
-      text = secrets.tarsnapKey;
-      mode = "0400";
-    };
+    # TODO: This shit is world-readable
+    ".tarsnap.key".text = secrets.tarsnapKey;
 
     "devel".source = config.lib.file.mkOutOfStoreSymlink "/devel";
 
-    ".rustypaste/config.toml" = {
-      text = secrets.rustypasteSecret;
-      mode = "0400";
-    };
+    ".rustypaste/config.toml".text = secrets.rustypasteSecret;
 
     ".tarsnaprc".source = ./config_files/tarsnaprc;
 
@@ -107,10 +93,7 @@ in
     ".thunderbird/gurkan.default/chrome/userChrome.css".source =
       ./config_files/thunderbird/userChrome.css;
 
-    ".trc" = {
-      text = secrets.rubyTwitterSecret;
-      mode = "0400";
-    };
+    ".trc".text = secrets.rubyTwitterSecret;
 
     ".proxychains/proxychains.conf".source = ./config_files/proxychains.conf;
 

@@ -13,6 +13,17 @@ in
     systemPackages = with pkgs; [
       fd # Needed for telescope
       nodejs # Not all plugins are well-integrated with nixpkgs
+
+      # Language servers registered in coc-settings.json under "languageserver".
+      # These have no coc extension packaged, so coc spawns the binary directly
+      # and reports a startup error for any that is missing from PATH.
+      bash-language-server # sh/bash/zsh, picks up shellcheck from PATH
+      gopls # go
+      nil # nix
+      # Top-level attr, not rubyPackages_<ver>, so it follows whatever ruby
+      # nixpkgs defaults to. rubocop in packages.nix is kept top-level for the
+      # same reason, which also keeps the two on one shared ruby closure.
+      ruby-lsp # ruby
     ];
   };
 
@@ -61,7 +72,6 @@ in
           neogit # Git integration
           nui-nvim # UI component library for Neovim
           nvim-cursorline # highlight word under cursor everywhere
-          nvim-lspconfig # Native LSP configuration utility
           nvim-treesitter-context # Show code context while scrolling
           nvim-ts-context-commentstring # Better commenting for embedded languages
           plenary-nvim # Lua functions library used by many plugins
@@ -72,7 +82,6 @@ in
           terminus # terminal integration
           trailblazer-nvim # Better mark jumps Ctrl-S and Shift-Up/Down
           vim-fugitive # git helper
-          vim-gutentags # Automatic tags management
           vim-markdown # Enhanced Markdown syntax and features
           vim-nix # Nix language syntax and filetype support
           vim-oscyank # Copy to system clipboard using ANSI OSC52

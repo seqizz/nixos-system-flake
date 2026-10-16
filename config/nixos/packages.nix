@@ -3,7 +3,8 @@
   config,
   lib,
   ...
-}: {
+}:
+{
   programs = {
     nix-ld = {
       enable = true;
@@ -35,7 +36,11 @@
       };
       settings = {
         yazi.mgr = {
-          ratio = [1 4 3];
+          ratio = [
+            1
+            4
+            3
+          ];
           sort_by = "mtime";
           sort_sensitive = false;
           sort_reverse = false;
@@ -43,14 +48,17 @@
           show_hidden = false;
           show_symlink = true;
           scrolloff = 5;
-          mouse_events = ["click" "scroll"];
+          mouse_events = [
+            "click"
+            "scroll"
+          ];
         };
         theme.mgr = {
           tab_width = 20;
         };
         keymap.mgr.prepend_keymap = [
           {
-            on = ["<C-y>"];
+            on = [ "<C-y>" ];
             run = "plugin xclip-system-clipboard";
           }
         ];
@@ -60,8 +68,8 @@
   };
 
   environment.systemPackages = with pkgs; [
-    (python3.withPackages (ps:
-      with ps; [
+    (python3.withPackages (
+      ps: with ps; [
         black
         ipython
         isort
@@ -70,7 +78,8 @@
         poetry-core
         setuptools
         virtualenv
-      ]))
+      ]
+    ))
 
     # unstable is better for some packages
     pkgs.unstable.rustypaste-cli
@@ -82,7 +91,7 @@
     nixfmt
     fixjson
     pkgs.unstable.ruff
-    rubyPackages_3_3.rubocop
+    rubocop
     shellcheck
     stylua
     taplo # toml
