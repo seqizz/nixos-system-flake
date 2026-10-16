@@ -8,12 +8,12 @@
 }:
 let
   fucknvidia = config.boot.kernelPackages.nvidiaPackages.mkDriver {
-    version = "595.91.07";
-    sha256_64bit = "sha256-yiPIjdJLB6GRZE4eEc+3vN11NzBXSa9A+YABiwleYxM=";
-    sha256_aarch64 = lib.fakeHash;
-    openSha256 = "sha256-OB8Epd+qn/WywxsPiFpxEOAzlJqb6I1SyRoV3a8l71k=";
-    settingsSha256 = "sha256-QzT8Cw1luuZGP9DUje3HN/0ngiayqHURj+bqPsxlJ5w=";
+    version = "595.104.02";
+    sha256_64bit = "sha256-5CHCAuTHn1jDx/MWG75xRU67PYiTb4ggWg4yfNBMWco=";
+    openSha256 = "sha256-FWk5ra2yjz8VAxAA8GXrSoeBj/XC1BKvsKsBKR09joE=";
+    settingsSha256 = "sha256-4Kxro6tvI5aX4nu2RspgyBsW+Jq3/VYjSAS5UGdzTCU=";
     persistencedSha256 = lib.fakeHash;
+    sha256_aarch64 = lib.fakeHash;
   };
 in
 {
@@ -56,17 +56,17 @@ in
         "vmd"
         "xhci_pci"
       ];
-      kernelModules = [
+      # kernelModules = [
         # Normally no modules need to be specified, only putting the sound-related modules here
         # in a specific order to ensure they are loaded in the correct sequence. Noone gives a shit
         # about user experience, they just push their commits in..
-        "spi-cs42l43"
-        "pinctrl-cs42l43"
-        "snd-soc-cs42l43"
-        "snd-soc-cs42l43-sdw"
-        "cs42l43-sdw"
-        "snd-soc-sof-sdw"
-      ];
+        # "spi-cs42l43"
+        # "pinctrl-cs42l43"
+        # "snd-soc-cs42l43"
+        # "snd-soc-cs42l43-sdw"
+        # "cs42l43-sdw"
+        # "snd-soc-sof-sdw"
+      # ];
       luks.devices = {
         crypted = {
           preLVM = true;

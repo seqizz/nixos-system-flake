@@ -19,11 +19,15 @@
 }:
 let
   src = inputs.pi-tool-repair-src;
+  # Read from the pinned source rather than hardcoded: a hardcoded string goes
+  # stale silently on `nix flake update` and the store path then advertises a
+  # version the tree does not contain.
+  inherit (final.lib.importJSON "${src}/package.json") version;
   # Same pi.nix bun build the host and jail use (pinned pi-nix input), so the
   # vendored typebox matches the pi runtime and host/jail stay byte-identical.
   pi = inputs.pi-nix.packages.${final.stdenv.hostPlatform.system}.coding-agent-bun;
 in
-final.runCommandLocal "pi-ext-tool-repair-0.2.5" { } ''
+final.runCommandLocal "pi-ext-tool-repair-${version}" { } ''
   mkdir -p $out/node_modules
   cp ${src}/tool-repair.ts $out/
   cp ${src}/package.json $out/

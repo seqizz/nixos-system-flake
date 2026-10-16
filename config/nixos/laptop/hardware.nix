@@ -3,7 +3,8 @@
   lib,
   pkgs,
   ...
-}: {
+}:
+{
   imports = [
     ./helper-modules/usb-wakeup-disable.nix
     ./helper-modules/v4l2loopback.nix
@@ -12,7 +13,10 @@
   hardware = {
     bluetooth.enable = true;
     v4l2loopback.enable = true;
-    logitech.wireless.enable = true;
+    logitech.wireless = {
+      enable = true;
+      enableGraphical = false;
+    };
     keyboard.qmk.enable = true;
     i2c.enable = true;
     xone.enable = true;
