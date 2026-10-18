@@ -550,11 +550,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1792083701,
-        "narHash": "sha256-peR1XJsPwv8ZaNa+JGOZdR79f+4Hs8VQhxUjH4ZcXVQ=",
+        "lastModified": 1792161280,
+        "narHash": "sha256-t8hgeJ/tnazn2K1bx6A1rVH72gE4AmT0ma6fTLCkGXU=",
         "ref": "refs/heads/master",
-        "rev": "e074e997b0943217dda7c4bbba8502d15a184a46",
-        "revCount": 18,
+        "rev": "49e25f1e910257429fc38a95287f48988d3be214",
+        "revCount": 19,
         "type": "git",
         "url": "https://git.gurkan.in/gurkan/llm-custody.git"
       },
@@ -771,11 +771,11 @@
         "nixpkgs": "nixpkgs_3"
       },
       "locked": {
-        "lastModified": 1792151034,
-        "narHash": "sha256-U/XwfK8cgl2Y0kZrrNSnBY0rInNqJgsc/D0h8Lic7IM=",
+        "lastModified": 1792160973,
+        "narHash": "sha256-jAHFXi23DIGdkpa2PCfzd533lFDZHC9kYzOVonm3R2U=",
         "owner": "nix-community",
         "repo": "NUR",
-        "rev": "7b7547768088632577b77f6134b443947d1c4ddd",
+        "rev": "c9ac955ecb447ca9087bfad73af1bae7c180b273",
         "type": "github"
       },
       "original": {
@@ -1030,11 +1030,11 @@
         "treefmt-nix": "treefmt-nix_4"
       },
       "locked": {
-        "lastModified": 1791574550,
-        "narHash": "sha256-MjKDY8oHQIZIMC+jN51v47KIZANdFE7dpaV4XzW3W+0=",
+        "lastModified": 1792161109,
+        "narHash": "sha256-N0pT4MTe0qk1dZoKKbPPI7Y15Hbwg5AV3o972ppqv94=",
         "owner": "skyethepinkcat",
         "repo": "skyepkgs",
-        "rev": "6f524c355781605a9f2ebd1987e3973de6b31b48",
+        "rev": "6847d8677f166336517a44bf6e045f7c88b1a04c",
         "type": "github"
       },
       "original": {

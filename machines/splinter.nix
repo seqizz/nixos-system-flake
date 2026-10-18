@@ -56,17 +56,6 @@ in
         "vmd"
         "xhci_pci"
       ];
-      # kernelModules = [
-        # Normally no modules need to be specified, only putting the sound-related modules here
-        # in a specific order to ensure they are loaded in the correct sequence. Noone gives a shit
-        # about user experience, they just push their commits in..
-        # "spi-cs42l43"
-        # "pinctrl-cs42l43"
-        # "snd-soc-cs42l43"
-        # "snd-soc-cs42l43-sdw"
-        # "cs42l43-sdw"
-        # "snd-soc-sof-sdw"
-      # ];
       luks.devices = {
         crypted = {
           preLVM = true;
@@ -77,7 +66,7 @@ in
       };
     };
     extraModulePackages = [ fucknvidia ];
-    kernelPackages = pkgs.linuxPackages_latest;
+    kernelPackages = pkgs.linuxPackages_testing;
     # kernelPackages = pkgs.linuxPackages_6_18;
     # kernelPackages = pkgs.linuxPackages_latest.extend (self: super: {
     #   kernel = super.kernel.override {
@@ -272,3 +261,30 @@ in
   #   };
   # };
 }
+
+# @Reference: This should fix it
+# systemd.services.reprobe-internal-audio = {
+#   description = "Reprobe SOF audio if internal card failed";
+#
+#   wantedBy = [ "multi-user.target" ];
+#   after = [ "systemd-udev-settle.service" ];
+#
+#   serviceConfig.Type = "oneshot";
+#
+#   script = ''
+#     driver=/sys/bus/pci/drivers/sof-audio-pci-intel-mtl
+#     device=0000:00:1f.3
+#
+#     # Do nothing when the SOF card initialized successfully.
+#     if grep -qiE 'sof|soundwire' /proc/asound/cards 2>/dev/null; then
+#       exit 0
+#     fi
+#
+#     if [[ -e "$driver/$device" ]]; then
+#       echo "$device" > "$driver/unbind"
+#       sleep 2
+#       echo "$device" > "$driver/bind"
+#     fi
+#   '';
+# };
+
