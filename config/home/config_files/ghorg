@@ -4,3 +4,5 @@ GHORG_CONCURRENCY: 8
 GHORG_COLOR: enabled
 GHORG_RECLONE_VERBOSE: true
 GHORG_PRUNE: false
+# Wrapper from config/home/ghorg.nix, pulls the token out of glab's own config
+GHORG_TOKEN_CMD: ghorg-glab-token

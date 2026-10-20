@@ -2,6 +2,7 @@
 {
   imports = [
     ./files.nix
+    ./ghorg.nix
     ./inno.nix
     ./packages.nix
     ./pi.nix

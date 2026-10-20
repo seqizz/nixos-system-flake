@@ -59,9 +59,6 @@ in
       "yamlfix_config.toml".source = ./config_files/yamlfix_config.toml;
 
       "direnv/direnvrc".source = ./config_files/direnvrc;
-
-      "ghorg/conf.yaml".source = ./config_files/ghorg;
-      "ghorg/reclone.yaml".text = secrets.ghorgReclone;
     };
 
     # Placeholder for vim's undodir
