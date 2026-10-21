@@ -44,8 +44,6 @@ in
 
       "picom.conf".source = ./config_files/picom.conf;
 
-      "libinput-gestures.conf".source = ./config_files/libinput-gestures.conf;
-
       "touchegg/touchegg.conf".source = ./config_files/touchegg.conf;
 
       "pylintrc".source = ./config_files/pylintrc;
