@@ -85,6 +85,7 @@ in
           vim-markdown # Enhanced Markdown syntax and features
           vim-nix # Nix language syntax and filetype support
           vim-oscyank # Copy to system clipboard using ANSI OSC52
+          vim-puppet # Puppet ftplugin, still needed for indent
           vim-trailing-whitespace # Highlight and remove trailing whitespace
           vim-yaml # YAML syntax and filetype support
           vimwiki # Personal wiki and note-taking plugin
