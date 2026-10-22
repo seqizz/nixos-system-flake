@@ -672,11 +672,11 @@
     },
     "nixpkgs-multiverse": {
       "locked": {
-        "lastModified": 1792535154,
-        "narHash": "sha256-QgDLdz8f3MTBTRlw2uitW4FaqkF3Unwkh2LqdF4Fvog=",
+        "lastModified": 1792633408,
+        "narHash": "sha256-KHOaJXPqUvHqKDyJBmlRcdFAuBWA/1s+XvAb/0p799A=",
         "owner": "fzakaria",
         "repo": "nixpkgs-multiverse",
-        "rev": "87a1fa4d6fc08f86c39839ed7944e045f80e04f9",
+        "rev": "8d6a14c6a6b35c8f9bba82239b32a7d82942bb31",
         "type": "github"
       },
       "original": {
@@ -716,11 +716,11 @@
     },
     "nixpkgs_2": {
       "locked": {
-        "lastModified": 1792503283,
-        "narHash": "sha256-OtQ9jaQ9aXZDm61TqykPLZdXJa2NMykYG3d0tbT683U=",
-        "rev": "cd4ea8d57de16f4810bc5f14207bac45fbf19f67",
+        "lastModified": 1792615934,
+        "narHash": "sha256-q1ku4ygV7tdmv5Q9QYwhVDsNMZRJcRYjVczoX5+XWBo=",
+        "rev": "da6dc0e7b26060f2f71ce3ef7088fb56ee44fa36",
         "type": "tarball",
-        "url": "https://releases.nixos.org/nixos/26.05/nixos-26.05.12297.cd4ea8d57de1/nixexprs.tar.zst?lastModified=1792503283&rev=cd4ea8d57de16f4810bc5f14207bac45fbf19f67"
+        "url": "https://releases.nixos.org/nixos/26.05/nixos-26.05.12400.da6dc0e7b260/nixexprs.tar.zst?lastModified=1792615934&rev=da6dc0e7b26060f2f71ce3ef7088fb56ee44fa36"
       },
       "original": {
         "type": "tarball",
@@ -771,11 +771,11 @@
         "nixpkgs": "nixpkgs_3"
       },
       "locked": {
-        "lastModified": 1792614980,
-        "narHash": "sha256-gMJLp535T8sfIl3oSW/Fq+JShE0v7W15oYJtcmyPYfo=",
+        "lastModified": 1792652147,
+        "narHash": "sha256-qUVPwsp4ZrZV6oTQA6L2BfSTeaM6fpxpLawNRHe/Iss=",
         "owner": "nix-community",
         "repo": "NUR",
-        "rev": "01b6c93a8873683ea78ea75dba71904659ed162e",
+        "rev": "7bafd580ba5926be0936ab483096dffa31a7654a",
         "type": "github"
       },
       "original": {
@@ -963,11 +963,11 @@
     "serveradmin-src": {
       "flake": false,
       "locked": {
-        "lastModified": 1792412831,
-        "narHash": "sha256-T9BklF8/BnqF2gXz2iytOgxDKnjEpfwOSYQQsLssn7E=",
+        "lastModified": 1792646687,
+        "narHash": "sha256-YCin673fGPzJaS2pJcPAbF777vtUF9wBFizzF9GXLIo=",
         "owner": "innogames",
         "repo": "serveradmin",
-        "rev": "460be501872fa7f7b31de25f019d261811248d48",
+        "rev": "283c4af9c3a6b6471521763952f49f83fc53b591",
         "type": "github"
       },
       "original": {
