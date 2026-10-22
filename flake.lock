@@ -550,11 +550,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1792615980,
-        "narHash": "sha256-njHMlTHXg0p91Lajhus2reow4OJ7WsO8wItSz+JcFTU=",
+        "lastModified": 1792664118,
+        "narHash": "sha256-9qBRnUW8Fsgd/bGZCf8fxOaZU869PLgwiDvnXNM58Qg=",
         "ref": "refs/heads/master",
-        "rev": "0bd4e92ca2c73ff77d8dc1bb557c83a2f5e577c8",
-        "revCount": 20,
+        "rev": "d7ddeaa382ddf8f62f33d5a580682c2e5644a5c4",
+        "revCount": 22,
         "type": "git",
         "url": "https://git.gurkan.in/gurkan/llm-custody.git"
       },
@@ -672,11 +672,11 @@
     },
     "nixpkgs-multiverse": {
       "locked": {
-        "lastModified": 1792633408,
-        "narHash": "sha256-KHOaJXPqUvHqKDyJBmlRcdFAuBWA/1s+XvAb/0p799A=",
+        "lastModified": 1792653064,
+        "narHash": "sha256-OXCzUjYL2I6x8g9Uzi4M+1pJ6ARrQl04HjxjTIgQBI8=",
         "owner": "fzakaria",
         "repo": "nixpkgs-multiverse",
-        "rev": "8d6a14c6a6b35c8f9bba82239b32a7d82942bb31",
+        "rev": "a9a5469d9effb0776e2669dd2eefa6cf9fd1706a",
         "type": "github"
       },
       "original": {
@@ -771,11 +771,11 @@
         "nixpkgs": "nixpkgs_3"
       },
       "locked": {
-        "lastModified": 1792652147,
-        "narHash": "sha256-qUVPwsp4ZrZV6oTQA6L2BfSTeaM6fpxpLawNRHe/Iss=",
+        "lastModified": 1792663580,
+        "narHash": "sha256-Uf6sGJk/6BXb2GGWQmpjMtY522dPkmIFLKkaasf9LSo=",
         "owner": "nix-community",
         "repo": "NUR",
-        "rev": "7bafd580ba5926be0936ab483096dffa31a7654a",
+        "rev": "08d1b3ca5904e3f5f48df8914a871ef9c54c6ed2",
         "type": "github"
       },
       "original": {
@@ -963,11 +963,11 @@
     "serveradmin-src": {
       "flake": false,
       "locked": {
-        "lastModified": 1792646687,
-        "narHash": "sha256-YCin673fGPzJaS2pJcPAbF777vtUF9wBFizzF9GXLIo=",
+        "lastModified": 1792660945,
+        "narHash": "sha256-JeKD8wZTL1PfQcLzow6Giw9m+PesjEreIhvTLaodzlk=",
         "owner": "innogames",
         "repo": "serveradmin",
-        "rev": "283c4af9c3a6b6471521763952f49f83fc53b591",
+        "rev": "24f68014402171c9be366354802e585234c36580",
         "type": "github"
       },
       "original": {

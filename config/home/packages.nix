@@ -74,6 +74,7 @@ in
     claude-code
     llm-custody.pi
     llm-custody.claude
+    llm-custody.toolbox
     pkgs.unstable.opencode
     thunderbird
 
