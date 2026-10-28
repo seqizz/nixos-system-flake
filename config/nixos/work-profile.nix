@@ -47,6 +47,15 @@ let
       | ${pkgs.gawk}/bin/awk -F: '$3 == "connected" && ($2 == "wifi" || $2 == "ethernet") { print $1 }'); do
       sudo ${nmcli} device reapply "$dev" || true
     done
+
+    # awesome tints its wibar and client borders by profile, read from
+    # /etc/nixos-profile at startup. /etc/nixos-profile is a symlink that
+    # setup-etc swaps out, so inotify on the path is unreliable — poke the
+    # running instance instead. No session bus (TTY, ssh) means no awesome to
+    # poke, and its own 5-minute fallback timer covers a missed poke anyway.
+    if [ -n "''${DBUS_SESSION_BUS_ADDRESS:-}" ]; then
+      ${pkgs.awesome}/bin/awesome-client 'nixos_profile.refresh()' >/dev/null 2>&1 || true
+    fi
   '';
 
   currentProfile = ''"$(cat /etc/nixos-profile 2>/dev/null || echo unknown)"'';

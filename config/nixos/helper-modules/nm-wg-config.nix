@@ -31,6 +31,14 @@ let
   hexCharToInt = c: lib.stringLength (lib.head (lib.splitString c hexDigits));
   hexToInt = s: lib.foldl' (acc: c: acc * 16 + hexCharToInt c) 0 (lib.stringToCharacters s);
 
+  # NetworkManager wants the fwmark of a routing rule in hex notation.
+  intToHex =
+    n:
+    let
+      go = x: if x == 0 then "" else go (x / 16) + builtins.substring (lib.mod x 16) 1 hexDigits;
+    in
+    if n == 0 then "0" else go n;
+
   # Overrides from secrets.nix may be ints, "42" or "0x42".
   toIntFlexible =
     v:
@@ -58,6 +66,19 @@ let
   markId = if fwmark != null then toIntFlexible fwmark else 66; # 0x42
 
   usePolicyRouting = policyRouting;
+
+  # The routes of a policy-routed tunnel live in a private table, so without a
+  # rule pointing at that table nothing ever reaches the tunnel. Letting
+  # NetworkManager install the rule ties its lifetime to the connection itself
+  # instead of to a dispatcher script, which NM kills after its timeout and
+  # which does not run at all when the dispatcher service is down.
+  routingRule =
+    family:
+    lib.optionalString usePolicyRouting (
+      "routing-rule1=priority ${toString tableId} not fwmark 0x${intToHex markId}"
+      + " from ${if family == "ipv6" then "::/0" else "0.0.0.0/0"}"
+      + " table ${toString tableId}"
+    );
 
   # Get a uniq id for each given network, needed by networkmanager
   uuid =
@@ -94,6 +115,7 @@ in
     ${if dnsSearchAddress != null then "dns-search=${dnsSearchAddress}" else ""}
     method=manual
     ${if usePolicyRouting then "route-table=${toString tableId}" else ""}
+    ${routingRule "ipv4"}
     ${if routeMetric != null then "route-metric=${routeMetric}" else ""}
     ${if v4dnsAddress != null then "dns=${v4dnsAddress}" else ""}
 
@@ -107,6 +129,7 @@ in
           ${if dnsSearchAddress != null then "dns-search=${dnsSearchAddress}" else ""}
           method=manual
           ${if usePolicyRouting then "route-table=${toString tableId}" else ""}
+          ${routingRule "ipv6"}
           ${if routeMetric != null then "route-metric=${routeMetric}" else ""}
         ''
       else
