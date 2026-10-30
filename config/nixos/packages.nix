@@ -90,6 +90,7 @@
     jsbeautifier
     nixfmt
     fixjson
+    prettier # markdown, pads GFM table cells to column width
     pkgs.unstable.ruff
     rubocop
     shellcheck

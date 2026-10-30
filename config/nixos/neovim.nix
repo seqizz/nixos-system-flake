@@ -75,7 +75,11 @@ in
           nvim-treesitter-context # Show code context while scrolling
           nvim-ts-context-commentstring # Better commenting for embedded languages
           plenary-nvim # Lua functions library used by many plugins
+          render-markdown-nvim # In-buffer markdown rendering
           splitjoin-vim # Better split/join with gS/gJ
+          # vim-markdown's :TableFormat calls :Tabularize but does not declare
+          # tabular as a dependency, so it has to be pulled in explicitly.
+          tabular # Align text on a delimiter
           telescope-file-browser-nvim # File browser extension for telescope
           telescope-nvim # Highly extendable fuzzy finder
           telescope-zoxide # Zoxide integration for telescope
