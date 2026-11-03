@@ -1,5 +1,6 @@
 {
   config,
+  lib,
   pkgs,
   ...
 }: let
@@ -47,6 +48,10 @@ in {
     etc = {
       # Not sure why I am doing this
       "nginx/.updateSongSecret".text = secrets.updateSongSecret;
+      # Autoindex XSLT for the browsable media dirs. Lives under /etc because
+      # the vhosts come out of secrets.nix, which is a plain attrset with no
+      # access to pkgs and therefore cannot reference a store path.
+      "nginx/gallery-index.xslt".source = ./gallery-index.xslt;
       # Later
       # "fail2ban/filter.d/nginx-probing.conf".text = ''
       # [Definition]
@@ -55,6 +60,25 @@ in {
       # '';
     };
   };
+
+  # The browsable media dirs are written by syncthing and read by nginx. Setgid
+  # makes everything syncthing drops in there land in the nginx group rather
+  # than inheriting syncthing's, so nginx keeps group read without the tree
+  # having to be world readable.
+  #
+  # tmpfiles rather than an activation script: activation only runs on
+  # nixos-rebuild switch, so a plain reboot would never reapply it.
+  #
+  # The paths live in secrets.nix (`galleryDirs`, a list of absolute paths) so
+  # the layout of the sync tree stays out of the public repo.
+  systemd.tmpfiles.settings."10-nginx-gallery" = lib.genAttrs secrets.galleryDirs (_: {
+    d = {
+      user = "syncthing";
+      group = "nginx";
+      # Setgid, but no group write: nginx only ever reads here.
+      mode = "2755";
+    };
+  });
 
   services = {
     geoipupdate = {
