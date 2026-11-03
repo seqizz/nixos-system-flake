@@ -58,6 +58,21 @@ let
     fi
   '';
 
+  # Relinking skills is part of the profile switch: the HM half of the work
+  # profile adds the inno repo to skillissue/config.yaml (config/home/inno.nix),
+  # but writing that file links nothing by itself. `link` is the offline phase
+  # only — it creates symlinks for repos already in the cache and GCs the ones
+  # that left the config, so it is safe in both directions and needs no VPN.
+  # Fetching the inno repo for the first time (or pulling it) still needs
+  # `skillissue update` with the VPN up, hence the hint in work-on.
+  #
+  # Runs unprivileged on purpose: the cache, the symlink targets and the ssh
+  # agent all belong to the invoking user, not to root.
+  relinkSkills =
+    extraArgs: ''
+      ${pkgs.skillissue}/bin/skillissue link ${extraArgs} || true
+    '';
+
   currentProfile = ''"$(cat /etc/nixos-profile 2>/dev/null || echo unknown)"'';
 in
 {
@@ -91,11 +106,14 @@ in
         fi
         sudo ${childSwitch} switch
         ${resettle}
+        ${relinkSkills ""}
         echo
         echo "Work profile active."
         echo "  Restart Firefox/Chromium — a running browser read the CA store at"
         echo "  startup and cannot see the work CAs that just appeared."
         echo "  VPN is not brought up automatically: nmcli connection up IG-WG-1"
+        echo "  Work skills are linked from the local skillissue cache; run"
+        echo "  'skillissue update' once the VPN is up to clone/pull them."
       '')
 
       (pkgs.writeShellScriptBin "work-off" ''
@@ -106,6 +124,11 @@ in
         fi
         sudo ${parentSwitch} switch
         ${resettle}
+        # --prune-cache so leaving work mode also takes the work skill content
+        # off disk, not just the symlinks. It refuses to delete a clone with
+        # uncommitted or unpushed work, so an unsynced skill blocks the removal
+        # instead of being lost; `skillissue update` inside work mode first.
+        ${relinkSkills "--prune-cache"}
         echo
         echo "Private profile active. Work CAs and connections are gone from"
         echo "/etc; restart browsers if you want them to forget the CAs too."
