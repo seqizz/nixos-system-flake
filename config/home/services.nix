@@ -19,6 +19,40 @@ let
       "${pkgs.pinentry-rofi}/bin/pinentry-rofi" "$@"
     '';
   };
+  # The cs42l43 codec sometimes loses the race against the SOF controller probe
+  # and the sof-soundwire card never gets registered. Unbind/bind of the PCI
+  # controller reruns the probe late enough for the codec to be there.
+  #
+  # needs following fixes, still not on upstream, check later:
+  # soundwire: Add a helper function to indicate a device will detach
+  # mfd: cs42l43: Move to core detach helper
+  rebind-sof = pkgs.writeShellApplication {
+    name = "rebind-sof";
+    runtimeInputs = [
+      pkgs.coreutils
+      pkgs.gnugrep
+    ];
+    text = ''
+      if grep -q 'sof-soundwire' /proc/asound/cards; then
+        exit 0
+      fi
+
+      dev=0000:00:1f.3
+
+      # Nothing bound at all means a different failure mode than the probe
+      # race, so do not fail the unit over it.
+      if [[ ! -e "/sys/bus/pci/devices/$dev/driver" ]]; then
+        echo "no driver bound to $dev, skipping rebind" >&2
+        exit 0
+      fi
+
+      driver=$(basename "$(readlink "/sys/bus/pci/devices/$dev/driver")")
+
+      echo "$dev" >"/sys/bus/pci/drivers/$driver/unbind"
+      sleep 2
+      echo "$dev" >"/sys/bus/pci/drivers/$driver/bind"
+    '';
+  };
 in
 {
   services = {
@@ -132,6 +166,25 @@ in
           Restart = "always";
           Environment = "DISPLAY=:0";
           PrivateTmp = "false";
+        };
+      };
+
+      # Only the XPS 14 9440 has the cs42l43 / SOF SoundWire setup, the PCI
+      # address is hardcoded for that board.
+      rebind-sof = lib.mkIf (osConfig.networking.hostName == "splinter") {
+        Unit = {
+          Description = "Rebind SOF audio controller when the SoundWire card is missing";
+        };
+        Install = {
+          WantedBy = [
+            "graphical-session.target"
+          ];
+        };
+        Service = {
+          Type = "oneshot";
+          RemainAfterExit = true;
+          # sysfs bind/unbind needs root, wheel is passwordless on the laptops
+          ExecStart = "/run/wrappers/bin/sudo -n ${rebind-sof}/bin/rebind-sof";
         };
       };
     };
