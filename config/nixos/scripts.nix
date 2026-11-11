@@ -31,10 +31,11 @@ in
       src = ./scripts/git-default-branch;
       inherit git sed;
     })
-    # No substitutions on purpose: sysclean looks up nix, sudo and
-    # llm-custody-toolbox on PATH, because the host's own nix is the one that
-    # matches the running daemon and the toolbox only exists where Home
-    # Manager installed it. See the script's own header.
+    # No substitutions on purpose: sysclean looks up nix and sudo on PATH,
+    # because the host's own nix is the one that matches the running daemon.
+    # The jail toolbox needs no step here: `llm-custody` expires its leases
+    # and unpins the generations at every jail start, so whatever this script
+    # collects is already unreferenced. See the script's own header.
     (writeSubbedBin {
       name = "sysclean";
       src = ./scripts/sysclean;

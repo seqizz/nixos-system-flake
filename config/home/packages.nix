@@ -72,9 +72,7 @@ in
     pkgs.unstable.wezterm
     pkgs.unstable.discord
     pkgs.unstable.claude-code
-    llm-custody.pi
-    llm-custody.claude
-    llm-custody.toolbox
+    llm-custody.default
     thunderbird
 
     # NUR packages @Reference, mostly unmaintained / do not work. The overlay
