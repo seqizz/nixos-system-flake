@@ -83,7 +83,7 @@
 
     # unstable is better for some packages
     pkgs.unstable.rustypaste-cli
-    pkgs.unstable.sheldon # zsh plugin manager
+    pkgs.sheldon # zsh plugin manager, grafted on unstable
     igrep
 
     # Code formatters

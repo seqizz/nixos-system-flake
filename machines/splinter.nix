@@ -66,7 +66,7 @@ in
       };
     };
     extraModulePackages = [ fucknvidia ];
-    kernelPackages = pkgs.linuxPackages_testing;
+    kernelPackages = pkgs.linuxPackages_latest;
     # kernelPackages = pkgs.linuxPackages_6_18;
     # kernelPackages = pkgs.linuxPackages_latest.extend (self: super: {
     #   kernel = super.kernel.override {
@@ -127,7 +127,6 @@ in
       "fbcon=nodefer"
       "quiet"
       "pm_debug_messages"
-      "acpi_mask_gpe=0x6E"
       # disable systemd status messages
       "rd.systemd.show_status=auto"
       # lower the udev log level to show only errors or worse
@@ -204,87 +203,32 @@ in
     };
   };
 
-  # The ACPI wake alarm clock (AWAC, platform:ACPI000E:00) is armed as an S4
-  # wakeup source by firmware and randomly resumes the machine from suspend.
-  # acpi_mask_gpe=0x6E in kernelParams only muzzles the GPE storm, the wakeup
-  # source itself still has to be disabled via sysfs, and it comes back armed
-  # after a resume cycle, hence the sleep-target dependencies as well.
-  systemd.services.disable-awac-wakeup =
+  # No USB wake ups on this box, something is very buggy.
+  systemd.services =
     let
-      wakeupAttr = "/sys/devices/pci0000:00/ACPI000E:00/power/wakeup";
-      # These targets are ordered *after* systemd-suspend.service, so a unit
-      # that is both wantedBy and after them effectively runs on resume.
       sleepTargets = [
         "suspend.target"
         "hibernate.target"
         "hybrid-sleep.target"
         "suspend-then-hibernate.target"
       ];
+      disableWakeup = description: wakeupAttr: {
+        inherit description;
+        wantedBy = [ "multi-user.target" ] ++ sleepTargets;
+        after = sleepTargets;
+        unitConfig.ConditionPathIsWritable = wakeupAttr;
+        serviceConfig = {
+          Type = "oneshot";
+          RemainAfterExit = false;
+          ExecStart = "${pkgs.coreutils}/bin/tee ${wakeupAttr}";
+          StandardInput = "data";
+          StandardInputText = "disabled";
+          StandardOutput = "null";
+        };
+      };
     in
     {
-      description = "Disable AWAC ACPI wakeup source";
-      wantedBy = [ "multi-user.target" ] ++ sleepTargets;
-      after = sleepTargets;
-      # Firmware/kernel may not expose the device at all on other revisions,
-      # do not fail the boot over it.
-      unitConfig.ConditionPathIsWritable = wakeupAttr;
-      serviceConfig = {
-        Type = "oneshot";
-        RemainAfterExit = false;
-        ExecStart = "${pkgs.coreutils}/bin/tee ${wakeupAttr}";
-        StandardInput = "data";
-        StandardInputText = "disabled";
-        StandardOutput = "null";
-      };
+      disable-awac-wakeup = disableWakeup "Disable AWAC ACPI wakeup source" "/sys/devices/pci0000:00/ACPI000E:00/power/wakeup";
+      disable-xhci-wakeup = disableWakeup "Disable xHCI PCI wakeup source" "/sys/devices/pci0000:00/0000:00:14.0/power/wakeup";
     };
-
-  # @Reference: other wakeup sources this box arms by default, in case AWAC is
-  # not the only culprit. Check /proc/acpi/wakeup for the current state.
-  #   XHCI (pci:0000:00:14.0) - USB controller, S0. Disabling it also kills
-  #   wake from USB keyboard/mouse, so only worth it for a docked setup.
-  #   TXHC (pci:0000:00:0d.0), TDM0/TDM1, TRP0-TRP3 - Thunderbolt controller
-  #   and its ports, all S4. Dock hotplug events can spuriously resume.
-  # Same recipe, just point the attr at the matching sysfs node, e.g.
-  #   /sys/devices/pci0000:00/0000:00:14.0/power/wakeup
-
-  # Hack time!
-  # boot.blacklistedKernelModules = ["iwlwifi" "iwlmvm"];
-  #
-  # systemd.services.load-iwlwifi = {
-  #   description = "Load iwlwifi after boot because ordering is broken";
-  #   wantedBy = ["multi-user.target"];
-  #   before = ["NetworkManager.service"];
-  #   serviceConfig = {
-  #     Type = "oneshot";
-  #     RemainAfterExit = true;
-  #     ExecStart = "${pkgs.kmod}/bin/modprobe iwlwifi";
-  #   };
-  # };
 }
-
-# @Reference: This should fix it
-# systemd.services.reprobe-internal-audio = {
-#   description = "Reprobe SOF audio if internal card failed";
-#
-#   wantedBy = [ "multi-user.target" ];
-#   after = [ "systemd-udev-settle.service" ];
-#
-#   serviceConfig.Type = "oneshot";
-#
-#   script = ''
-#     driver=/sys/bus/pci/drivers/sof-audio-pci-intel-mtl
-#     device=0000:00:1f.3
-#
-#     # Do nothing when the SOF card initialized successfully.
-#     if grep -qiE 'sof|soundwire' /proc/asound/cards 2>/dev/null; then
-#       exit 0
-#     fi
-#
-#     if [[ -e "$driver/$device" ]]; then
-#       echo "$device" > "$driver/unbind"
-#       sleep 2
-#       echo "$device" > "$driver/bind"
-#     fi
-#   '';
-# };
-

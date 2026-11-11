@@ -64,6 +64,11 @@
       flake = false;
     };
 
+    rubato-src = {
+      url = "github:andOrlando/rubato";
+      flake = false;
+    };
+
     picom-src = {
       url = "github:yshui/picom/next";
       inputs.nixpkgs.follows = "nixpkgs";

@@ -71,6 +71,7 @@ in
     };
 
     ".local/awesome-lain".source = inputs.lain-src;
+    ".local/awesome-rubato".source = inputs.rubato-src;
 
     ".gist".text = secrets.gistSecret;
 

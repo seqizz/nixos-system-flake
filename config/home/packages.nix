@@ -75,7 +75,6 @@ in
     llm-custody.pi
     llm-custody.claude
     llm-custody.toolbox
-    pkgs.unstable.opencode
     thunderbird
 
     # NUR packages @Reference, mostly unmaintained / do not work. The overlay

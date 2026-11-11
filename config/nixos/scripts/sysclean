@@ -1,0 +1,38 @@
+#!/usr/bin/env sh
+# Housekeeping for everything on this machine that hoards nix generations.
+set -eu
+
+GEN_DAYS=20
+SYSTEM_KEEP=3
+
+say() {
+  printf '\n==> %s\n' "$1"
+}
+
+warn() {
+  printf 'sysclean: %s\n' "$1" >&2
+}
+
+if [ "$(id -u)" -eq 0 ]; then
+  warn "run this as your own user, not with sudo - it elevates the steps that need it"
+  exit 1
+fi
+
+say "system profile: keeping the newest $SYSTEM_KEEP generations"
+sudo nix-env -p /nix/var/nix/profiles/system --delete-generations "+$SYSTEM_KEEP"
+
+user_profile="$HOME/.local/state/nix/profiles/profile"
+if [ -L "$user_profile" ]; then
+  say "ad-hoc user profile: dropping generations older than ${GEN_DAYS}d"
+  nix profile wipe-history --profile "$user_profile" --older-than "${GEN_DAYS}d"
+fi
+
+say "collecting garbage"
+# Not fatal: an optimise pass is still worth having, and the alias this script
+# replaced ran it unconditionally for the same reason.
+if ! sudo nix-collect-garbage; then
+  warn "nix-collect-garbage failed, optimising the store anyway"
+fi
+
+say "deduplicating the store"
+sudo nix-store --optimize
