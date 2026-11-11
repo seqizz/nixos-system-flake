@@ -550,11 +550,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1794401721,
-        "narHash": "sha256-eH88gt20Jn/4eVhdmGxCtYOKOJ7LA54iAiga21/Dm7o=",
+        "lastModified": 1794431140,
+        "narHash": "sha256-LZTbs6j4LlwSY7r1Sd5OQqzcoEtD6LqVv+CO0WnOWYs=",
         "ref": "refs/heads/master",
-        "rev": "19007aeb7d46255f8c34fc5010119eb7f873ec34",
-        "revCount": 25,
+        "rev": "7821440008a47461b3776a030fe291eed1640e4a",
+        "revCount": 26,
         "type": "git",
         "url": "https://git.gurkan.in/gurkan/llm-custody.git"
       },
@@ -771,11 +771,11 @@
         "nixpkgs": "nixpkgs_3"
       },
       "locked": {
-        "lastModified": 1794401407,
-        "narHash": "sha256-kFfX3GFQT5Crs4ytQVnuu974mB7PErlQ41aZXk+ZC34=",
+        "lastModified": 1794427175,
+        "narHash": "sha256-b2G/ypRnMuLunGPhDxxO/5M8+5Rt84VyBkCXAkmmXa0=",
         "owner": "nix-community",
         "repo": "NUR",
-        "rev": "6d62be6e0801ce1672953ecccc9ed3c3d0b45e7f",
+        "rev": "0eaef7efa3e4505e25bc208a7773bf3149d96881",
         "type": "github"
       },
       "original": {
@@ -796,11 +796,11 @@
         "nixpkgs-x86_64-darwin": "nixpkgs-x86_64-darwin"
       },
       "locked": {
-        "lastModified": 1794328189,
-        "narHash": "sha256-dGBZidyLzf2xhO4ca5pl+VQ379xzf1bPjJMKCABIQJ0=",
+        "lastModified": 1794413860,
+        "narHash": "sha256-5Hyqkp4g2LCKfEiDF8NTxa0WZh83NkUwbFogk1FHpDk=",
         "owner": "lukasl-dev",
         "repo": "pi.nix",
-        "rev": "0eef6da6a8e092464f11a592b7f01a32b9d8640c",
+        "rev": "66ff1253be6cd025012f9cf0c2b53af9bf77383a",
         "type": "github"
       },
       "original": {
@@ -906,11 +906,11 @@
     "rpiv-mono-src": {
       "flake": false,
       "locked": {
-        "lastModified": 1794365553,
-        "narHash": "sha256-cDM0LmzflxlqiNFH0ia291/KkVhupAqG9s32J/HlpFk=",
+        "lastModified": 1794418925,
+        "narHash": "sha256-WCmi38SDOz/dmmy0/g+aIXD836bIXWXOjsbEquyKe6M=",
         "owner": "juicesharp",
         "repo": "rpiv-mono",
-        "rev": "ad6cc0afd24a5a91b9c413bde5ed8e15319b5041",
+        "rev": "1a4add9dbe61597059a93dd9200bf25d51238659",
         "type": "github"
       },
       "original": {

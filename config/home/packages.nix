@@ -71,7 +71,7 @@ in
     pkgs.unstable.telegram-desktop
     pkgs.unstable.wezterm
     pkgs.unstable.discord
-    claude-code
+    pkgs.unstable.claude-code
     llm-custody.pi
     llm-custody.claude
     llm-custody.toolbox

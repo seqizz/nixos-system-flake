@@ -56,12 +56,6 @@ in
     # WhatsApp PWA
     zapzap.enable = true;
 
-    # TODO for when I'm not lazy
-    # claude-code = {
-    #   enable = true;
-    #   skills = secrets.claudeSkills;
-    # };
-
     firefox = {
       enable = true;
       # Pin the legacy profile location. Default flips to the XDG path at
