@@ -4,6 +4,9 @@
   ...
 }:
 let
+  hardening = import ../helper-modules/service-hardening.nix;
+  # Hardcoded in ../scripts/lastsong.go as well, keep both in sync
+  outputFile = "/shared/vhosts/gurkan.in/public/current-song.json";
   blog-song-updater = pkgs.buildGoModule {
     pname = "blog-song-updater";
     version = "0.1.0";
@@ -21,8 +24,7 @@ let
     '';
     buildPhase = ''
       mkdir bin
-      # Add debug flags and disable stripping
-      go build -v -x -gcflags="all=-N -l" -o bin/blog-song-updater $src/main.go
+      go build -o bin/blog-song-updater $src/main.go
     '';
     installPhase = ''
       install -dm755 $out/bin
@@ -37,6 +39,12 @@ let
   };
 in
 {
+  users.users.song-updater = {
+    isSystemUser = true;
+    group = "song-updater";
+  };
+  users.groups.song-updater = { };
+
   systemd.services.blog-song-updater = {
     description = "Blog Current Song Updater";
     after = [
@@ -45,18 +53,17 @@ in
     ];
     wantedBy = [ "multi-user.target" ];
 
-    environment = {
-      # Add some debug environment
-      GODEBUG = "http2debug=2";
-      LOG_LEVEL = "debug";
-    };
-
-    serviceConfig = {
+    serviceConfig = hardening // {
       ExecStart = "${blog-song-updater}/bin/blog-song-updater";
       Restart = "always";
       RestartSec = "10";
-      User = "nginx";
-      ReadWritePaths = [ "/shared/vhosts/gurkan.in/public" ];
+      # Dedicated user instead of nginx: a compromise must not be able to
+      # rewrite the vhosts. Only the single output file is writable, it has
+      # to exist beforehand since ReadWritePaths bind-mounts it.
+      User = "song-updater";
+      Group = "song-updater";
+      ReadWritePaths = [ outputFile ];
+      MemoryDenyWriteExecute = true;
       StandardOutput = "journal";
       StandardError = "journal";
     };

@@ -1,13 +1,12 @@
 #!/usr/bin/env python3
 
-from hashlib import sha256
-from pickle import dump, load
-from socket import gethostname
+import json
+import os
 from time import time
 
 
 def current_psi_dict() -> dict:
-    with open('/proc/pressure/cpu', 'r') as psifile:
+    with open('/proc/pressure/cpu') as psifile:
         for line in psifile.readlines():
             if not line.startswith('some'):
                 continue
@@ -19,29 +18,31 @@ def current_psi_dict() -> dict:
 def write_current_value(temp_file, last_reported_value):
     current_value = current_psi_dict()
     current_value['last_reported_value'] = last_reported_value
-    with open(temp_file, 'wb+') as valuefile:
-        dump(current_value, valuefile)
+    with open(temp_file, 'w') as valuefile:
+        json.dump(current_value, valuefile)
 
 
 def get_last_value(name):
     result = False
     try:
-        with open(name, 'rb') as valuefile:
-            result = load(valuefile)
-    except IOError:
+        with open(name) as valuefile:
+            result = json.load(valuefile)
+    except (OSError, ValueError):
         return False
     return result
 
 
 def get_filename():
-    hash = sha256(gethostname().encode('utf-8')).hexdigest()[:8]
-    return '/tmp/{}_psi'.format(hash)
+    # Per-user 0700 runtime dir: a shared /tmp path lets other local users
+    # plant or pre-create the state file
+    runtime_dir = os.environ.get('XDG_RUNTIME_DIR', f'/run/user/{os.getuid()}')
+    return os.path.join(runtime_dir, 'psitool.json')
 
 
 def get_difference(temp_file):
     last_value = get_last_value(temp_file)
     if last_value is False:
-        return "-1"
+        return '-1'
     current_value = current_psi_dict()
     time_difference = current_value['time'] - last_value['time']
     value_difference = current_value['value'] - last_value['value']

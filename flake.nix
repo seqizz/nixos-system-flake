@@ -14,6 +14,7 @@
     home-manager.url = "github:nix-community/home-manager/release-26.05";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     nur.url = "github:nix-community/NUR";
+    nur.inputs.nixpkgs.follows = "nixpkgs";
 
     skyepkgs.url = "github:skyethepinkcat/skyepkgs";
     skyepkgs.inputs.nixpkgs.follows = "nixpkgs";
@@ -46,6 +47,10 @@
     pi-nix = {
       url = "github:lukasl-dev/pi.nix";
       inputs.nixpkgs.follows = "nixpkgs";
+      # Darwin-only inputs, never evaluated on these x86_64-linux machines.
+      # Following them avoids locking and fetching a second nixpkgs/bun2nix.
+      inputs.nixpkgs-x86_64-darwin.follows = "nixpkgs";
+      inputs.bun2nix-x86_64-darwin.follows = "pi-nix/bun2nix";
     };
     rpiv-mono-src = {
       url = "github:juicesharp/rpiv-mono";

@@ -3,7 +3,8 @@
   lib,
   pkgs,
   ...
-}: let
+}:
+let
   secrets = import ../secrets.nix;
   regenerateAsNginx = pkgs.writeScriptBin "regenerateAsNginx" ''
     #!/usr/bin/env sh
@@ -22,28 +23,16 @@
       su -s /run/current-system/sw/bin/zsh -c ${pkgs.hugo}/bin/hugo nginx
     fi
   '';
-in {
-  networking.firewall.allowedTCPPorts = [80 443];
+in
+{
+  networking.firewall.allowedTCPPorts = [
+    80
+    443
+  ];
 
   environment = {
     systemPackages = with pkgs; [
       regenerateAsNginx
-      (pkgs.writeTextFile {
-        name = "git-disallow-robots";
-        destination = "/var/lib/gitea/custom/public/robots.txt";
-        text = ''
-          #  ▗▄▄▄▖▗▖_▗▖_▗▄▄▖▗▖_▗▖_____▗▄▖_▗▄▄▄▖▗▄▄▄▖
-          #  ▐▌___▐▌_▐▌▐▌___▐▌▗▞▘____▐▌_▐▌▐▌___▐▌___
-          #  ▐▛▀▀▘▐▌_▐▌▐▌___▐▛▚▖_____▐▌_▐▌▐▛▀▀▘▐▛▀▀▘
-          #  ▐▌___▝▚▄▞▘▝▚▄▄▖▐▌_▐▌____▝▚▄▞▘▐▌___▐▌___
-          #  _______________________________________
-          #  _______________________________________
-          #  _______________________________________
-
-          User-agent: *
-          Disallow: /
-        '';
-      })
     ];
     etc = {
       # Not sure why I am doing this
@@ -90,7 +79,9 @@ in {
           "GeoLite2-Country"
         ];
         AccountID = secrets.maxmindUserID;
-        LicenseKey = {_secret = "/shared/.maxmind_key";};
+        LicenseKey = {
+          _secret = "/shared/.maxmind_key";
+        };
         DatabaseDirectory = "/var/lib/GeoIP";
       };
     };
@@ -101,6 +92,12 @@ in {
       recommendedProxySettings = true;
       recommendedTlsSettings = true;
       commonHttpConfig = secrets.nginxCommonHttpConfig;
+      # Without a charset in Content-Type, browsers fall back to Windows-1252
+      # and mangle UTF-8 in text/plain (e.g. forgejo's robots.txt banner).
+      # Only labels charset_types responses that lack one, nothing is recoded.
+      appendHttpConfig = ''
+        charset utf-8;
+      '';
       virtualHosts = secrets.nginxVirtualHostConfig;
       additionalModules = with pkgs.nginxModules; [
         geoip2

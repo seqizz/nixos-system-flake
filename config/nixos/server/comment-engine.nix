@@ -1,8 +1,17 @@
-{ config, pkgs, ...}:
+{ config, pkgs, ... }:
 let
   secrets = import ../secrets.nix;
+  hardening = import ../helper-modules/service-hardening.nix;
 in
 {
+  # remark42 writes the bolt DBs and, relative to WorkingDirectory, its
+  # var/{pictures,avatars,backup} dirs, so it owns the whole comment-engine tree.
+  users.users.remark42 = {
+    isSystemUser = true;
+    group = "remark42";
+  };
+  users.groups.remark42 = { };
+
   environment.systemPackages = with pkgs; [
     remark42
   ];
@@ -29,8 +38,12 @@ in
       NOTIFY_ADMINS = "telegram";
       NOTIFY_TELEGRAM_CHAN = secrets.remarkTelegramChannel;
     };
-    serviceConfig = {
+    serviceConfig = hardening // {
       ExecStart = "${pkgs.remark42}/bin/remark42 server";
+      User = "remark42";
+      Group = "remark42";
+      ReadWritePaths = [ "/shared/comment-engine" ];
+      MemoryDenyWriteExecute = true;
       Restart = "always";
       RestartSec = 30;
       StandardOutput = "syslog";
@@ -60,8 +73,12 @@ in
       NOTIFY_ADMINS = "telegram";
       NOTIFY_TELEGRAM_CHAN = secrets.remarkTelegramChannel;
     };
-    serviceConfig = {
+    serviceConfig = hardening // {
       ExecStart = "${pkgs.remark42}/bin/remark42 server";
+      User = "remark42";
+      Group = "remark42";
+      ReadWritePaths = [ "/shared/comment-engine" ];
+      MemoryDenyWriteExecute = true;
       Restart = "always";
       RestartSec = 30;
       StandardOutput = "syslog";

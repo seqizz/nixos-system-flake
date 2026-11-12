@@ -151,7 +151,6 @@ in
       enable = true;
       platform = "ipu6epmtl";
     };
-    cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
     nvidia = {
       nvidiaSettings = false;
       modesetting.enable = true;

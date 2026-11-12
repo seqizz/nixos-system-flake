@@ -1,39 +1,44 @@
-{ lib, config, pkgs, ... }:
+{
+  lib,
+  config,
+  pkgs,
+  ...
+}:
 let
   secrets = import ../secrets.nix;
   sshBanner = pkgs.writeText "ssh-banner" ''
-    ,-.,-.,-.,-.
-    `7        .'
-     |        |
-     |      .-!.     What? Sorry. I was using this time
-     |  .---| ||      to think about something useful.
-     | (C   `-'^.
-     |  `      _;
-     |        |
-    ("`--.    |
-    /`-._ `-._|        /\
-   /     `-._/=\      /`-\
-  /  /    \  >~7\     |`-|
- /  |      | \-\ ;   /\ /
-;   `-j--f-'  \/`!__7\ y
-|     |  |     `./_I_;'
-|     |  |       ||
-|     |  |       ||
-|     |  |       ||
-|     |  |_      ||
-|____/   .-'_____|'
-    (/|||\\ | |
-     |`^' ` | \
-     |      | |
-     \      | |
-     |      | |
-     |      | /
-     |      | |
-     /      | |
-     |______|_|
-       |___|_|
-      /     `=`=====.
-      `='-----------'
+        ,-.,-.,-.,-.
+        `7        .'
+         |        |
+         |      .-!.     What? Sorry. I was using this time
+         |  .---| ||      to think about something useful.
+         | (C   `-'^.
+         |  `      _;
+         |        |
+        ("`--.    |
+        /`-._ `-._|        /\
+       /     `-._/=\      /`-\
+      /  /    \  >~7\     |`-|
+     /  |      | \-\ ;   /\ /
+    ;   `-j--f-'  \/`!__7\ y
+    |     |  |     `./_I_;'
+    |     |  |       ||
+    |     |  |       ||
+    |     |  |       ||
+    |     |  |_      ||
+    |____/   .-'_____|'
+        (/|||\\ | |
+         |`^' ` | \
+         |      | |
+         \      | |
+         |      | |
+         |      | /
+         |      | |
+         /      | |
+         |______|_|
+           |___|_|
+          /     `=`=====.
+          `='-----------'
   '';
 in
 {
@@ -50,6 +55,11 @@ in
 
   services.openssh = {
     enable = true;
-    settings.Banner = "${sshBanner}";
+    settings = {
+      Banner = "${sshBanner}";
+      # Key-only: NixOS defaults leave both of these enabled
+      PasswordAuthentication = false;
+      KbdInteractiveAuthentication = false;
+    };
   };
 }

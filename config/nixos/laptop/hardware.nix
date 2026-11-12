@@ -22,6 +22,8 @@
     xone.enable = true;
     xpadneo.enable = true;
     enableRedistributableFirmware = true;
+    # Both laptops are Intel; nothing else enables microcode loading for them
+    cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 
     graphics = {
       enable = true;
