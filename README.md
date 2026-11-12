@@ -18,7 +18,7 @@
 │   ├── helpers.nix         # overrideSrc, mkVimPlugin, fromFlake
 │   └── README.md
 ├── grafts/                 # Package additions and overrides — drop files here
-│   ├── mpv.nix             # override: example — prev.mpv-unwrapped.override { ... }
+│   ├── mpv.nix             # override: example — prev.mpv.override { mpv-unwrapped = ...; }
 │   ├── ionicons.nix        # addition: example — final.callPackage { ... } {}
 │   ├── vim-plugins.nix     # set: merges vim plugins into pkgs
 │   ├── nixos/              # NixOS modules (auto-applied to all nixosConfigurations)
@@ -59,7 +59,7 @@ The file receives `{ final, prev, inputs, helpers, ... }`:
 ```nix
 # grafts/mpv.nix — override existing nixpkgs package
 { prev, ... }:
-prev.mpv-unwrapped.override { ffmpeg = prev.ffmpeg_6-full; }
+prev.mpv.override { mpv-unwrapped = prev.mpv-unwrapped.override { ffmpeg = prev.ffmpeg_6-full; }; }
 
 # grafts/mytool.nix — add new package
 { final, ... }:

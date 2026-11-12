@@ -22,7 +22,7 @@ Available args:
 ```nix
 # Override existing nixpkgs package
 { prev, ... }:
-prev.mpv-unwrapped.override { ffmpeg = prev.ffmpeg_6-full; }
+prev.mpv.override { mpv-unwrapped = prev.mpv-unwrapped.override { ffmpeg = prev.ffmpeg_6-full; }; }
 
 # New package
 { final, ... }:
@@ -45,8 +45,10 @@ Rename `foo.nix` → `foo@<ref>.nix` to evaluate the same file against historica
 ```nix
 # grafts/mpv@2026-08-08.nix  → pkgs.mpv built against nixpkgs as of 2026-08-08
 {prev, ...}:
-prev.mpv-unwrapped.override {
-  ffmpeg = prev.ffmpeg_6-full;
+prev.mpv.override {
+  mpv-unwrapped = prev.mpv-unwrapped.override {
+    ffmpeg = prev.ffmpeg_6-full;
+  };
 }
 ```
 
