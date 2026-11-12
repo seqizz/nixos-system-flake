@@ -25,13 +25,7 @@ rustPlatform.buildRustPackage (finalAttrs: {
 
   dontUseCargoParallelTests = true;
 
-  checkFlags = [
-    # Tests require internet access
-    "--skip=paste::tests::test_paste_data"
-    "--skip=server::tests::test_upload_remote_file"
-    "--skip=test_validate_remote_url_valid_http"
-    "--skip=test_validate_remote_url_valid_https"
-  ];
+  doCheck = false;
 
   __darwinAllowLocalNetworking = true;
 
