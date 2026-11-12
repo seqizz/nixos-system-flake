@@ -62,11 +62,15 @@ in
         "https://cache.nixos.org"
         "https://nix-community.cachix.org"
       ];
+      # Keep build-time dependencies (toolchains, sources) of live generations across GC,
+      # so rebuilds and dev shells do not refetch them. mkDefault so disk-constrained hosts
+      # can turn it off. Lives in settings rather than extraOptions because extraOptions is
+      # appended after settings in nix.conf and would win over any per-machine override.
+      keep-outputs = lib.mkDefault true;
+      keep-derivations = lib.mkDefault true;
     };
     package = pkgs.lix;
     extraOptions = ''
-      keep-outputs = true
-      keep-derivations = true
       experimental-features = nix-command flakes
       access-tokens = github.com=${secrets.githubRateLimitAccessToken}
       trusted-users = root gurkan

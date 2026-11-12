@@ -33,6 +33,13 @@
     options = ["noatime"];
   };
 
+  # Small disk and it builds itself: let GC drop build-time dependencies
+  # (rustc, cargo, sources) instead of pinning them for every live generation.
+  nix.settings = {
+    keep-outputs = false;
+    keep-derivations = false;
+  };
+
   swapDevices = [
     {
       device = "/swapfile";

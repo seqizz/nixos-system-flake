@@ -1,3 +1,4 @@
+# @Reference, retired bot
 { config, pkgs, lib, ...}:
 let
   secrets = import ../../secrets.nix;
