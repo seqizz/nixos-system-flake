@@ -21,7 +21,7 @@ in
     };
     serviceConfig = {
       User = "rustypaste";
-      ExecStart = "${pkgs.unstable.rustypaste}/bin/rustypaste";
+      ExecStart = "${pkgs.rustypaste}/bin/rustypaste";
       Restart = "always";
       RestartSec = 30;
       StandardOutput = "syslog";
