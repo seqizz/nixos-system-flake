@@ -7,6 +7,7 @@
 | **splinter** | Dell XPS 14 9440 (Intel + Nvidia) | Primary laptop |
 | **bebop** | Dell XPS 9310 2-in-1 (Intel) | Secondary laptop |
 | **rocksteady** | Vultr VPS | Server (mail, forgejo, gotosocial, etc.) |
+| **shredder** | VM | rocksteady successor, installed with nixos-anywhere + disko |
 
 ## Directory Layout
 
@@ -29,6 +30,8 @@
 │   ├── splinter.nix
 │   ├── bebop.nix
 │   ├── rocksteady.nix
+│   ├── shredder.nix
+│   ├── shredder-disko.nix
 │   └── README.md
 └── config/                 # All configurations
     ├── nixos/
@@ -83,8 +86,8 @@ config/nixos/base.nix (all machines — overlays + nix settings)
 └── config/nixos/common.nix (locale, nix, users, packages)
     ├── config/nixos/laptop/common.nix (splinter + bebop)
     │   └── machines/{splinter,bebop}.nix (kernel, GPU, boot, disk)
-    └── config/nixos/server/common.nix (rocksteady)
-        └── machines/rocksteady.nix (boot, network)
+    └── config/nixos/server/common.nix (rocksteady + shredder)
+        └── machines/{rocksteady,shredder}.nix (boot, network)
 ```
 
 ## Usage
