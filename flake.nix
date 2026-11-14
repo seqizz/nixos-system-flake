@@ -251,6 +251,17 @@
           ]
           ++ flakeModules.nixos-modules;
         };
+        shredder = nixpkgs.lib.nixosSystem {
+          specialArgs = { inherit inputs outputs; };
+          modules = [
+            disko.nixosModules.disko
+            simple-nixos-mailserver.nixosModules.mailserver
+            nix-index-database.nixosModules.nix-index
+            ./config/nixos/base.nix
+            ./machines/shredder.nix
+          ]
+          ++ flakeModules.nixos-modules;
+        };
       };
 
       # No homeConfigurations: Home Manager is wired in as a NixOS module from

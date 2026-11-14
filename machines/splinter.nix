@@ -7,11 +7,16 @@
   ...
 }:
 let
+  # Version and hashes live in JSON so `nvidia-update` can bump them with jq
+  # instead of rewriting Nix source.
+  driverPin = lib.importJSON ./splinter-nvidia.json;
   fucknvidia = config.boot.kernelPackages.nvidiaPackages.mkDriver {
-    version = "595.104.02";
-    sha256_64bit = "sha256-5CHCAuTHn1jDx/MWG75xRU67PYiTb4ggWg4yfNBMWco=";
-    openSha256 = "sha256-FWk5ra2yjz8VAxAA8GXrSoeBj/XC1BKvsKsBKR09joE=";
-    settingsSha256 = "sha256-4Kxro6tvI5aX4nu2RspgyBsW+Jq3/VYjSAS5UGdzTCU=";
+    inherit (driverPin)
+      version
+      sha256_64bit
+      openSha256
+      settingsSha256
+      ;
     persistencedSha256 = lib.fakeHash;
     sha256_aarch64 = lib.fakeHash;
   };
@@ -178,6 +183,20 @@ in
     };
     user.extraConfig = "DefaultTimeoutStopSec=10s";
   };
+  # nix and nix-prefetch-url come from PATH on purpose, the host's own nix is
+  # the one that matches the running daemon (same reasoning as sysclean).
+  environment.systemPackages = [
+    (pkgs.writeShellApplication {
+      name = "nvidia-update";
+      runtimeInputs = with pkgs; [
+        coreutils
+        curl
+        jq
+      ];
+      text = builtins.readFile ../config/nixos/scripts/nvidia-update;
+    })
+  ];
+
   services = {
     xserver.videoDrivers = [ "nvidia" ];
     tlp.settings = {
