@@ -20,6 +20,8 @@
           excludesfile = /etc/gitignore
       [pull]
         ff = only
+      [push]
+          autoSetupRemote = true
       [alias]
           # foksheet: Send the last change amended to last commit quickly, except on master branch
           fs = "!CURBRANCH=$(git symbolic-ref --short HEAD) && if [ \"''${CURBRANCH}\" = \"$(git-default-branch)\" ]; then echo \"Cant do this on $(git-default-branch) bro\" && exit 1; fi  && git add -u && git commit -a --amend --no-edit && git push --force-with-lease origin ''${CURBRANCH}"
@@ -72,6 +74,7 @@
 
       [branch]
           sort = committerdate
+          autoSetupMerge = simple
     '';
   };
 
