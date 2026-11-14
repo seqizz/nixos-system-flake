@@ -3,7 +3,8 @@
   lib,
   config,
   ...
-}: {
+}:
+{
   imports = [
     ../common.nix
 
@@ -25,6 +26,8 @@
     ./websites.nix
     ./yarr.nix
   ];
+
+  local.profiles.server.enable = true;
 
   environment.systemPackages = with pkgs; [
     zoxide # Not available as an option yet, configured on home-manager separately

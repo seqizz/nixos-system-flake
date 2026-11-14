@@ -1,11 +1,16 @@
-{ lib, pkgs, config, ... }:
+{
+  lib,
+  pkgs,
+  config,
+  ...
+}:
 with lib;
 let
   cfg = config.services.my_syncthing;
   secrets = import ./secrets.nix;
 in
 {
-  options.services.my_syncthing= {
+  options.services.my_syncthing = {
     enablePublicGui = mkOption {
       type = types.bool;
       default = false;
@@ -41,7 +46,6 @@ in
       allowedTCPPorts = [ cfg.guiPort ];
     };
 
-
     services = {
       syncthing = {
         enable = true;
@@ -56,6 +60,10 @@ in
             rocksteady = {
               name = "rocksteady";
               id = secrets.syncthingIDrocksteady;
+            };
+            shredder = {
+              name = "shredder";
+              id = secrets.syncthingIDshredder;
             };
             nixosis = {
               name = "nixosis";
@@ -84,8 +92,9 @@ in
               label = "syncfolder";
               devices = [
                 "nixosis"
-                # "oneplusNord"
+                "oneplusNord"
                 "rocksteady"
+                "shredder"
                 "bebop"
                 "splinter"
                 "truenas"

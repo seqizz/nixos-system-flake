@@ -50,7 +50,8 @@ in
       secrets.truenasSSHPub
     ];
     # For emergencies
-    hashedPassword = secrets.rocksteadyRootPass;
+    # Per-host secret (<hostname>RootPass), so servers never share a root password
+    hashedPassword = secrets."${config.networking.hostName}RootPass";
   };
 
   services.openssh = {

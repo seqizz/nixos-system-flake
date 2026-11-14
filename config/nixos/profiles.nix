@@ -20,6 +20,12 @@
       alone
     '';
 
+    server.enable = lib.mkEnableOption ''
+      the server role. Set by server/common.nix, read by modules that differ
+      between servers and laptops in ways no hardware option describes (e.g.
+      the flake checkout living under /shared instead of /home/gurkan)
+    '';
+
     llm.enable = lib.mkEnableOption ''
       LLM tooling, currently the neovim side of it. Off by default so headless
       machines do not drag it in

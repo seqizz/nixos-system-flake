@@ -1,0 +1,86 @@
+# Bump the pinned nvidia driver (machines/<host>-nvidia.json) to the latest
+# release NVIDIA's own driver lookup service offers, and refresh its hashes.
+# Ported from https://codeberg.org/tlater/dotfiles/src/branch/master/packages/nvidia/update.nu
+#
+# Usage: nvidia-update [path/to/<host>-nvidia.json]
+
+case "$HOSTNAME" in
+  splinter)
+    lookup_params='osID=12&psid=133&beta=1&isWHQL=0&qnf=0'
+    ;;
+  *)
+    echo "nvidia-update: no lookup parameters for host '$HOSTNAME'" >&2
+    exit 1
+    ;;
+esac
+
+pin_file="${1:-$HOME/syncfolder/dotfiles/nixos-system-flake/machines/$HOSTNAME-nvidia.json}"
+
+if [[ ! -w "$pin_file" ]]; then
+  echo "nvidia-update: $pin_file is missing or not writable" >&2
+  exit 1
+fi
+
+api='https://gfwsl.geforce.com/services_toolkit/services/com/nvidia/services/AjaxDriverService.php'
+# The response order is not by version (production lists mix branches), and
+# some entries carry an empty DisplayVersion, so filter and pick the highest
+# with sort -V instead of trusting the first entry.
+latest=$(
+  curl -fsSL "$api?func=DriverManualLookup&$lookup_params" |
+    jq -r '.IDS[].downloadInfo | select(.DisplayVersion != "") | .DisplayVersion' |
+    sort -V | tail -n 1
+)
+if [[ -z "$latest" ]]; then
+  echo "nvidia-update: lookup returned no driver for '$lookup_params'" >&2
+  exit 1
+fi
+current=$(jq -er '.version' "$pin_file")
+
+if [[ "$latest" == "$current" ]]; then
+  echo "nvidia-update: already at $current"
+  exit 0
+fi
+echo "nvidia-update: $current -> $latest"
+
+# `nix hash to-sri` instead of `nix hash convert`: the system nix is Lix,
+# which never gained `convert`. CppNix still ships `to-sri` (deprecated), so
+# this works on both.
+to_sri() {
+  nix hash to-sri --type sha256 "$1"
+}
+
+# URLs mirror what nixpkgs' nvidia mkDriver fetches, so the hashes match its
+# fixed-output derivations: the .run installer is a flat file hash, the two
+# GitHub sources are fetchFromGitHub (NAR hash of the unpacked tag tarball).
+#
+# nix-prefetch-url also adds what it downloads to the store. A fixed-output
+# store path depends only on name + hash, so when the name matches the one
+# the derivation uses, the rebuild finds the path and skips the download.
+# The .run name already matches (both take the URL basename). fetchFromGitHub
+# names its output "source", hence --name source on the unpacked fetches.
+run_hash=$(to_sri "$(nix-prefetch-url \
+  "https://download.nvidia.com/XFree86/Linux-x86_64/$latest/NVIDIA-Linux-x86_64-$latest.run")")
+open_hash=$(to_sri "$(nix-prefetch-url --unpack --name source \
+  "https://github.com/NVIDIA/open-gpu-kernel-modules/archive/$latest.tar.gz")")
+settings_hash=$(to_sri "$(nix-prefetch-url --unpack --name source \
+  "https://github.com/NVIDIA/nvidia-settings/archive/$latest.tar.gz")")
+
+# Write through a temp file next to the target so a failed jq run never
+# leaves a truncated pin file behind.
+tmp=$(mktemp "$pin_file.XXXXXX")
+trap 'rm -f "$tmp"' EXIT
+jq \
+  --arg version "$latest" \
+  --arg run "$run_hash" \
+  --arg open "$open_hash" \
+  --arg settings "$settings_hash" \
+  '.version = $version
+   | .sha256_64bit = $run
+   | .openSha256 = $open
+   | .settingsSha256 = $settings' \
+  "$pin_file" >"$tmp"
+# mktemp creates 0600, keep the original mode instead
+chmod --reference="$pin_file" "$tmp"
+mv "$tmp" "$pin_file"
+
+echo "nvidia-update: wrote $pin_file, rebuild to apply"

@@ -1,6 +1,6 @@
 { config, ... }:
 let
-  myConfigBase = if config.networking.hostName == "rocksteady" then "/shared" else "/home/gurkan";
+  myConfigBase = if config.local.profiles.server.enable then "/shared" else "/home/gurkan";
   myConfigPath = "${myConfigBase}/syncfolder/dotfiles/nixos-system-flake";
 in
 {
