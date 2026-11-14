@@ -24,7 +24,7 @@
               content = {
                 type = "luks";
                 name = "crypted";
-                extraOpenArgs = [];
+                extraOpenArgs = [ ];
                 settings = {
                   # @Reference:
                   # if you want to use the key for interactive login be sure there is no trailing newline
@@ -56,7 +56,7 @@
                 "noatime"
                 "nodiratime"
                 "ssd"
-                "discard"
+                "discard=async"
                 "space_cache=v2"
               ];
             };
