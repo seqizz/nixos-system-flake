@@ -4,9 +4,17 @@
 #
 # Usage: nvidia-update [path/to/<host>-nvidia.json]
 
+# Lookup parameters per machine, same ones NVIDIA's website sends:
+# osID 12 = Linux 64-bit, psid/pfid = product series/model, beta 0 =
+# production releases only. The response mixes all supported branches.
+#
+# branch limits the pick to one major driver branch (empty = any). splinter
+# stays on 595: 620.70.06 left it on a black screen, and the 595 betas are
+# too old to build against current kernels.
 case "$HOSTNAME" in
   splinter)
-    lookup_params='osID=12&psid=133&beta=1&isWHQL=0&qnf=0'
+    lookup_params='osID=12&psid=129&pfid=1008&languageCode=1033&beta=0&isWHQL=0&dltype=-1&dch=0&upCRD=null&qnf=null&ctk=null&sort1=1&numberOfResults=20'
+    branch=595
     ;;
   *)
     echo "nvidia-update: no lookup parameters for host '$HOSTNAME'" >&2
@@ -22,16 +30,18 @@ if [[ ! -w "$pin_file" ]]; then
 fi
 
 api='https://gfwsl.geforce.com/services_toolkit/services/com/nvidia/services/AjaxDriverService.php'
-# The response order is not by version (production lists mix branches), and
-# some entries carry an empty DisplayVersion, so filter and pick the highest
-# with sort -V instead of trusting the first entry.
+# The response order is not by version, and some entries carry an empty
+# DisplayVersion, so filter and pick the highest with sort -V instead of
+# trusting the first entry.
 latest=$(
   curl -fsSL "$api?func=DriverManualLookup&$lookup_params" |
-    jq -r '.IDS[].downloadInfo | select(.DisplayVersion != "") | .DisplayVersion' |
+    jq -r --arg branch "$branch" \
+      '.IDS[].downloadInfo.DisplayVersion
+       | select(. != "" and ($branch == "" or startswith($branch + ".")))' |
     sort -V | tail -n 1
 )
 if [[ -z "$latest" ]]; then
-  echo "nvidia-update: lookup returned no driver for '$lookup_params'" >&2
+  echo "nvidia-update: lookup returned no driver for branch '${branch:-any}'" >&2
   exit 1
 fi
 current=$(jq -er '.version' "$pin_file")
