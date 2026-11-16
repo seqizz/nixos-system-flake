@@ -22,6 +22,8 @@
     kernelModules = [ "tcp_bbr" ];
     kernel.sysctl = {
       "net.ipv4.tcp_congestion_control" = "bbr";
+      # Provider specific
+      "net.ipv6.conf.ens5.use_tempaddr" = 0;
     };
   };
 
@@ -58,9 +60,11 @@
         "yarr"
       ]
       # mkForce: the bot and remark42 units set enable = true explicitly.
-      (_: {
-        enable = lib.mkForce false;
-      });
+      (
+        _: {
+          enable = lib.mkForce false;
+        }
+      );
 
   # Receive-only while shredder joins the share with a fresh index: whatever
   # happens to its local copy (partial rsync, empty dir, permission errors)

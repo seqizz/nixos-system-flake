@@ -518,11 +518,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1794670876,
-        "narHash": "sha256-2WNNwOAbkiT5EoR1FYkcGi/r0IYnf0cvWzm1m6gmgF0=",
+        "lastModified": 1794740049,
+        "narHash": "sha256-fCUJcjm7MHwRR+06FS8+P+I6F3mRIyEGWjRiaMhTtRQ=",
         "ref": "refs/heads/master",
-        "rev": "e3de8589577111846f6cf77f6969a564ed279649",
-        "revCount": 29,
+        "rev": "306a4a9e8acb1612d97554c7caf0c2e00364f1c9",
+        "revCount": 30,
         "type": "git",
         "url": "https://git.gurkan.in/gurkan/llm-custody.git"
       },
@@ -579,11 +579,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1794132860,
-        "narHash": "sha256-iGNtQnUZsi+v6/4NbtYr+dsmASa6GkzXtUcTpE8F3mE=",
+        "lastModified": 1794739050,
+        "narHash": "sha256-PCGNIyAydZcdUXCxEXTjrS1+wWS+k9E+ENqBkUK2Mpg=",
         "owner": "nix-community",
         "repo": "nix-index-database",
-        "rev": "af9249ca33bc2efaae5d071e4c67ddef19dcb681",
+        "rev": "9bd074026d6db75b59aae8cd6071b5f2fe27a36c",
         "type": "github"
       },
       "original": {
@@ -640,11 +640,11 @@
     },
     "nixpkgs-multiverse": {
       "locked": {
-        "lastModified": 1794615216,
-        "narHash": "sha256-IENkXV/qqnqZO5inanLkpzjcs7YPoWf2MCDNxivqLoQ=",
+        "lastModified": 1794750163,
+        "narHash": "sha256-rNT7iIZhp5BVVwesMVd9RqGEd/A5DDf0Eb/HzoqImww=",
         "owner": "fzakaria",
         "repo": "nixpkgs-multiverse",
-        "rev": "e2f99511444fcc7b07f1115fda35aadc1b189c6b",
+        "rev": "5c58c9e4e5c07baa613ecc427592dfc56248f4e4",
         "type": "github"
       },
       "original": {
@@ -655,11 +655,11 @@
     },
     "nixpkgs-unstable": {
       "locked": {
-        "lastModified": 1794386569,
-        "narHash": "sha256-W60urNAgQVS8bhNWH0bQsYoiagds8m38oTDUjEOM9FE=",
-        "rev": "d4f25a3e562008648d45bcf2d70bcc7422cad84e",
+        "lastModified": 1794537146,
+        "narHash": "sha256-bTKSclXJAmo9qdxPedTBHUGr8awPr4BrbOoOutJsYIc=",
+        "rev": "d5cc6833999746cffdfe0598f7bc801a57b887a9",
         "type": "tarball",
-        "url": "https://releases.nixos.org/nixos/unstable/nixos-26.11pre1117658.d4f25a3e5620/nixexprs.tar.zst?lastModified=1794386569&rev=d4f25a3e562008648d45bcf2d70bcc7422cad84e"
+        "url": "https://releases.nixos.org/nixos/unstable/nixos-26.11pre1119549.d5cc68339997/nixexprs.tar.zst?lastModified=1794537146&rev=d5cc6833999746cffdfe0598f7bc801a57b887a9"
       },
       "original": {
         "type": "tarball",
@@ -668,11 +668,11 @@
     },
     "nixpkgs_2": {
       "locked": {
-        "lastModified": 1794552581,
-        "narHash": "sha256-C0bP9ShRkxihpkAiWel93+JypO7ls9usnHRtK2VLvWA=",
-        "rev": "f1e5c356f35d07e7b71a6b5e6c9338e0b029e0c0",
+        "lastModified": 1794756927,
+        "narHash": "sha256-gMyd1bZoTbvrap9NEM2ZIy/7Qfhd54segpSkHPB2vfE=",
+        "rev": "b349185bb79c7cf7ad8ea8c097931730bf473c71",
         "type": "tarball",
-        "url": "https://releases.nixos.org/nixos/26.05/nixos-26.05.14234.f1e5c356f35d/nixexprs.tar.zst?lastModified=1794552581&rev=f1e5c356f35d07e7b71a6b5e6c9338e0b029e0c0"
+        "url": "https://releases.nixos.org/nixos/26.05/nixos-26.05.14561.b349185bb79c/nixexprs.tar.zst?lastModified=1794756927&rev=b349185bb79c7cf7ad8ea8c097931730bf473c71"
       },
       "original": {
         "type": "tarball",
@@ -709,11 +709,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1794680144,
-        "narHash": "sha256-/gOMbC2gM9bn0xW49fKb6qu5gbOExgSgefHIld+CMeI=",
+        "lastModified": 1794852202,
+        "narHash": "sha256-/r4b71bJvn5XgmgNyK14GQ27OiMEkFp6fBQu5fhR+0s=",
         "owner": "nix-community",
         "repo": "NUR",
-        "rev": "05ea10c7d32dd586724d635b61ea791466001922",
+        "rev": "0e1cc6e9d0acab9293d2373fe34d344860086d87",
         "type": "github"
       },
       "original": {
@@ -739,11 +739,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1794669110,
-        "narHash": "sha256-fjsGFgpPj/yN4J5lmRRGZcAZNsPQ+3piGTQSIDFBd9g=",
+        "lastModified": 1794849711,
+        "narHash": "sha256-JnZASoK+6wvNAwuYj2tZ1ZPoayVeHjUg3uwCuJ8dHvk=",
         "owner": "lukasl-dev",
         "repo": "pi.nix",
-        "rev": "06ee2f93bfe681252165c926457243931be21ff0",
+        "rev": "2388c0c7f7c34395de94411406c911c24079e165",
         "type": "github"
       },
       "original": {
@@ -968,11 +968,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1793697812,
-        "narHash": "sha256-9OQ/LdDDZuID54GrnbY2Wt3lqXd9pVKIKlw7DdvKOFU=",
+        "lastModified": 1794681870,
+        "narHash": "sha256-2OP12X4Tjh4tjYPLROj/GFRI91/ps0r82G88blvj0YM=",
         "ref": "refs/heads/master",
-        "rev": "439e608ae729e1c03be09a8d1b9ad8186f2382e4",
-        "revCount": 4,
+        "rev": "0c2155ddcf0d63b1fedc282184af2ba1134a5310",
+        "revCount": 5,
         "type": "git",
         "url": "https://git.gurkan.in/gurkan/skillissue.git"
       },
