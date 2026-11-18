@@ -518,11 +518,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1794740049,
-        "narHash": "sha256-fCUJcjm7MHwRR+06FS8+P+I6F3mRIyEGWjRiaMhTtRQ=",
+        "lastModified": 1794911210,
+        "narHash": "sha256-ah5wXoIx1Xzy5ajjCivwpR6n/yh40Sb0M4ZJsG+latA=",
         "ref": "refs/heads/master",
-        "rev": "306a4a9e8acb1612d97554c7caf0c2e00364f1c9",
-        "revCount": 30,
+        "rev": "7ca29933ac310580b1b967e5c090b1024449a537",
+        "revCount": 33,
         "type": "git",
         "url": "https://git.gurkan.in/gurkan/llm-custody.git"
       },
@@ -640,11 +640,11 @@
     },
     "nixpkgs-multiverse": {
       "locked": {
-        "lastModified": 1794750163,
-        "narHash": "sha256-rNT7iIZhp5BVVwesMVd9RqGEd/A5DDf0Eb/HzoqImww=",
+        "lastModified": 1794870885,
+        "narHash": "sha256-0g9Pil2rgPf6QQB/OcibCeOsHu9Xn4wLGI7kSlKVvzY=",
         "owner": "fzakaria",
         "repo": "nixpkgs-multiverse",
-        "rev": "5c58c9e4e5c07baa613ecc427592dfc56248f4e4",
+        "rev": "42209105bb0ed8787cd4c71e4b57a5751578f9c9",
         "type": "github"
       },
       "original": {
@@ -709,11 +709,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1794852202,
-        "narHash": "sha256-/r4b71bJvn5XgmgNyK14GQ27OiMEkFp6fBQu5fhR+0s=",
+        "lastModified": 1794910078,
+        "narHash": "sha256-jBTAJRyFLlsDdSUVHHUlowkoPEcbZd37qIKJ9OWs1Sw=",
         "owner": "nix-community",
         "repo": "NUR",
-        "rev": "0e1cc6e9d0acab9293d2373fe34d344860086d87",
+        "rev": "54e040a9bcb85a4fb86ddf16b13f019058ddfaaa",
         "type": "github"
       },
       "original": {
@@ -739,11 +739,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1794849711,
-        "narHash": "sha256-JnZASoK+6wvNAwuYj2tZ1ZPoayVeHjUg3uwCuJ8dHvk=",
+        "lastModified": 1794854457,
+        "narHash": "sha256-fGYr4ABeS+IAjiaAt6CnxVGhlZmHukyLk/sZgtFIPtA=",
         "owner": "lukasl-dev",
         "repo": "pi.nix",
-        "rev": "2388c0c7f7c34395de94411406c911c24079e165",
+        "rev": "7c2db5a26b2e501019ffd47ddd7e9d1095615715",
         "type": "github"
       },
       "original": {
@@ -923,11 +923,11 @@
     "serveradmin-src": {
       "flake": false,
       "locked": {
-        "lastModified": 1792744966,
-        "narHash": "sha256-sm5igdlCoCJMNFCKBYyHyCB9Xt7dmK8PYHyPksJCMoA=",
+        "lastModified": 1794908577,
+        "narHash": "sha256-c20j2S6QA+pR4pKLXyZ9jlSKSXSANvjwahSUadPVXtE=",
         "owner": "innogames",
         "repo": "serveradmin",
-        "rev": "b7517d9dd1e5f0ac8ee48d19a9dd64688b7403eb",
+        "rev": "efa0b4b969cb971a7e818b8dc08d03a828b36dc1",
         "type": "github"
       },
       "original": {

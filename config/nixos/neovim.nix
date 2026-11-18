@@ -7,6 +7,31 @@
 }:
 let
   secrets = import ./secrets.nix;
+
+  # With BUNDLE_GEMFILE unset, ruby-lsp composes a bundle in the editor's cwd
+  # on every start (writes .ruby-lsp/, runs `bundle install` against
+  # rubygems.org, then re-execs through `bundle exec`), and exits before the
+  # LSP handshake when any of that fails. An empty Gemfile makes it serve
+  # straight from the nixpkgs closure. --set-default leaves a project that
+  # exports its own BUNDLE_GEMFILE (direnv, bundle exec) in control.
+  #
+  # nixpkgs' rubygems puts GEM_HOME (default ~/.local/share/gem/ruby/<abi>) on
+  # the gem path, and the highest version of a gem wins. A newer prism or rbs
+  # left there by `gem install` or bundler carries a native extension linked
+  # against the libruby of its install day, which fails to load after a ruby
+  # bump. Pinning GEM_HOME to an empty dir and dropping GEM_PATH keeps
+  # resolution inside the store closure.
+  ruby-lsp-standalone = pkgs.symlinkJoin {
+    name = "ruby-lsp-standalone-${pkgs.ruby-lsp.version}";
+    paths = [ pkgs.ruby-lsp ];
+    nativeBuildInputs = [ pkgs.makeWrapper ];
+    postBuild = ''
+      wrapProgram $out/bin/ruby-lsp \
+        --set-default BUNDLE_GEMFILE ${pkgs.writeTextDir "Gemfile" ""}/Gemfile \
+        --set GEM_HOME ${pkgs.emptyDirectory} \
+        --unset GEM_PATH
+    '';
+  };
 in
 {
   environment = {
@@ -23,7 +48,7 @@ in
       # Top-level attr, not rubyPackages_<ver>, so it follows whatever ruby
       # nixpkgs defaults to. rubocop in packages.nix is kept top-level for the
       # same reason, which also keeps the two on one shared ruby closure.
-      ruby-lsp # ruby
+      ruby-lsp-standalone # ruby
     ];
   };
 
