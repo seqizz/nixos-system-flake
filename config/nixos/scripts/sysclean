@@ -13,13 +13,18 @@ warn() {
   printf 'sysclean: %s\n' "$1" >&2
 }
 
-if [ "$(id -u)" -eq 0 ]; then
-  warn "run this as your own user, not with sudo - it elevates the steps that need it"
-  exit 1
-fi
+# Runs a step with root privileges. Root calls it directly, so the script
+# also works on machines that only have a root login.
+as_root() {
+  if [ "$(id -u)" -eq 0 ]; then
+    "$@"
+  else
+    sudo "$@"
+  fi
+}
 
 say "system profile: keeping the newest $SYSTEM_KEEP generations"
-sudo nix-env -p /nix/var/nix/profiles/system --delete-generations "+$SYSTEM_KEEP"
+as_root nix-env -p /nix/var/nix/profiles/system --delete-generations "+$SYSTEM_KEEP"
 
 user_profile="$HOME/.local/state/nix/profiles/profile"
 if [ -L "$user_profile" ]; then
@@ -30,9 +35,9 @@ fi
 say "collecting garbage"
 # Not fatal: an optimise pass is still worth having, and the alias this script
 # replaced ran it unconditionally for the same reason.
-if ! sudo nix-collect-garbage; then
+if ! as_root nix-collect-garbage; then
   warn "nix-collect-garbage failed, optimising the store anyway"
 fi
 
 say "deduplicating the store"
-sudo nix-store --optimize
+as_root nix-store --optimize
