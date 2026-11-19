@@ -4,6 +4,9 @@
   inputs = {
     nixpkgs.url = "https://channels.nixos.org/nixos-26.05/nixexprs.tar.zst";
     nixpkgs-unstable.url = "https://channels.nixos.org/nixos-unstable/nixexprs.tar.zst";
+    # Head of the release branch, ahead of the Hydra-gated channel above.
+    # Source of security fixes that have not reached the channel (pkgs.release).
+    nixpkgs-release.url = "github:NixOS/nixpkgs/release-26.05";
     # Historical nixpkgs revisions for frozen grafts (grafts/<name>@<ref>.nix).
     # Declares no inputs of its own (revisions are fetched lazily), so nothing to follow.
     nixpkgs-multiverse.url = "github:fzakaria/nixpkgs-multiverse";
