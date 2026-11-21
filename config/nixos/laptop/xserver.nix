@@ -84,7 +84,9 @@
     [Logitech M705 Marathon Mouse]
     MatchVendor=0x046D
     MatchName=Logitech M705
-    AttrEventCode=-REL_WHEEL_HI_RES;
+    # Both axes lose hi-res together: libinput stops deriving scroll from
+    # low-res events as soon as the device sends a single hi-res one
+    AttrEventCode=-REL_WHEEL_HI_RES;-REL_HWHEEL_HI_RES;
   '';
 }
 #  vim: set ts=2 sw=2 tw=0 et :
