@@ -94,6 +94,7 @@
     pkgs.unstable.ruff
     rubocop
     shellcheck
+    shfmt
     stylua
     taplo # toml
     typstyle
