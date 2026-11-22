@@ -69,6 +69,18 @@ in
     };
   });
 
+  # Wait until geoipupdate has downloaded the GeoIP database before starting nginx
+  systemd.services.geoipupdate-bootstrap = {
+    description = "Initial GeoIP database download for nginx";
+    requiredBy = [ "nginx.service" ];
+    before = [ "nginx.service" ];
+    unitConfig.ConditionPathExists = "!${config.services.geoipupdate.settings.DatabaseDirectory}/GeoLite2-Country.mmdb";
+    serviceConfig = {
+      Type = "oneshot";
+      ExecStart = "${config.systemd.package}/bin/systemctl start --wait geoipupdate.service";
+    };
+  };
+
   services = {
     geoipupdate = {
       enable = true;
