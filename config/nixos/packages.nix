@@ -17,10 +17,6 @@
       enable = true;
       enableGlobalCompInit = false;
     };
-    tmux = {
-      enable = true;
-      terminal = "screen-256color";
-    };
     less.enable = true;
     nix-index-database.comma.enable = true;
     git = {

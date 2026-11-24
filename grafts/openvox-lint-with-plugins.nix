@@ -7,7 +7,7 @@
 # using that name.
 {final, ...}: let
   plugins = [
-    final.puppet-lint-align_equals
+    final.puppet-lint-stackenblocken
   ];
 in
   final.symlinkJoin {

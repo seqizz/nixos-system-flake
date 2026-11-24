@@ -19,6 +19,7 @@ in
     ./scripts.nix
     ./sheldon.nix
     ./syncthing.nix
+    ./tmux.nix
     ./users.nix
     ./variables.nix
   ];

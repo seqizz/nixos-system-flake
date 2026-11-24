@@ -4,10 +4,10 @@
 # with --load instead.
 {final, inputs, ...}:
 final.stdenvNoCC.mkDerivation {
-  pname = "puppet-lint-align_equals";
+  pname = "puppet-lint-stackenblocken";
   version = "master";
 
-  src = inputs.puppet-lint-align_equals-src;
+  src = inputs.puppet-lint-stackenblocken-src;
 
   dontConfigure = true;
   dontBuild = true;
@@ -20,8 +20,8 @@ final.stdenvNoCC.mkDerivation {
   '';
 
   meta = with final.lib; {
-    description = "puppet-lint check aligning parameter types, names and default value equals signs";
-    homepage = "https://git.gurkan.in/gurkan/puppet-lint-align_equals";
+    description = "puppet-lint check formatting and aligning class and defined type parameters";
+    homepage = "https://git.gurkan.in/gurkan/puppet-lint-stackenblocken";
     platforms = platforms.all;
   };
 }

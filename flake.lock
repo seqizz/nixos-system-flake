@@ -655,11 +655,11 @@
     },
     "nixpkgs-release": {
       "locked": {
-        "lastModified": 1795528018,
-        "narHash": "sha256-6avY8gGauSBitB7VQjH7YoUm03H3k2+iZiJs+6Ew7xk=",
+        "lastModified": 1795543421,
+        "narHash": "sha256-/FfddpFaAKTEmviudBVgEvEKjzYw6U8BVghfutaYudE=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "3a77b9bcca4957d31f476c0c5942f2ca0694f98d",
+        "rev": "89a050db1dc1bb8cbac0e9b0130643196956b49c",
         "type": "github"
       },
       "original": {
@@ -725,11 +725,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1795529852,
-        "narHash": "sha256-QwmFno23efl3IJ5GysR+9k7rhsdVpfUZO878EMPHiI4=",
+        "lastModified": 1795543524,
+        "narHash": "sha256-XQPWlbEZUTalHUv2UYBgeSzGtBHtuU/FVeDrt/do5rU=",
         "owner": "nix-community",
         "repo": "NUR",
-        "rev": "5a95d289ec6bef1d1864a7a8608231a3e23fa4fe",
+        "rev": "4608077baf9feef872f846a6d0cc95190aefda1e",
         "type": "github"
       },
       "original": {
@@ -823,20 +823,20 @@
         "type": "github"
       }
     },
-    "puppet-lint-align_equals-src": {
+    "puppet-lint-stackenblocken-src": {
       "flake": false,
       "locked": {
-        "lastModified": 1795530310,
-        "narHash": "sha256-6PKDLu0sxWjnlPq+m/y/UhFrhG3/fuIwIrs4VbVSOSg=",
+        "lastModified": 1795544080,
+        "narHash": "sha256-6TJwpXN6sNxJP4UkzFfEFN4TXhypUOUz9JlOqQW9h14=",
         "ref": "refs/heads/master",
-        "rev": "1dc9e733a658a0ddce5a0d607641dca3371920ba",
-        "revCount": 2,
+        "rev": "3a9ed25f0635e595a4f34635c6e800f6514cb1de",
+        "revCount": 4,
         "type": "git",
-        "url": "https://git.gurkan.in/gurkan/puppet-lint-align_equals.git"
+        "url": "https://git.gurkan.in/gurkan/puppet-lint-stackenblocken.git"
       },
       "original": {
         "type": "git",
-        "url": "https://git.gurkan.in/gurkan/puppet-lint-align_equals.git"
+        "url": "https://git.gurkan.in/gurkan/puppet-lint-stackenblocken.git"
       }
     },
     "root": {
@@ -862,7 +862,7 @@
         "pi-tool-repair-src": "pi-tool-repair-src",
         "pi-web-access-src": "pi-web-access-src",
         "picom-src": "picom-src",
-        "puppet-lint-align_equals-src": "puppet-lint-align_equals-src",
+        "puppet-lint-stackenblocken-src": "puppet-lint-stackenblocken-src",
         "rpiv-mono-src": "rpiv-mono-src",
         "rubato-src": "rubato-src",
         "serveradmin-src": "serveradmin-src",

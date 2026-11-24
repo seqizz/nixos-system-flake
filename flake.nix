@@ -118,8 +118,8 @@
       flake = false;
     };
 
-    puppet-lint-align_equals-src = {
-      url = "git+https://git.gurkan.in/gurkan/puppet-lint-align_equals.git";
+    puppet-lint-stackenblocken-src = {
+      url = "git+https://git.gurkan.in/gurkan/puppet-lint-stackenblocken.git";
       flake = false;
     };
 
