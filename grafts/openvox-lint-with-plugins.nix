@@ -5,24 +5,25 @@
 # This is a separate attribute wrapping final.openvox-lint: an overlay after
 # grafts-overlay (skyepkgs) defines openvox-lint and would replace a graft
 # using that name.
-{final, ...}: let
+{ final, ... }:
+let
   plugins = [
     final.puppet-lint-stackenblocken
   ];
 in
-  final.symlinkJoin {
-    name = "${final.openvox-lint.name}-with-plugins";
-    paths = [final.openvox-lint];
-    nativeBuildInputs = [final.makeWrapper];
-    postBuild = ''
-      loadFlags=()
-      for plugin in ${final.lib.escapeShellArgs plugins}; do
-        for check in "$plugin"/lib/puppet-lint/plugins/*.rb; do
-          loadFlags+=(--add-flags "--load $check")
-        done
+final.symlinkJoin {
+  name = "${final.openvox-lint.name}-with-plugins";
+  paths = [ final.openvox-lint ];
+  nativeBuildInputs = [ final.makeWrapper ];
+  postBuild = ''
+    loadFlags=()
+    for plugin in ${final.lib.escapeShellArgs plugins}; do
+      for check in "$plugin"/lib/puppet-lint/plugins/*.rb; do
+        loadFlags+=(--add-flags "--load $check")
       done
-      wrapProgram $out/bin/puppet-lint "''${loadFlags[@]}"
-    '';
-    passthru.unwrapped = final.openvox-lint;
-    inherit (final.openvox-lint) meta;
-  }
+    done
+    wrapProgram $out/bin/puppet-lint "''${loadFlags[@]}"
+  '';
+  passthru.unwrapped = final.openvox-lint;
+  inherit (final.openvox-lint) meta;
+}

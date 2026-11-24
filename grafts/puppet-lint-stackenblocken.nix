@@ -2,7 +2,7 @@
 # Bundler.setup, which hides every gem outside its own Gemfile.lock from
 # puppet-lint's plugin discovery. grafts/openvox-lint-with-plugins.nix loads these files
 # with --load instead.
-{final, inputs, ...}:
+{ final, inputs, ... }:
 final.stdenvNoCC.mkDerivation {
   pname = "puppet-lint-stackenblocken";
   version = "master";
