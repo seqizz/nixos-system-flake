@@ -118,6 +118,11 @@
       flake = false;
     };
 
+    puppet-lint-align_equals-src = {
+      url = "git+https://git.gurkan.in/gurkan/puppet-lint-align_equals.git";
+      flake = false;
+    };
+
     lol-plymouth-src = {
       url = "git+https://git.gurkan.in/gurkan/lol-plymouth.git";
       inputs.nixpkgs.follows = "nixpkgs";

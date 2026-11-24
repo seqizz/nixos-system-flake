@@ -140,7 +140,7 @@ in
     nfpm
     nomacs
     onboard # on-screen keyboard
-    openvox-lint # OpenVox fork of puppet-lint, still ships bin/puppet-lint
+    openvox-lint-with-plugins # My graft-overlayed version of puppet-lint with plugins
     pamixer # pulseaudio mixer
     pasystray
     pavucontrol
