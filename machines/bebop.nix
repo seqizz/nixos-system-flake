@@ -31,7 +31,7 @@ in
 
   # Only temporarily a work laptop, so the work environment lives in a
   # specialisation instead of the base system. See config/nixos/work-profile.nix
-  # for the switching commands.
+  # and `sysman work on|off` for the runtime switch.
   local.profiles.work.asSpecialisation = true;
 
   boot = {

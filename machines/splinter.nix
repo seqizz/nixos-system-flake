@@ -184,7 +184,7 @@ in
     user.extraConfig = "DefaultTimeoutStopSec=10s";
   };
   # nix and nix-prefetch-url come from PATH on purpose, the host's own nix is
-  # the one that matches the running daemon (same reasoning as sysclean).
+  # the one that matches the running daemon (same reasoning as sysman).
   environment.systemPackages = [
     (pkgs.writeShellApplication {
       name = "nvidia-update";

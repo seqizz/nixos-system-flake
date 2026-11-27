@@ -14,8 +14,8 @@
     work.asSpecialisation = lib.mkEnableOption ''
       building the work environment as a NixOS specialisation rather than into
       the base system, for a machine that is only sometimes a work machine.
-      Leaves work.enable off in the parent and on in the child, and adds the
-      work-check / work-on / work-off commands. See work-profile.nix.
+      Leaves work.enable off in the parent and on in the child, and enables
+      `sysman work on|off`. See work-profile.nix.
       A permanent work machine sets work.enable = true instead and leaves this
       alone
     '';

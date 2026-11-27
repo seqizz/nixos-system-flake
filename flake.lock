@@ -640,11 +640,11 @@
     },
     "nixpkgs-multiverse": {
       "locked": {
-        "lastModified": 1795476465,
-        "narHash": "sha256-I8I39X/EKxV3lvVF6X3Z5icH7nqiC0EtHwcbY20DbLg=",
+        "lastModified": 1795624153,
+        "narHash": "sha256-lLXuXL4Us1X26gOSCV5S4dKT7KXsbzEVrNv0VNFrrIE=",
         "owner": "fzakaria",
         "repo": "nixpkgs-multiverse",
-        "rev": "08279a869108a671dd9004a6eeef4569f629870e",
+        "rev": "aef007415062953fe09eb989570186c3f9c2d8b5",
         "type": "github"
       },
       "original": {
@@ -655,11 +655,11 @@
     },
     "nixpkgs-release": {
       "locked": {
-        "lastModified": 1795551368,
-        "narHash": "sha256-tfcz+X/wSC0IJ8wBdbYYZeYgxz86UkWp6aMzFhh6QOQ=",
+        "lastModified": 1795774567,
+        "narHash": "sha256-Ksqf2SPSe8LX53CZAjbdjEsIK1axnzoss3oieeBZ6Hg=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "2c087720ed8c24b687c3e8abba03432f7e1f9d10",
+        "rev": "4cc4983f4b2e4722b56b917a207ed6db0266c593",
         "type": "github"
       },
       "original": {
@@ -725,11 +725,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1795553675,
-        "narHash": "sha256-+SEpW4umTF76oE/b6ve5ThqiupxSA5kGckpbb/PEb1Y=",
+        "lastModified": 1795782564,
+        "narHash": "sha256-fnWsA8XSh008EMkxOxu3IaV1Qh7yCof2UdpCBYpNmaI=",
         "owner": "nix-community",
         "repo": "NUR",
-        "rev": "aa073331a5bd859a790e34ae3385be6b7d929640",
+        "rev": "4cb6900347681623b8d5c7ec1edbaa556535386d",
         "type": "github"
       },
       "original": {
@@ -755,11 +755,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1795549003,
-        "narHash": "sha256-wobpbvPL4QON/BbbXSPH1W20ohNLf8JP4DhG1p7gHT0=",
+        "lastModified": 1795717825,
+        "narHash": "sha256-prYaN3CxgGCjJs6EC79R/UQVGcjtqH3i32pz9jk5b0I=",
         "owner": "lukasl-dev",
         "repo": "pi.nix",
-        "rev": "00ad9b10f40b508c0bb9555485bb650396f1858e",
+        "rev": "692d83934ada4d3dd6b9eae5a4833ac11c2ccd92",
         "type": "github"
       },
       "original": {
@@ -787,11 +787,11 @@
     "pi-web-access-src": {
       "flake": false,
       "locked": {
-        "lastModified": 1795289202,
-        "narHash": "sha256-n6/CtO20p42yxKHazXOh0lcI0SjcCdpRmDtwS8f3qCY=",
+        "lastModified": 1795652279,
+        "narHash": "sha256-g92Z6HdeKAfk9z06OcVCFILmUSN4N0S7UudSvlX6aBY=",
         "owner": "nicobailon",
         "repo": "pi-web-access",
-        "rev": "f5a745af5bf7c81fa55d47bf86c4afa25ac870e8",
+        "rev": "4427fb2044adcd176ced091dc82ff787f3b039ff",
         "type": "github"
       },
       "original": {
@@ -826,11 +826,11 @@
     "puppet-lint-stackenblocken-src": {
       "flake": false,
       "locked": {
-        "lastModified": 1795544080,
-        "narHash": "sha256-6TJwpXN6sNxJP4UkzFfEFN4TXhypUOUz9JlOqQW9h14=",
+        "lastModified": 1795596904,
+        "narHash": "sha256-jI/dsuXJm6OwVewqdY7z2tXf4GL+0YeizP65E2RwBtQ=",
         "ref": "refs/heads/master",
-        "rev": "3a9ed25f0635e595a4f34635c6e800f6514cb1de",
-        "revCount": 4,
+        "rev": "a41b450580a87875ab0088adda992858f8b8019a",
+        "revCount": 5,
         "type": "git",
         "url": "https://git.gurkan.in/gurkan/puppet-lint-stackenblocken.git"
       },
@@ -883,11 +883,11 @@
     "rpiv-mono-src": {
       "flake": false,
       "locked": {
-        "lastModified": 1794418925,
-        "narHash": "sha256-WCmi38SDOz/dmmy0/g+aIXD836bIXWXOjsbEquyKe6M=",
+        "lastModified": 1795707162,
+        "narHash": "sha256-hmPAfdiw4M1/c6rRFPJNLJ4KZFyY17ukXg3APDNrPrM=",
         "owner": "juicesharp",
         "repo": "rpiv-mono",
-        "rev": "1a4add9dbe61597059a93dd9200bf25d51238659",
+        "rev": "7c669d0837cd08497dc34c53a7a17fdfa1a949ee",
         "type": "github"
       },
       "original": {
@@ -957,11 +957,11 @@
     "serveradmin-src": {
       "flake": false,
       "locked": {
-        "lastModified": 1795522036,
-        "narHash": "sha256-Sgr1ChxgOUmDBMCio7rI9dyKvXAaAcLuYF3g/va3Q8I=",
+        "lastModified": 1795782005,
+        "narHash": "sha256-Yepb6CKDjdfi7vWeDyu8bjO5hRysVMYtSnvGKxtw7fU=",
         "owner": "innogames",
         "repo": "serveradmin",
-        "rev": "0e8c809d345b3ee4a8076f4b07a6226c140098b7",
+        "rev": "5a42711db3d70264af54df33b391063fe7fab2d9",
         "type": "github"
       },
       "original": {

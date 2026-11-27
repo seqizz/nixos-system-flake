@@ -7,73 +7,16 @@
 # and ignores this module entirely.
 #
 # Switching is runtime-only: the specialisation is built as part of every
-# generation and already lives in the store, so work-on / work-off cost no
-# rebuild and no reboot. A boot entry is generated as well.
+# generation and already lives in the store, so `sysman work on|off` costs no
+# rebuild and no reboot (see sysman.nix and scripts/sysman). A boot entry is
+# generated as well.
 {
   config,
   lib,
-  pkgs,
   ...
 }:
 let
   cfg = config.local.profiles.work;
-
-  # switch-to-configuration of the child system, reachable only from the parent.
-  childSwitch = "/run/current-system/specialisation/work/bin/switch-to-configuration";
-  # The system profile keeps pointing at the parent generation even while the
-  # specialisation is live, which is what makes the way back work.
-  parentSwitch = "/nix/var/nix/profiles/system/bin/switch-to-configuration";
-
-  nmcli = "${pkgs.networkmanager}/bin/nmcli";
-
-  # Shared tail for both directions. switch-to-configuration only restarts units
-  # whose *definition* changed, and the two profiles have an identical unit
-  # graph — they differ only in files under /etc. So every daemon that reads
-  # those files once at startup has to be poked by hand.
-  resettle = ''
-    # NM caches system-connections in memory: without this the work connections
-    # linger after work-off and are absent after work-on.
-    sudo ${nmcli} connection reload
-
-    # resolved parses /etc/dnssec-trust-anchors.d only at startup, so the
-    # ig.local anchor appears (or disappears) for it only across a restart.
-    sudo ${config.systemd.package}/bin/systemctl restart systemd-resolved
-
-    # That restart wipes the per-link DNS overrides the dnscrypt dispatcher
-    # installs (see laptop/dnscrypt.nix — this is the same post-rebuild gotcha).
-    # Reapplying each connected physical link re-runs the dispatcher and
-    # restores them.
-    for dev in $(${nmcli} -t -f DEVICE,TYPE,STATE device \
-      | ${pkgs.gawk}/bin/awk -F: '$3 == "connected" && ($2 == "wifi" || $2 == "ethernet") { print $1 }'); do
-      sudo ${nmcli} device reapply "$dev" || true
-    done
-
-    # awesome tints its wibar and client borders by profile, read from
-    # /etc/nixos-profile at startup. /etc/nixos-profile is a symlink that
-    # setup-etc swaps out, so inotify on the path is unreliable — poke the
-    # running instance instead. No session bus (TTY, ssh) means no awesome to
-    # poke, and its own 5-minute fallback timer covers a missed poke anyway.
-    if [ -n "''${DBUS_SESSION_BUS_ADDRESS:-}" ]; then
-      ${pkgs.awesome}/bin/awesome-client 'nixos_profile.refresh()' >/dev/null 2>&1 || true
-    fi
-  '';
-
-  # Relinking skills is part of the profile switch: the HM half of the work
-  # profile adds the inno repo to skillissue/config.yaml (config/home/inno.nix),
-  # but writing that file links nothing by itself. `link` is the offline phase
-  # only — it creates symlinks for repos already in the cache and GCs the ones
-  # that left the config, so it is safe in both directions and needs no VPN.
-  # Fetching the inno repo for the first time (or pulling it) still needs
-  # `skillissue update` with the VPN up, hence the hint in work-on.
-  #
-  # Runs unprivileged on purpose: the cache, the symlink targets and the ssh
-  # agent all belong to the invoking user, not to root.
-  relinkSkills =
-    extraArgs: ''
-      ${pkgs.skillissue}/bin/skillissue link ${extraArgs} || true
-    '';
-
-  currentProfile = ''"$(cat /etc/nixos-profile 2>/dev/null || echo unknown)"'';
 in
 {
   config = lib.mkIf cfg.asSpecialisation {
@@ -85,54 +28,9 @@ in
       environment.etc."nixos-profile".text = lib.mkForce "work\n";
     };
 
-    # Runtime marker for the commands below. Probing for one of the files the
-    # work profile happens to install would work too, but this says what it
-    # means. The child overrides it above.
+    # Runtime marker read by sysman and by awesome. Probing for one of the
+    # files the work profile happens to install would work too, but this says
+    # what it means. The child overrides it above.
     environment.etc."nixos-profile".text = "private\n";
-
-    # Inherited by the specialisation as well, so work-off is available from
-    # inside work mode.
-    environment.systemPackages = [
-      (pkgs.writeShellScriptBin "work-check" ''
-        echo "profile: $(cat /etc/nixos-profile 2>/dev/null || echo unknown)"
-        echo "system:  $(readlink /run/current-system)"
-      '')
-
-      (pkgs.writeShellScriptBin "work-on" ''
-        set -e
-        if [ ${currentProfile} = "work" ]; then
-          echo "Already in work profile."
-          exit 0
-        fi
-        sudo ${childSwitch} switch
-        ${resettle}
-        ${relinkSkills ""}
-        echo
-        echo "Work profile active."
-        echo "  Restart Firefox/Chromium — a running browser read the CA store at"
-        echo "  startup and cannot see the work CAs that just appeared."
-        echo "  VPN is not brought up automatically: nmcli connection up IG-WG-1"
-        echo "  Work skills are linked from the local skillissue cache; run"
-        echo "  'skillissue update' once the VPN is up to clone/pull them."
-      '')
-
-      (pkgs.writeShellScriptBin "work-off" ''
-        set -e
-        if [ ${currentProfile} = "private" ]; then
-          echo "Already in private profile."
-          exit 0
-        fi
-        sudo ${parentSwitch} switch
-        ${resettle}
-        # --prune-cache so leaving work mode also takes the work skill content
-        # off disk, not just the symlinks. It refuses to delete a clone with
-        # uncommitted or unpushed work, so an unsynced skill blocks the removal
-        # instead of being lost; `skillissue update` inside work mode first.
-        ${relinkSkills "--prune-cache"}
-        echo
-        echo "Private profile active. Work CAs and connections are gone from"
-        echo "/etc; restart browsers if you want them to forget the CAs too."
-      '')
-    ];
   };
 }

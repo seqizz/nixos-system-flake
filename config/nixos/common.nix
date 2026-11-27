@@ -18,6 +18,7 @@ in
     ./profiles.nix
     ./scripts.nix
     ./sheldon.nix
+    ./sysman.nix
     ./syncthing.nix
     ./tmux.nix
     ./users.nix

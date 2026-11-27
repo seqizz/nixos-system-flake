@@ -103,9 +103,14 @@ nixos-rebuild switch --flake .#splinter
 # A machine with local.profiles.work.asSpecialisation = true
 # keeps the work environment in a specialisation, check config/nixos/work-profile.nix.
 # Boot entry "<host> - work", or switch at runtime, no rebuild involved:
-work-check  # which profile is live right now
-work-on     # activate work, reload NM, restart resolved, reapply link DNS etc.
-work-off    # back to private, same cleanup
+sysman work on   # activate work, reload NM, restart resolved, reapply link DNS etc.
+sysman work off  # back to private, same cleanup
+
+# Day to day management, all machines (config/nixos/scripts/sysman):
+sysman up [--no-update]  # update inputs, rebuild, activate; stays in the live profile
+sysman status            # live profile, booted/running/default system, generations, failed units
+sysman diff [OLD [NEW]]  # nvd diff, by default the previous generation against the newest
+sysman clean             # drop old generations, collect garbage, optimise the store
 
 # Build a graft package
 nix build .#ionicons
